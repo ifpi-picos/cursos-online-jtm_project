@@ -17,7 +17,7 @@ public class Professor {
         return nome;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
