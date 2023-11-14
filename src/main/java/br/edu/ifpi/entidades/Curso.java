@@ -1,17 +1,15 @@
 package br.edu.ifpi.entidades;
 
-public class Aluno {
+public class Curso {
 
     private String nome;
-    private long id;
-    private String email;
-    private Curso curso;
+    private int id;
+    private int cargaHoraria;
 
-    public Aluno(String nome, int id, String email, Curso curso) {
+    public Curso(String nome, int id, int cargaHoraria) {
         this.nome = nome;
         this.id = id;
-        this.email = email;
-        this.curso = curso;
+        this.cargaHoraria = cargaHoraria;
     }
 
     public String getNome() {
@@ -22,15 +20,19 @@ public class Aluno {
         return id;
     }
 
-    public String getEmail() {
-        return email;
+    public int getCargaHoraria() {
+        return cargaHoraria;
     }
 
-    public Curso getCurso() {
-        return curso;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setCargaHoraria(int cargaHoraria) {
+        this.cargaHoraria = cargaHoraria;
     }
 }
