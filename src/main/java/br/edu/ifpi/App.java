@@ -35,11 +35,6 @@ public class App {
 
     public static void cadastraUsuario(){
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Digite seu Nome:");
-        String nome = scanner.nextLine();
-        System.out.println("Digite seu email:");
-        String email = scanner.nextLine();
         System.out.println("Escolha o tipo de Usuário:");
         System.out.println("1. Aluno");
         System.out.println("2. Professor");
