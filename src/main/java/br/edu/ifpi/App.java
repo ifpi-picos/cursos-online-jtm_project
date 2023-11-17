@@ -27,12 +27,13 @@ public class App {
         if (opt == 1){
             cadastraUsuario();
         } else if (opt == 2){
-
+            logarUsuario();
         }else{
             System.out.println("Opção Inválida, tente Novamente");
             mostrarMenuInicial();
         }
     }
+}
 
     public static void cadastraUsuario(){
         Scanner scanner = new Scanner(System.in);
@@ -41,20 +42,36 @@ public class App {
         String nome = scanner.nextLine();
         System.out.println("Digite seu email:");
         String email = scanner.nextLine();
+        System.out.println("Digite sua senha:");
+        String senha = scanner.nextLine();
 
-        Usuario usuario = null;
+        Usuario usuario = new Usuario(nome, email, senha);
 
-        if (usuario == null) {
-            System.out.println("Erro ao cadastrar o usuário!");
-            mostrarMenuInicial();
+        UsuarioDAO dao = new UsuarioDAO();
+        if (dao.cadastrar(usuario) > 0) {
+            System.out.println("Usuário cadastrado com sucesso!");
         } else {
-            UsuarioDAO dao = new UsuarioDAO();
-            if (dao.cadastrar(usuario) > 0) {
-                System.out.println("Usuário cadastrado com sucesso!");
-            } else {
-                System.out.println("Erro ao cadastrar o usuário!");
-            }
+            System.out.println("Erro ao cadastrar o usuário!");
+        }
+        mostrarMenuInicial();
+    }
+
+    public static void logarUsuario(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Digite seu email:");
+        String email = scanner.nextLine();
+        System.out.println("Digite sua senha:");
+        String senha = scanner.nextLine();
+
+        UsuarioDAO dao = new UsuarioDAO();
+        Usuario usuario = dao.buscarPorEmail(email);
+
+        if (usuario != null && usuario.getSenha().equals(senha)){
+            System.out.println("Usuário logado com sucesso!");
+      
+        } else {
+            System.out.println("Email ou senha incorretos!");
             mostrarMenuInicial();
         }
     }
-}
