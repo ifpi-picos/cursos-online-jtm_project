@@ -16,8 +16,8 @@ class CursoDao implements Dao<Curso>{
         try{
             PreparedStatement stmt =  conexao.prepareStatement(SQL_INSERT);
             stmt.setString(1, curso.getNome());
-            stmt.setString(2, curso.getStatus().name());
-            stmt.setInt(3, curso.getCargahoraria());
+            stmt.setString(2, (String) curso.getStatus());
+            stmt.setInt(3, curso.getCargaHoraria());
         }catch (SQLException e){
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
         }catch (Exception e){
@@ -37,8 +37,8 @@ class CursoDao implements Dao<Curso>{
             String sqlUpdate = "UPDATE cursos SET NOME=?, STATUS=?, CARGAHORARIA=? WHERE ID=?" + curso;
             PreparedStatement stmt = conexao.prepareStatement(sqlUpdate);
             stmt.setString(1, curso.getNome());
-            stmt.setString(2, curso.getStatus().name());
-            stmt.setInt(3, curso.getCargahoraria());
+            stmt.setString(2, (String) curso.getStatus());
+            stmt.setInt(3, curso.getCargaHoraria());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,4 +49,5 @@ class CursoDao implements Dao<Curso>{
     public int remover(Curso entidade) {
         throw new UnsupportedOperationException("Unimplemented method 'remover'");
     }
+}
     
