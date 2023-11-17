@@ -7,6 +7,7 @@ import br.edu.ifpi.entidades.Aluno;
 import br.edu.ifpi.entidades.Professor;
 import br.edu.ifpi.entidades.Usuario;
 
+
 public class App {
     public static void main(String[] args) {
         System.out.println("Bem Vindo ao Sistema de Cursos Online JTM");
@@ -35,20 +36,25 @@ public class App {
 
     public static void cadastraUsuario(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Escolha o tipo de Usuário:");
-        System.out.println("1. Aluno");
-        System.out.println("2. Professor");
-        System.out.println("3. Administrador");
-        int tipo = scanner.nextInt();
-        scanner.nextLine();
 
-        if (tipo == 1){
-            
-        } else if (tipo == 2){
-            
-        } else if (tipo == 3){
-            
+        System.out.println("Digite seu Nome:");
+        String nome = scanner.nextLine();
+        System.out.println("Digite seu email:");
+        String email = scanner.nextLine();
+
+        Usuario usuario = null;
+
+        if (usuario == null) {
+            System.out.println("Erro ao cadastrar o usuário!");
+            mostrarMenuInicial();
+        } else {
+            UsuarioDAO dao = new UsuarioDAO();
+            if (dao.cadastrar(usuario) > 0) {
+                System.out.println("Usuário cadastrado com sucesso!");
+            } else {
+                System.out.println("Erro ao cadastrar o usuário!");
+            }
+            mostrarMenuInicial();
         }
     }
-    
 }
