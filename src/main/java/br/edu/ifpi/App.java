@@ -3,16 +3,18 @@ package br.edu.ifpi;
 import java.util.Scanner;
 
 import br.edu.ifpi.DAO.AlunoDao;
+import br.edu.ifpi.DAO.Conexao;
 import br.edu.ifpi.DAO.ProfessorDao;
+import br.edu.ifpi.DAO.AdministradorDao;
 import br.edu.ifpi.entidades.Administrador;
 import br.edu.ifpi.entidades.Aluno;
 import br.edu.ifpi.entidades.Professor;
-import br.edu.ifpi.entidades.Usuario;
 
 public class App {
     public static void main(String[] args) {
         System.out.println("Bem Vindo ao Sistema de Cursos Online JTM");
         mostrarMenuInicial();
+        Conexao conexao = new Conexao();
     }
     
     public static void mostrarMenuInicial(){
@@ -51,6 +53,9 @@ public class App {
             String nome = scanner.nextLine();
             System.out.println("Digite seu Email:");
             String email = scanner.nextLine();
+            
+            Conexao conexao = new Conexao();
+            AlunoDao AlunorDao = new AlunoDao(conexao);
 
             Aluno aluno = new Aluno(nome, tipo, email, null);
             AlunoDao.cadastrar(aluno);
@@ -59,6 +64,9 @@ public class App {
             String nome = scanner.nextLine();
             System.out.println("Digite seu Email:");
             String email = scanner.nextLine();
+            
+            Conexao conexao = new Conexao();
+            ProfessorDao ProfessorDao = new ProfessorDao(conexao);
 
             Professor professor = new Professor(nome, tipo, email, null);
             ProfessorDao.cadastrar(professor);
@@ -67,6 +75,9 @@ public class App {
             String nome = scanner.nextLine();
             System.out.println("Digite seu Email:");
             String email = scanner.nextLine();
+
+            Conexao conexao = new Conexao();
+            AdministradorDao AdministradorDao = new AdministradorDao(conexao);
             
             Administrador administrador = new Administrador(nome, tipo, email);
             AdministradorDao.cadastrar(administrador);
@@ -108,7 +119,7 @@ public class App {
         System.out.println("0. Sair");
         System.out.println("_____________________________________________");
         System.out.println("\nEscolha uma opção: ");
-        Int opt = scanner.nextInt();
+        int opt = scanner.nextInt();
         scanner.nextLine();
 
         if(opt == 1){
@@ -138,7 +149,7 @@ public class App {
         System.out.println("0. Sair");
         System.out.println("_____________________________________________");
         System.out.println("\nEscolha uma opção: ");
-        Int opt = scanner.nextInt();
+        int opt = scanner.nextInt();
         scanner.nextLine();
 
         if(opt == 1){
@@ -177,7 +188,7 @@ public class App {
         System.out.println("0. Sair");
         System.out.println("_____________________________________________");
         System.out.println("\nEscolha uma opção: ");
-        Int opt = scanner.nextInt();
+        int opt = scanner.nextInt();
         scanner.nextLine();
 
         if(opt == 1){
