@@ -16,6 +16,7 @@ public class AlunoDao implements Dao<Aluno> {
         this.conexao = conexao;
     }
 
+    
     @Override
     public int cadastrar(Aluno aluno) {
         String SQL_INSERT = "INSERT INTO ALUNOS (NOME, EMAIL) VALUES(?,?)";

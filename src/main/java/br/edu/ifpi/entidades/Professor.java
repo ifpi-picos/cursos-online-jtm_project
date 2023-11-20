@@ -6,7 +6,7 @@ public class Professor {
     private String email;
     private Curso curso;
 
-    public Professor(String nome, int id, String email, Curso curso){
+    public Professor(){
         this.nome = nome;
         this.id = id;
         this.email = email;

@@ -19,7 +19,7 @@ public class CursoDao implements Dao<Curso> {
         try {
             PreparedStatement stmt = conexao.prepareStatement(SQL_INSERT);
             stmt.setString(1, curso.getNome());
-            stmt.setString(2, curso.getStatus());
+            stmt.setString(2, (String) curso.getStatus());
             stmt.setInt(3, curso.getCargaHoraria());
 
             return stmt.executeUpdate();
@@ -64,9 +64,9 @@ public class CursoDao implements Dao<Curso> {
 
         try (PreparedStatement stmt = conexao.prepareStatement(SQL_UPDATE)) {
             stmt.setString(1, curso.getNome());
-            stmt.setString(2, curso.getStatus());
+            stmt.setString(2, (String) curso.getStatus());
             stmt.setInt(3, curso.getCargaHoraria());
-            stmt.setInt(4, curso.getId());
+            stmt.setInt(4, (int) curso.getId());
 
             return stmt.executeUpdate();
 
@@ -82,7 +82,7 @@ public class CursoDao implements Dao<Curso> {
         String SQL_DELETE = "DELETE FROM Curso WHERE ID=?";
 
         try (PreparedStatement stmt = conexao.prepareStatement(SQL_DELETE)) {
-            stmt.setInt(1, curso.getId());
+            stmt.setInt(1, (int) curso.getId());
 
             return stmt.executeUpdate();
 

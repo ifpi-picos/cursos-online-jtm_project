@@ -9,11 +9,11 @@ public class Curso {
     private int cargaHoraria;
     private StatusCurso status;
 
-    public Curso(String nome, int id, int cargaHoraria, StatusCurso status) {
-        this.nome = nome;
-        this.id = id;
-        this.cargaHoraria = cargaHoraria;
-        this.status = status;
+    public Curso(int id2, String nome2, String status2, int cargaHoraria2) {
+        this.nome = id2;
+        this.id = nome2;
+        this.cargaHoraria = status2;
+        this.status = cargaHoraria2;
     }
 
     public String getNome() {
