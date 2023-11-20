@@ -1,6 +1,6 @@
 package br.edu.ifpi.entidades;
 
-public abstract class Administrador {
+public class Administrador {
     private String nome;
     private int id;
     private String email;
