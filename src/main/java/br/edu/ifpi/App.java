@@ -2,10 +2,10 @@ package br.edu.ifpi;
 
 import java.util.Scanner;
 
+import br.edu.ifpi.DAO.AdministradorDao;
 import br.edu.ifpi.DAO.AlunoDao;
 import br.edu.ifpi.DAO.Conexao;
 import br.edu.ifpi.DAO.ProfessorDao;
-import br.edu.ifpi.DAO.AdministradorDao;
 import br.edu.ifpi.entidades.Administrador;
 import br.edu.ifpi.entidades.Aluno;
 import br.edu.ifpi.entidades.Professor;
@@ -125,7 +125,9 @@ public class App {
         if(opt == 1){
 
         } else if (opt == 2){
-
+            Conexao conexao = new Conexao();
+            ProfessorDao professordao = new ProfessorDao(conexao);
+            ProfessorDao.consultarTodos();
         } else if (opt == 3){
 
         } else if (opt == 4){
@@ -155,7 +157,10 @@ public class App {
         if(opt == 1){
 
         } else if (opt == 2){
-
+            Conexao conexao = new Conexao();
+            ProfessorDao professordao = new ProfessorDao(conexao);
+            ProfessorDao.consultarTodos();
+            menuProfessor();
         } else if (opt == 3){
 
         } else if (opt == 4){
@@ -200,7 +205,10 @@ public class App {
         } else if (opt == 4){
 
         }else if (opt == 5){
-            
+            Conexao conexao = new Conexao();
+            ProfessorDao professordao = new ProfessorDao(conexao);
+            ProfessorDao.consultarTodos();
+            menuAdministrador();
         }else if (opt == 6){
             
         }else if (opt == 7){
