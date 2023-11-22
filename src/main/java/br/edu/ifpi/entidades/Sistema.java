@@ -51,24 +51,24 @@ public class Sistema {
         scanner.nextLine();
 
         if (tipo == 1){
-            System.out.println("Digite seu Nome:");
+            System.out.println("Digite Nome do Aluno:");
             String nome = scanner.nextLine();
-            System.out.println("Digite seu Email:");
+            System.out.println("Digite Email do Aluno:");
             String email = scanner.nextLine();
             
             AlunoDao AlunorDao = new AlunoDao(conexao);
 
-            Aluno aluno = new Aluno(tipo, nome, email, null);
+            Aluno aluno = new Aluno(0, nome, email, null);
             AlunoDao.cadastrar(aluno);
         } else if (tipo == 2){
-            System.out.println("Digite seu Nome:");
+            System.out.println("Digite Nome do Professor:");
             String nome = scanner.nextLine();
-            System.out.println("Digite seu Email:");
+            System.out.println("Digite Email do Professor:");
             String email = scanner.nextLine();
             
             ProfessorDao ProfessorDao = new ProfessorDao(conexao);
 
-            Professor professor = new Professor(nome, tipo, email, null);
+            Professor professor = new Professor(nome, 0, email, null);
             ProfessorDao.cadastrar(professor);
         } 
     }
@@ -113,13 +113,17 @@ public class Sistema {
         if(opt == 1){
             CursoDao cursodao = new CursoDao();
             CursoDao.consultarTodos();
+            menuAluno();
         } else if (opt == 2){
             ProfessorDao professordao = new ProfessorDao(conexao);
             ProfessorDao.consultarTodos();
+            menuAluno();
         } else if (opt == 3){
 
+            menuAluno();
         } else if (opt == 4){
 
+            menuAluno();
         }else if (opt == 0){
             mostrarMenuInicial();
         } else {
@@ -134,10 +138,14 @@ public class Sistema {
 
         System.out.println("______M E N U   D O   P R O F E S S O R______");
         System.out.println("\n1. Vizualizar lista de Cursos");
-        System.out.println("2. Vizualizar lista de Professores");
-        System.out.println("3. Vizualizar lista de Alunos");
-        System.out.println("4. Realizar cadastro em Curso");
-        System.out.println("5. Registrar Notas de Alunos");
+        System.out.println("2. Realizar cadastro de Curso");
+        System.out.println("3. Editar dados de um Curso");
+        System.out.println("4. Vizualizar lista de Professores");
+        System.out.println("5. Vizualizar lista de Alunos");
+        System.out.println("6. Realizar cadastro de Aluno");
+        System.out.println("7. Editar dados de um Aluno");  
+        System.out.println("8. Registrar Notas de Alunos");      
+        System.out.println("9. Associar Professor a um Curso");
         System.out.println("0. Sair");
         System.out.println("_____________________________________________");
         System.out.println("\nEscolha uma opção: ");
@@ -147,16 +155,31 @@ public class Sistema {
         if(opt == 1){
             CursoDao cursodao = new CursoDao();
             CursoDao.consultarTodos();
+            menuProfessor();
         } else if (opt == 2){
-            ProfessorDao professordao = new ProfessorDao(conexao);
-            ProfessorDao.consultarTodos();
+
             menuProfessor();
         } else if (opt == 3){
 
+            menuProfessor();
         } else if (opt == 4){
-
+            ProfessorDao professordao = new ProfessorDao(conexao);
+            ProfessorDao.consultarTodos();
+            menuProfessor();
         }else if (opt == 5){
             
+            menuProfessor();
+        }else if (opt == 6){
+            
+            menuProfessor();
+        }else if (opt == 7){
+            
+            menuProfessor();
+        }else if (opt == 8){
+            menuProfessor();
+        }else if (opt == 9){
+            
+            menuProfessor();
         }else if (opt == 0){
             mostrarMenuInicial();
         } else {
@@ -165,4 +188,3 @@ public class Sistema {
         }
     }
 }
-
