@@ -9,18 +9,18 @@ public class Curso {
     private int cargaHoraria;
     private StatusCurso status;
 
-    public Curso(int id2, String nome2, String status2, int cargaHoraria2) {
-        this.nome = id2;
-        this.id = nome2;
-        this.cargaHoraria = status2;
-        this.status = cargaHoraria2;
+    public Curso(int id, String nome, StatusCurso status, int cargaHoraria) {
+        this.id = id;
+        this.nome = nome;
+        this.status = status;
+        this.cargaHoraria = cargaHoraria;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -44,7 +44,7 @@ public class Curso {
         this.cargaHoraria = cargaHoraria;
     }
 
-    public Object getStatus() {
-        return null;
+    public StatusCurso getStatus() {
+        return status;
     }
 }
