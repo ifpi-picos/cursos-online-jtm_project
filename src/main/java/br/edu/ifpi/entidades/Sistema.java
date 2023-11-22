@@ -111,7 +111,7 @@ public class Sistema {
         scanner.nextLine();
 
         if(opt == 1){
-            CursoDao cursodao = new CursoDao();
+            CursoDao cursodao = new CursoDao(conexao);
             CursoDao.consultarTodos();
             menuAluno();
         } else if (opt == 2){
@@ -153,7 +153,7 @@ public class Sistema {
         scanner.nextLine();
 
         if(opt == 1){
-            CursoDao cursodao = new CursoDao();
+            CursoDao cursodao = new CursoDao(conexao);
             CursoDao.consultarTodos();
             menuProfessor();
         } else if (opt == 2){

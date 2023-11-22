@@ -1,6 +1,5 @@
 package br.edu.ifpi.DAO;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,9 +10,9 @@ import br.edu.ifpi.entidades.Curso;
 import br.edu.ifpi.enums.StatusCurso;
 
 public class CursoDao implements Dao<Curso> {
-    private Connection conexao;
+    private Conexao conexao;
 
-    public CursoDao(Connection conexao) {
+    public CursoDao(Conexao conexao) {
         this.conexao = conexao;
     }
 

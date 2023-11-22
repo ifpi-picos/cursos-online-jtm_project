@@ -1,18 +1,31 @@
-CREATE TABLE aluno(
-    ID serial NOT NULL,
-    NOME varchar (30) NOT NULL,
-    EMAIL varchar (25) NOT NULL,
-    CURSO varchar (30) NOT NULL,
-    PRIMARY KEY (ID)
+create table aluno (
+id int not null primary key,
+nome varchar(50) not null,
+email varchar(50) not null,
+curso varchar(50) not null
 );
 
-CREATE TABLE curso(
-    ID serial NOT NULL,
-    NOME varchar (30) NOT NULL,
-    -- STATUS ENUM 
-    CARGAHORARIA INTEGER NOT NULL,
-    PROF_ID INTEGER NOT NULL,
-    PRIMARY KEY (ID), 
-    FOREIGN KEY (PROF_ID) REFERENCES professor(id)
-    
+create table
+professor (
+id int not null primary key,
+nome varchar(50) not null,
+email varchar(50) not null
+);
+
+create table if not exists
+curso (
+id int not null primary key,
+nome varchar(50) not null,
+status varchar(50) not null,
+cargaHoraria int not null,
+foreign key (id_professor) REFERENCES professor(id)
+);
+
+CREATE TABLE turma(
+id_curso int,
+id_aluno int,
+nota float(25),
+situacao VARCHAR(255),
+FOREIGN KEY (id_curso) REFERENCES curso(id),
+FOREIGN key (id_aluno) REFERENCES aluno(id)
 );
