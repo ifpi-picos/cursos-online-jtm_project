@@ -8,9 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.ifpi.entidades.Curso;
+import br.edu.ifpi.enums.StatusCurso;
 
 public class CursoDao implements Dao<Curso> {
     private Connection conexao;
+
+    public CursoDao(Connection conexao) {
+        this.conexao = conexao;
+    }
 
     @Override
     public int cadastrar(Curso curso) {
@@ -19,14 +24,12 @@ public class CursoDao implements Dao<Curso> {
         try {
             PreparedStatement stmt = conexao.prepareStatement(SQL_INSERT);
             stmt.setString(1, curso.getNome());
-            stmt.setString(2, (String) curso.getStatus());
+            stmt.setString(2, curso.getStatus().name());
             stmt.setInt(3, curso.getCargaHoraria());
 
             return stmt.executeUpdate();
 
         } catch (SQLException e) {
-            System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
-        } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
@@ -43,7 +46,7 @@ public class CursoDao implements Dao<Curso> {
             while (resultSet.next()) {
                 int id = resultSet.getInt("ID");
                 String nome = resultSet.getString("NOME");
-                String status = resultSet.getString("STATUS");
+                StatusCurso status = StatusCurso.valueOf(resultSet.getString("STATUS"));
                 int cargaHoraria = resultSet.getInt("CARGAHORARIA");
 
                 Curso curso = new Curso(id, nome, status, cargaHoraria);
@@ -51,7 +54,6 @@ public class CursoDao implements Dao<Curso> {
             }
 
         } catch (SQLException e) {
-            System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
             e.printStackTrace();
         }
 
@@ -64,14 +66,13 @@ public class CursoDao implements Dao<Curso> {
 
         try (PreparedStatement stmt = conexao.prepareStatement(SQL_UPDATE)) {
             stmt.setString(1, curso.getNome());
-            stmt.setString(2, (String) curso.getStatus());
+            stmt.setString(2, curso.getStatus().name());
             stmt.setInt(3, curso.getCargaHoraria());
-            stmt.setInt(4, (int) curso.getId());
+            stmt.setInt(4, curso.getId());
 
             return stmt.executeUpdate();
 
         } catch (SQLException e) {
-            System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
             e.printStackTrace();
         }
         return 0;
@@ -82,12 +83,11 @@ public class CursoDao implements Dao<Curso> {
         String SQL_DELETE = "DELETE FROM Curso WHERE ID=?";
 
         try (PreparedStatement stmt = conexao.prepareStatement(SQL_DELETE)) {
-            stmt.setInt(1, (int) curso.getId());
+            stmt.setInt(1, curso.getId());
 
             return stmt.executeUpdate();
 
         } catch (SQLException e) {
-            System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
             e.printStackTrace();
         }
         return 0;
