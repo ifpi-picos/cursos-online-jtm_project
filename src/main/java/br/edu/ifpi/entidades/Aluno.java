@@ -6,9 +6,9 @@ public class Aluno {
     private String email;
     private Curso curso;
 
-    public Aluno(String nome, String email){
-        this.nome = nome;
+    public Aluno(int id, String nome, String email, Curso curso) {
         this.id = id;
+        this.nome = nome;
         this.email = email;
         this.curso = curso;
     }
@@ -35,10 +35,6 @@ public class Aluno {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setCurso(Curso curso) {
