@@ -50,6 +50,7 @@ public class AlunoDao implements Dao<Aluno> {
 
                 Aluno aluno = new Aluno(nome, email);
                 alunos.add(aluno);
+            
             }
 
         } catch (SQLException e) {
