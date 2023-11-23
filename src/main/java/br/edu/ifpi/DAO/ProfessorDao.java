@@ -98,7 +98,7 @@ public class ProfessorDao implements Dao<Professor> {
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_DELETE);
 
-            preparedStatement.setInt(1, professor.getId()); // Assuming there is an ID column
+            preparedStatement.setInt(1, professor.getId());
 
             int row = preparedStatement.executeUpdate();
 
