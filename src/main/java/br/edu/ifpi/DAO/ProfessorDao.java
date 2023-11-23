@@ -1,6 +1,5 @@
 package br.edu.ifpi.DAO;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,13 +32,13 @@ public class ProfessorDao implements Dao<Professor> {
 
         } catch (SQLException e) {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return 0;
     }
-    
+
     @Override
     public List<Professor> consultarTodos() {
         List<Professor> professores = new ArrayList<>();

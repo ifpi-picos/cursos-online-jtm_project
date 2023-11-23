@@ -1,6 +1,5 @@
 package br.edu.ifpi.DAO;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +15,6 @@ public class AlunoDao implements Dao<Aluno> {
         this.conexao = conexao;
     }
 
-    
     @Override
     public int cadastrar(Aluno aluno) {
         String SQL_INSERT = "INSERT INTO ALUNOS (NOME, EMAIL) VALUES(?,?)";
@@ -50,7 +48,7 @@ public class AlunoDao implements Dao<Aluno> {
 
                 Aluno aluno = new Aluno(nome, email);
                 alunos.add(aluno);
-            
+
             }
 
         } catch (SQLException e) {

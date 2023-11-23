@@ -10,12 +10,12 @@ import br.edu.ifpi.DAO.ProfessorDao;
 public class Sistema {
     Conexao conexao;
 
-    public void carregarSistema(){
+    public void carregarSistema() {
         Conexao conexao = new Conexao();
         mostrarMenuInicial();
     }
 
-    public void mostrarMenuInicial(){
+    public void mostrarMenuInicial() {
         System.out.println("___________M E N U   I N I C I A L___________");
         System.out.println("1. Cadastrar Usuário");
         System.out.println("2. Logar Usuário");
@@ -28,20 +28,20 @@ public class Sistema {
         int opt = scanner.nextInt();
         scanner.nextLine();
 
-        if (opt == 1){
+        if (opt == 1) {
             cadastraUsuario();
-        } else if (opt == 2){
+        } else if (opt == 2) {
             logarUsuario();
-        }else if(opt == 0){
+        } else if (opt == 0) {
             System.out.println("Obrigado por usar o Sistema de Cursos Online JTM!");
             System.exit(0);
-        }else{
+        } else {
             System.out.println("Opção Inválida, tente Novamente");
             mostrarMenuInicial();
         }
     }
 
-    public void cadastraUsuario(){
+    public void cadastraUsuario() {
         Conexao conexao = new Conexao();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Escolha o tipo de Usuário:");
@@ -50,30 +50,30 @@ public class Sistema {
         int tipo = scanner.nextInt();
         scanner.nextLine();
 
-        if (tipo == 1){
+        if (tipo == 1) {
             System.out.println("Digite Nome do Aluno:");
             String nome = scanner.nextLine();
             System.out.println("Digite Email do Aluno:");
             String email = scanner.nextLine();
-            
-            AlunoDao AlunorDao = new AlunoDao(conexao);
+
+            AlunoDao alunoDao = new AlunoDao(conexao);
 
             Aluno aluno = new Aluno(0, nome, email, null);
-            AlunoDao.cadastrar(aluno);
-        } else if (tipo == 2){
+            alunoDao.cadastrar(aluno);
+        } else if (tipo == 2) {
             System.out.println("Digite Nome do Professor:");
             String nome = scanner.nextLine();
             System.out.println("Digite Email do Professor:");
             String email = scanner.nextLine();
-            
-            ProfessorDao ProfessorDao = new ProfessorDao(conexao);
+
+            ProfessorDao professorDao = new ProfessorDao(conexao);
 
             Professor professor = new Professor(nome, 0, email, null);
-            ProfessorDao.cadastrar(professor);
-        } 
+            professorDao.cadastrar(professor);
+        }
     }
-    
-    public void logarUsuario(){
+
+    public void logarUsuario() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Digite seu Nome:");
@@ -84,9 +84,9 @@ public class Sistema {
 
         /* bucar pelo id e identificar o tipo, se for aluno = 1, prof = 2, adm = 3 */
 
-        if (tipo == 1){
+        if (tipo == 1) {
             menuAluno();
-        } else if (tipo == 2){
+        } else if (tipo == 2) {
             menuProfessor();
         } else {
             System.out.println("Usuário Não Encontrado, tente novamente.");
@@ -95,7 +95,7 @@ public class Sistema {
 
     }
 
-    public void menuAluno(){
+    public void menuAluno() {
         Scanner scanner = new Scanner(System.in);
         Conexao conexao = new Conexao();
 
@@ -110,21 +110,21 @@ public class Sistema {
         int opt = scanner.nextInt();
         scanner.nextLine();
 
-        if(opt == 1){
-            CursoDao cursodao = new CursoDao(conexao);
-            CursoDao.consultarTodos();
+        if (opt == 1) {
+            CursoDao cursoDao = new CursoDao(conexao);
+            cursoDao.consultarTodos();
             menuAluno();
-        } else if (opt == 2){
-            ProfessorDao professordao = new ProfessorDao(conexao);
-            ProfessorDao.consultarTodos();
+        } else if (opt == 2) {
+            ProfessorDao professorDao = new ProfessorDao(conexao);
+            professorDao.consultarTodos();
             menuAluno();
-        } else if (opt == 3){
+        } else if (opt == 3) {
 
             menuAluno();
-        } else if (opt == 4){
+        } else if (opt == 4) {
 
             menuAluno();
-        }else if (opt == 0){
+        } else if (opt == 0) {
             mostrarMenuInicial();
         } else {
             System.out.println("Opção Inválida, tente novamente.");
@@ -132,7 +132,7 @@ public class Sistema {
         }
     }
 
-    public void menuProfessor(){
+    public void menuProfessor() {
         Scanner scanner = new Scanner(System.in);
         Conexao conexao = new Conexao();
 
@@ -143,8 +143,8 @@ public class Sistema {
         System.out.println("4. Vizualizar lista de Professores");
         System.out.println("5. Vizualizar lista de Alunos");
         System.out.println("6. Realizar cadastro de Aluno");
-        System.out.println("7. Editar dados de um Aluno");  
-        System.out.println("8. Registrar Notas de Alunos");      
+        System.out.println("7. Editar dados de um Aluno");
+        System.out.println("8. Registrar Notas de Alunos");
         System.out.println("9. Associar Professor a um Curso");
         System.out.println("0. Sair");
         System.out.println("_____________________________________________");
@@ -152,35 +152,35 @@ public class Sistema {
         int opt = scanner.nextInt();
         scanner.nextLine();
 
-        if(opt == 1){
-            CursoDao cursodao = new CursoDao(conexao);
-            CursoDao.consultarTodos();
+        if (opt == 1) {
+            CursoDao cursoDao = new CursoDao(conexao);
+            cursoDao.consultarTodos();
             menuProfessor();
-        } else if (opt == 2){
+        } else if (opt == 2) {
 
             menuProfessor();
-        } else if (opt == 3){
+        } else if (opt == 3) {
 
             menuProfessor();
-        } else if (opt == 4){
-            ProfessorDao professordao = new ProfessorDao(conexao);
-            ProfessorDao.consultarTodos();
+        } else if (opt == 4) {
+            ProfessorDao professorDao = new ProfessorDao(conexao);
+            professorDao.consultarTodos();
             menuProfessor();
-        }else if (opt == 5){
-            
+        } else if (opt == 5) {
+
             menuProfessor();
-        }else if (opt == 6){
-            
+        } else if (opt == 6) {
+
             menuProfessor();
-        }else if (opt == 7){
-            
+        } else if (opt == 7) {
+
             menuProfessor();
-        }else if (opt == 8){
+        } else if (opt == 8) {
             menuProfessor();
-        }else if (opt == 9){
-            
+        } else if (opt == 9) {
+
             menuProfessor();
-        }else if (opt == 0){
+        } else if (opt == 0) {
             mostrarMenuInicial();
         } else {
             System.out.println("Opção Inválida, tente novamente.");
