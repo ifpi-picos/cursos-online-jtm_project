@@ -8,5 +8,5 @@ public class App {
         Sistema sistema = new Sistema();
         sistema.mostrarMenuInicial();
     }
-    
+
 }

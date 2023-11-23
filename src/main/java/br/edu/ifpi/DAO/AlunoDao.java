@@ -24,8 +24,6 @@ public class AlunoDao implements Dao<Aluno> {
             return stmt.executeUpdate();
         } catch (SQLException e) {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return 0;
     }

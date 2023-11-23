@@ -55,10 +55,12 @@ public class Sistema {
             String nome = scanner.nextLine();
             System.out.println("Digite Email do Aluno:");
             String email = scanner.nextLine();
+            System.out.println("Digite Curso do Aluno:");
+            String curso = scanner.nextLine();
 
             AlunoDao alunoDao = new AlunoDao(conexao);
 
-            Aluno aluno = new Aluno(0, nome, email, null);
+            Aluno aluno = new Aluno(0, nome, email, curso);
             alunoDao.cadastrar(aluno);
         } else if (tipo == 2) {
             System.out.println("Digite Nome do Professor:");
