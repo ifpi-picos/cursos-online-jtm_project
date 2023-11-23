@@ -13,7 +13,7 @@ public class Aluno {
         this.curso = curso;
     }
 
-    public Aluno(String nome, String email, Curso curso) {
+    public Aluno(String nome2, String email2) {
     }
 
     public String getNome() {
