@@ -4,16 +4,13 @@ public class Aluno {
     private String nome;
     private int id;
     private String email;
-    private Curso curso;
+    private String curso;
 
-    public Aluno(int id, String nome, String email, Curso curso) {
+    public Aluno(int id, String nome, String email, String curso) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.curso = curso;
-    }
-
-    public Aluno(String nome2, String email2) {
     }
 
     public String getNome() {
@@ -28,7 +25,7 @@ public class Aluno {
         return email;
     }
 
-    public Curso getCurso() {
+    public String getCurso() {
         return curso;
     }
 
@@ -40,7 +37,10 @@ public class Aluno {
         this.email = email;
     }
 
-    public void setCurso(Curso curso) {
+    public void setCurso(String curso) {
         this.curso = curso;
+    }
+
+    public void add(Aluno aluno) {
     }
 }

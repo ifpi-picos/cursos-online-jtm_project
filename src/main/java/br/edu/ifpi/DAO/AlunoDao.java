@@ -9,20 +9,17 @@ import java.util.List;
 import br.edu.ifpi.entidades.Aluno;
 
 public class AlunoDao implements Dao<Aluno> {
-    private Conexao conexao;
-
     public AlunoDao(Conexao conexao) {
-        this.conexao = conexao;
     }
 
     @Override
     public int cadastrar(Aluno aluno) {
-        String SQL_INSERT = "INSERT INTO ALUNOS (NOME, EMAIL) VALUES(?,?)";
+        String SQL_INSERT = "INSERT INTO ALUNO (NOME, EMAIL, CURSO) VALUES (?, ?, ?)";
 
-        try {
-            PreparedStatement stmt = conexao.prepareStatement(SQL_INSERT);
+        try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_INSERT)) {
             stmt.setString(1, aluno.getNome());
             stmt.setString(2, aluno.getEmail());
+            stmt.setString(3, aluno.getCurso());
 
             return stmt.executeUpdate();
         } catch (SQLException e) {
@@ -36,19 +33,19 @@ public class AlunoDao implements Dao<Aluno> {
     @Override
     public List<Aluno> consultarTodos() {
         List<Aluno> alunos = new ArrayList<>();
-        String SQL_SELECT_ALL = "SELECT * FROM ALUNOS";
+        String SQL_SELECT_ALL = "SELECT * FROM ALUNO";
 
-        try {
-            PreparedStatement stmt = conexao.prepareStatement(SQL_SELECT_ALL);
-            ResultSet resultSet = stmt.executeQuery();
+        try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_SELECT_ALL);
+                ResultSet resultSet = stmt.executeQuery()) {
 
             while (resultSet.next()) {
+                int id = resultSet.getInt("ID");
                 String nome = resultSet.getString("NOME");
                 String email = resultSet.getString("EMAIL");
+                String curso = resultSet.getString("CURSO");
 
-                Aluno aluno = new Aluno(nome, email);
-                alunos.add(aluno);
-
+                Aluno aluno = new Aluno(id, nome, email, curso);
+                alunos.add(aluno); // Correção: Adiciona o objeto aluno à lista alunos
             }
 
         } catch (SQLException e) {
@@ -62,15 +59,14 @@ public class AlunoDao implements Dao<Aluno> {
 
     @Override
     public int alterar(Aluno aluno) {
-        String SQL_UPDATE = "UPDATE ALUNOS SET NOME=?, EMAIL=? WHERE ID=?";
+        String SQL_UPDATE = "UPDATE ALUNO SET NOME=?, EMAIL=?, CURSO=? WHERE ID=?";
 
-        try {
-            PreparedStatement stmt = conexao.prepareStatement(SQL_UPDATE);
+        try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_UPDATE)) {
             stmt.setString(1, aluno.getNome());
             stmt.setString(2, aluno.getEmail());
-            stmt.setInt(3, aluno.getId());
+            stmt.setString(3, aluno.getCurso());
+            stmt.setInt(4, aluno.getId());
 
-            // Execute the update statement
             return stmt.executeUpdate();
         } catch (SQLException e) {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
@@ -82,10 +78,9 @@ public class AlunoDao implements Dao<Aluno> {
 
     @Override
     public int remover(Aluno aluno) {
-        String SQL_DELETE = "DELETE FROM ALUNOS WHERE ID=?";
+        String SQL_DELETE = "DELETE FROM ALUNO WHERE ID=?";
 
-        try {
-            PreparedStatement stmt = conexao.prepareStatement(SQL_DELETE);
+        try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_DELETE)) {
             stmt.setInt(1, aluno.getId());
 
             return stmt.executeUpdate();
