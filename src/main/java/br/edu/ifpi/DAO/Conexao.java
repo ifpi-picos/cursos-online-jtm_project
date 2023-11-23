@@ -8,18 +8,23 @@ import java.sql.SQLException;
 public class Conexao {
 
     public static Connection getConexao() {
-        Connection conexcao = null;
+        Connection conexao = null;
         try {
-            conexcao = DriverManager.getConnection("jdbc:postgresql://localhost:5432/JTM", "postgres",
+            conexao = DriverManager.getConnection(
+                    "jdbc:postgresql://db.vgxfsesnppqjzdwgolcl.supabase.co:5432/postgres", "postgres",
                     "billiebossanova");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return conexcao;
+        return conexao;
     }
 
     public PreparedStatement prepareStatement(String sQL_INSERT) {
+        try {
+            return getConexao().prepareStatement(sQL_INSERT);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
-
 }
