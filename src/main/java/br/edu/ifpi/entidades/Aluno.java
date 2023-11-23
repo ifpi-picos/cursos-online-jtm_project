@@ -13,6 +13,9 @@ public class Aluno {
         this.curso = curso;
     }
 
+    public Aluno(String nome, String email, Curso curso) {
+    }
+
     public String getNome() {
         return nome;
     }
