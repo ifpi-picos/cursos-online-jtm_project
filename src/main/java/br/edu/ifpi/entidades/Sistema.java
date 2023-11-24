@@ -89,11 +89,12 @@ public class Sistema {
         System.out.println("Digite seu Email:");
         String email = scanner.nextLine();
         System.out.println("Digite seu ID:");
-        int idUsuario = scanner.nextInt();
+        int id = scanner.nextInt();
         scanner.nextLine();
 
         AutenticacaoDao autenticacao = new AutenticacaoDao(conexao);
-        autenticacao.autenticarAluno(id, email);
+        autenticacao.autenticarAluno(email, id);
+        autenticacao.autenticarProfessor(email, id);
 
         if (tipo == 1) {
             menuAluno();

@@ -37,7 +37,7 @@ public class AutenticacaoDao {
         return null;
     }
 
-    public Professor autenticarProfessor(String email) throws SQLException {
+    public Professor autenticarProfessor(String email, int id) throws SQLException {
         String sql = "SELECT id, nome, email FROM professor WHERE email = ?";
 
         try (PreparedStatement stm = conexao.prepareStatement(sql)) {
