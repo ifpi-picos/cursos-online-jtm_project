@@ -43,8 +43,15 @@ public class AlunoDao implements Dao<Aluno> {
                 String curso = resultSet.getString("CURSO");
 
                 Aluno aluno = new Aluno(id, nome, email, curso);
-                alunos.add(aluno); // Correção: Adiciona o objeto aluno à lista alunos
+                alunos.add(aluno);
             }
+
+            for (Aluno p : alunos) {
+                System.out.println(
+                        "id : " + p.getId() + "\t Nome  :" + p.getNome() + "\t" + p.getEmail() + "\t" + p.getCurso());
+            }
+            resultSet.close();
+            stmt.close();
 
         } catch (SQLException e) {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());

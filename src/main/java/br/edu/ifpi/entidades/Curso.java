@@ -16,6 +16,9 @@ public class Curso {
         this.cargaHoraria = cargaHoraria;
     }
 
+    public Curso() {
+    }
+
     public String getNome() {
         return nome;
     }
@@ -46,5 +49,11 @@ public class Curso {
 
     public StatusCurso getStatus() {
         return status;
+    }
+
+    public void setCargaHoraria(int int1) {
+    }
+
+    public void setCargahoraria(int int1) {
     }
 }

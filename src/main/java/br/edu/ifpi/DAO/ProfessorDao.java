@@ -49,13 +49,19 @@ public class ProfessorDao implements Dao<Professor> {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Professor professor = new Professor(SQL_SELECT_ALL, 0, SQL_SELECT_ALL, null);
+                Professor professor = new Professor(SQL_SELECT_ALL, SQL_SELECT_ALL);
                 professor.setId(resultSet.getInt("ID")); // Assuming there is an ID column
                 professor.setNome(resultSet.getString("NOME"));
                 professor.setEmail(resultSet.getString("EMAIL"));
 
                 professores.add(professor);
             }
+
+            for (Professor p : professores) {
+                System.out.println("id : " + p.getId() + "\t Nome  :" + p.getNome() + "\t" + p.getEmail());
+            }
+            resultSet.close();
+            preparedStatement.close();
 
         } catch (SQLException e) {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());

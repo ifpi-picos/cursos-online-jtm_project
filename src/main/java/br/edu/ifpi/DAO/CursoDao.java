@@ -40,7 +40,7 @@ public class CursoDao implements Dao<Curso> {
         String SQL_SELECT_ALL = "SELECT * FROM Curso";
 
         try (PreparedStatement stmt = conexao.prepareStatement(SQL_SELECT_ALL);
-             ResultSet resultSet = stmt.executeQuery()) {
+                ResultSet resultSet = stmt.executeQuery()) {
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("ID");
@@ -51,6 +51,13 @@ public class CursoDao implements Dao<Curso> {
                 Curso curso = new Curso(id, nome, status, cargaHoraria);
                 cursos.add(curso);
             }
+
+            for (Curso p : cursos) {
+                System.out.println("id : " + p.getId() + "\t Nome  :" + p.getNome() + "\t" + p.getStatus() + "\t"
+                        + p.getCargaHoraria());
+            }
+            resultSet.close();
+            stmt.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
