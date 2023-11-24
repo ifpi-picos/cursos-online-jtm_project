@@ -32,8 +32,6 @@ public class AutenticacaoDao {
             e.printStackTrace();
             throw new SQLException("Erro ao autenticar aluno: " + e.getMessage());
         }
-
-        System.out.println("Aluno não encontrado!");
         return null;
     }
 
@@ -56,8 +54,6 @@ public class AutenticacaoDao {
             e.printStackTrace();
             throw new SQLException("Erro ao autenticar professor: " + e.getMessage());
         }
-
-        System.out.println("Professor não encontrado!");
         return null;
     }
 }
