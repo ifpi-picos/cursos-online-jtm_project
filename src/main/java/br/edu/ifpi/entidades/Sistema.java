@@ -1,5 +1,6 @@
 package br.edu.ifpi.entidades;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import br.edu.ifpi.DAO.AlunoDao;
@@ -12,7 +13,7 @@ public class Sistema {
     Conexao conexao;
 
     public void carregarSistema() {
-        Conexao conexao = new Conexao();
+        conexao = new Conexao(); // Correção: Use a variável de classe existente
         mostrarMenuInicial();
     }
 
@@ -43,7 +44,6 @@ public class Sistema {
     }
 
     public void cadastraUsuario() {
-        Conexao conexao = new Conexao();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Escolha o tipo de Usuário:");
         System.out.println("1. Aluno");
@@ -79,7 +79,6 @@ public class Sistema {
     }
 
     public void logarUsuario() {
-        Conexao conexao = new Conexao();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Selecione o tipo de Usuário:");
         System.out.println("1. Aluno");
@@ -93,8 +92,16 @@ public class Sistema {
         scanner.nextLine();
 
         AutenticacaoDao autenticacao = new AutenticacaoDao(conexao);
-        autenticacao.autenticarAluno(email, id);
-        autenticacao.autenticarProfessor(email, id);
+        try {
+            autenticacao.autenticarAluno(email, id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            autenticacao.autenticarProfessor(email, id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         if (tipo == 1) {
             menuAluno();
@@ -104,12 +111,10 @@ public class Sistema {
             System.out.println("Usuário Não Encontrado, tente novamente.");
             logarUsuario();
         }
-
     }
 
     public void menuAluno() {
         Scanner scanner = new Scanner(System.in);
-        Conexao conexao = new Conexao();
 
         System.out.println("________M E N U   D O   A L U N O________");
         System.out.println("\n1. Vizualizar lista de Cursos");
@@ -131,10 +136,10 @@ public class Sistema {
             professorDao.consultarTodos();
             menuAluno();
         } else if (opt == 3) {
-
+            // Adicione lógica para visualizar notas
             menuAluno();
         } else if (opt == 4) {
-
+            // Adicione lógica para cadastrar em curso
             menuAluno();
         } else if (opt == 0) {
             mostrarMenuInicial();
@@ -146,7 +151,6 @@ public class Sistema {
 
     public void menuProfessor() {
         Scanner scanner = new Scanner(System.in);
-        Conexao conexao = new Conexao();
 
         System.out.println("______M E N U   D O   P R O F E S S O R______");
         System.out.println("\n1. Vizualizar lista de Cursos");
@@ -169,28 +173,29 @@ public class Sistema {
             cursoDao.consultarTodos();
             menuProfessor();
         } else if (opt == 2) {
-
+            // Adicione lógica para cadastrar curso
             menuProfessor();
         } else if (opt == 3) {
-
+            // Adicione lógica para editar curso
             menuProfessor();
         } else if (opt == 4) {
             ProfessorDao professorDao = new ProfessorDao(conexao);
             professorDao.consultarTodos();
             menuProfessor();
         } else if (opt == 5) {
-
+            // Adicione lógica para visualizar lista de alunos
             menuProfessor();
         } else if (opt == 6) {
-
+            // Adicione lógica para cadastrar aluno
             menuProfessor();
         } else if (opt == 7) {
-
+            // Adicione lógica para editar aluno
             menuProfessor();
         } else if (opt == 8) {
+            // Adicione lógica para registrar notas
             menuProfessor();
         } else if (opt == 9) {
-
+            // Adicione lógica para associar professor a um curso
             menuProfessor();
         } else if (opt == 0) {
             mostrarMenuInicial();
