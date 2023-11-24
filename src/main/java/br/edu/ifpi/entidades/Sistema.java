@@ -160,8 +160,8 @@ public class Sistema {
 
         System.out.println("______M E N U   D O   P R O F E S S O R______");
         System.out.println("\n1. Cursos");
-        System.out.println("4. Professores");
-        System.out.println("5. Alunos");
+        System.out.println("2. Professores");
+        System.out.println("3. Alunos");
         System.out.println("0. Sair");
         System.out.println("_____________________________________________");
         System.out.println("\nEscolha uma opção: ");
@@ -237,6 +237,7 @@ public class Sistema {
 
         if(opt == 1){
             professorDao.consultarTodos();
+            professores();
         } else if (opt == 2){
             System.out.println("Digite Nome do Professor:");
             String nome = scanner.nextLine();
@@ -263,7 +264,6 @@ public class Sistema {
         public void alunos(){
         Scanner scanner = new Scanner(System.in);
         Conexao conexao = new Conexao();
-        CursoDao cursoDao = new CursoDao(conexao);
         AlunoDao alunoDao = new AlunoDao(conexao);
         System.out.println("_________________A L U N O S_________________");
         System.out.println("\n1. Vizualizar lista de Alunos");
@@ -278,7 +278,7 @@ public class Sistema {
         scanner.nextLine();
 
         if(opt == 1){
-            cursoDao.consultarTodos();
+            alunoDao.consultarTodos();
         } else if (opt == 2){
             System.out.println("Digite Nome do Aluno:");
             String nome = scanner.nextLine();
