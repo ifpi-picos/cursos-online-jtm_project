@@ -52,6 +52,13 @@ public class CursoDao implements Dao<Curso> {
                 cursos.add(curso);
             }
 
+            for (Curso p : cursos) {
+                System.out.println("id : " + p.getId() + "\t Nome  :" + p.getNome() + "\t" + p.getStatus() + "\t"
+                        + p.getCargaHoraria());
+            }
+            resultSet.close();
+            stmt.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

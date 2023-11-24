@@ -57,6 +57,12 @@ public class ProfessorDao implements Dao<Professor> {
                 professores.add(professor);
             }
 
+            for (Professor p : professores) {
+                System.out.println("id : " + p.getId() + "\t Nome  :" + p.getNome() + "\t" + p.getEmail());
+            }
+            resultSet.close();
+            preparedStatement.close();
+
         } catch (SQLException e) {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
         } catch (Exception e) {

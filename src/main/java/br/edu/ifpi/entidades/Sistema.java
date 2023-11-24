@@ -323,6 +323,25 @@ public class Sistema {
             alunoDao.cadastrar(aluno);
             alunos();
         } else if (opt == 3) {
+            Scanner scan = new Scanner(System.in);
+
+            System.out.println(" Digite o id do professor que deseja alterar: ");
+            int Id_alter = scan.nextInt();
+            scan.nextLine();
+
+            Aluno alterarAluno = new Aluno(Id_alter, null, null, null);
+
+            alterarAluno.setId(Id_alter);
+
+            System.out.println("Novo Nome: ");
+            alterarAluno.setNome(scan.nextLine());
+            System.out.println("Novo Email: ");
+            alterarAluno.setEmail(scan.nextLine());
+            System.out.println("Novo Curso: ");
+            alterarAluno.setCurso(scan.nextLine());
+
+            alunoDao.alterar(alterarAluno);
+
             alunos();
         } else if (opt == 4) {
 

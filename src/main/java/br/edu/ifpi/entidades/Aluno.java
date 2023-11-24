@@ -46,4 +46,7 @@ public class Aluno {
 
     public void add(Aluno aluno) {
     }
+
+    public void setId(int id_alter) {
+    }
 }
