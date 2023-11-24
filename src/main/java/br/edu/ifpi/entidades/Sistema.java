@@ -93,7 +93,7 @@ public class Sistema {
         scanner.nextLine();
 
         AutenticacaoDao autenticacao = new AutenticacaoDao(conexao);
-        autenticacao.autenticarAluno(email);
+        autenticacao.autenticarAluno(id, email);
 
         if (tipo == 1) {
             menuAluno();
