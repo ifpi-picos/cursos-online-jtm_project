@@ -160,8 +160,8 @@ public class Sistema {
 
         System.out.println("______M E N U   D O   P R O F E S S O R______");
         System.out.println("\n1. Cursos");
-        System.out.println("4. Professores");
-        System.out.println("5. Alunos");
+        System.out.println("2. Professores");
+        System.out.println("3. Alunos");
         System.out.println("0. Sair");
         System.out.println("_____________________________________________");
         System.out.println("\nEscolha uma opção: ");
