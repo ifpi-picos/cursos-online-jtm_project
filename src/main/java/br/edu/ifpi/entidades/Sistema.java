@@ -8,6 +8,7 @@ import br.edu.ifpi.DAO.AutenticacaoDao;
 import br.edu.ifpi.DAO.Conexao;
 import br.edu.ifpi.DAO.CursoDao;
 import br.edu.ifpi.DAO.ProfessorDao;
+import br.edu.ifpi.enums.StatusCurso;
 
 public class Sistema {
     Conexao conexao;
@@ -181,7 +182,14 @@ public class Sistema {
             cursoDao.consultarTodos();
             menuProfessor();
         } else if (opt == 2) {
+            System.out.println("Digite Nome do Curso:");
+            String nome = scanner.nextLine();
+            System.out.println("Digite Carga Horária do Curso:");
+            String ch = scanner.nextLine();
+            StatusCurso status = StatusCurso.ABERTO;
 
+            Curso curso = new Curso(0, nome, status, ch);
+            cursoDao.cadastrar(curso);
             menuProfessor();
         } else if (opt == 3) {
 

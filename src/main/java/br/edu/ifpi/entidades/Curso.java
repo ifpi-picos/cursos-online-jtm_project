@@ -6,10 +6,10 @@ public class Curso {
 
     private String nome;
     private int id;
-    private int cargaHoraria;
+    private String cargaHoraria;
     private StatusCurso status;
 
-    public Curso(int id, String nome, StatusCurso status, int cargaHoraria) {
+    public Curso(int id, String nome, StatusCurso status, String cargaHoraria) {
         this.id = id;
         this.nome = nome;
         this.status = status;
@@ -24,7 +24,7 @@ public class Curso {
         return id;
     }
 
-    public int getCargaHoraria() {
+    public String getCargaHoraria() {
         return cargaHoraria;
     }
 
@@ -40,7 +40,7 @@ public class Curso {
         this.id = id;
     }
 
-    public void setCargaHoraria(int cargaHoraria) {
+    public void setCargaHoraria(String cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
     }
 
