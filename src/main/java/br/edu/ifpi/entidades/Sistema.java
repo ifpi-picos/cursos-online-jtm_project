@@ -45,6 +45,7 @@ public class Sistema {
 
     public void cadastraUsuario() {
         Scanner scanner = new Scanner(System.in);
+        Conexao conexao = new Conexao();
         System.out.println("Escolha o tipo de Usuário:");
         System.out.println("1. Aluno");
         System.out.println("2. Professor");
@@ -80,6 +81,7 @@ public class Sistema {
 
     public void logarUsuario() {
         Scanner scanner = new Scanner(System.in);
+        Conexao conexao = new Conexao();
         System.out.println("Selecione o tipo de Usuário:");
         System.out.println("1. Aluno");
         System.out.println("2. Professor");
@@ -91,26 +93,35 @@ public class Sistema {
         int id = scanner.nextInt();
         scanner.nextLine();
 
-        AutenticacaoDao autenticacao = new AutenticacaoDao(conexao);
-        try {
-            autenticacao.autenticarAluno(email, id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
-            autenticacao.autenticarProfessor(email, id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+AutenticacaoDao autenticacao = new AutenticacaoDao(conexao);
 
-        if (tipo == 1) {
-            menuAluno();
-        } else if (tipo == 2) {
-            menuProfessor();
-        } else {
-            System.out.println("Usuário Não Encontrado, tente novamente.");
-            logarUsuario();
-        }
+Aluno alunoAutenticado = null;
+Professor professorAutenticado = null;
+
+try {
+    alunoAutenticado = autenticacao.autenticarAluno(email, id);
+} catch (SQLException e) {
+    // Handle student authentication error
+    e.printStackTrace(); // You might want to log the exception instead of just printing it
+}
+
+if (alunoAutenticado != null) {
+    menuAluno();
+} else {
+    try {
+        professorAutenticado = autenticacao.autenticarProfessor(email, id);
+    } catch (SQLException e) {
+        // Handle professor authentication error
+        e.printStackTrace(); // You might want to log the exception instead of just printing it
+    }
+
+    if (professorAutenticado != null) {
+        menuProfessor();
+    } else {
+        System.out.println("Usuário não encontrado");
+        logarUsuario();
+    }
+}
     }
 
     public void menuAluno() {
