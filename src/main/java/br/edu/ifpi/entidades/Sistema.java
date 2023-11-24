@@ -3,6 +3,7 @@ package br.edu.ifpi.entidades;
 import java.util.Scanner;
 
 import br.edu.ifpi.DAO.AlunoDao;
+import br.edu.ifpi.DAO.AutenticacaoDao;
 import br.edu.ifpi.DAO.Conexao;
 import br.edu.ifpi.DAO.CursoDao;
 import br.edu.ifpi.DAO.ProfessorDao;
@@ -62,6 +63,7 @@ public class Sistema {
 
             Aluno aluno = new Aluno(0, nome, email, curso);
             alunoDao.cadastrar(aluno);
+            menuAluno();
         } else if (tipo == 2) {
             System.out.println("Digite Nome do Professor:");
             String nome = scanner.nextLine();
@@ -72,19 +74,26 @@ public class Sistema {
 
             Professor professor = new Professor(nome, 0, email, null);
             professorDao.cadastrar(professor);
+            menuProfessor();
         }
     }
 
     public void logarUsuario() {
+        Conexao conexao = new Conexao();
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Digite seu Nome:");
-        String nome = scanner.nextLine();
+        System.out.println("Selecione o tipo de Usuário:");
+        System.out.println("1. Aluno");
+        System.out.println("2. Professor");
+        int tipo = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Digite seu Email:");
+        String email = scanner.nextLine();
         System.out.println("Digite seu ID:");
         int idUsuario = scanner.nextInt();
         scanner.nextLine();
 
-        /* bucar pelo id e identificar o tipo, se for aluno = 1, prof = 2, adm = 3 */
+        AutenticacaoDao autenticacao =new AutenticacaoDao(conexao);
+        autenticacao.autenticarAluno(email);
 
         if (tipo == 1) {
             menuAluno();

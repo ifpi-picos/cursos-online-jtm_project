@@ -1,6 +1,5 @@
 package br.edu.ifpi.DAO;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,9 +8,9 @@ import br.edu.ifpi.entidades.Aluno;
 import br.edu.ifpi.entidades.Professor;
 
 public class AutenticacaoDao {
-    private Connection conexao;
+    private Conexao conexao;
 
-    public AutenticacaoDao(Connection conexao) {
+    public AutenticacaoDao(Conexao conexao) {
         this.conexao = conexao;
     }
 
@@ -25,7 +24,7 @@ public class AutenticacaoDao {
                     String nome = resultSet.getString("nome");
 
                     System.out.println("Aluno autenticado com sucesso!");
-                    return new Aluno(nome, email);
+                    return new Aluno(0, nome, email, null);
                 }
             }
         } catch (SQLException e) {
