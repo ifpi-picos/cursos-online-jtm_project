@@ -89,33 +89,33 @@ public class Sistema {
         int id = scanner.nextInt();
         scanner.nextLine();
 
-    AutenticacaoDao autenticacao = new AutenticacaoDao(conexao);
+        AutenticacaoDao autenticacao = new AutenticacaoDao(conexao);
 
-    Aluno alunoAutenticado = null;
-    Professor professorAutenticado = null;
+        Aluno alunoAutenticado = null;
+        Professor professorAutenticado = null;
 
-    try {
-        alunoAutenticado = autenticacao.autenticarAluno(email, id);
-    } catch (SQLException e) {
-        e.printStackTrace(); 
-    }
-
-    if (alunoAutenticado != null) {
-        menuAluno();
-    } else {
         try {
-            professorAutenticado = autenticacao.autenticarProfessor(email, id);
+            alunoAutenticado = autenticacao.autenticarAluno(email, id);
         } catch (SQLException e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
 
-    if (professorAutenticado != null) {
-        menuProfessor();
-    } else {
-        System.out.println("Usuário não encontrado");
-        logarUsuario();
-    }
-}
+        if (alunoAutenticado != null) {
+            menuAluno();
+        } else {
+            try {
+                professorAutenticado = autenticacao.autenticarProfessor(email, id);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            if (professorAutenticado != null) {
+                menuProfessor();
+            } else {
+                System.out.println("Usuário não encontrado");
+                logarUsuario();
+            }
+        }
     }
 
     public void menuAluno() {
@@ -182,7 +182,7 @@ public class Sistema {
         }
     }
 
-    public void cursos(){
+    public void cursos() {
         Scanner scanner = new Scanner(System.in);
         Conexao conexao = new Conexao();
         CursoDao cursoDao = new CursoDao(conexao);
@@ -196,10 +196,10 @@ public class Sistema {
         int opt = scanner.nextInt();
         scanner.nextLine();
 
-        if(opt == 1){
+        if (opt == 1) {
             cursoDao.consultarTodos();
             cursos();
-        } else if (opt == 2){
+        } else if (opt == 2) {
             System.out.println("Digite Nome do Curso:");
             String nome = scanner.nextLine();
             System.out.println("Digite Carga Horária do Curso:");
@@ -209,10 +209,27 @@ public class Sistema {
             Curso curso = new Curso(0, nome, status, ch);
             cursoDao.cadastrar(curso);
             cursos();
-        } else if (opt == 3){
+        } else if (opt == 3) {
+            System.out.print("Digite o ID do curso a ser alterado: ");
+            int alteracao = scanner.nextInt();
+
+            scanner.nextLine();
+
+            Curso cursoalterado = new Curso();
+
+            cursoalterado.setId(alteracao);
+            System.out.println("novo nome: ");
+            cursoalterado.setNome(scanner.nextLine());
+
+            System.out.println("status do curso: ");
+            cursoalterado.setStatus(StatusCurso.valueOf(scanner.next()));
+
+            System.out.println("nova carga horaria: ");
+            cursoalterado.setCargahoraria(scanner.nextInt());
+            cursoDao.alterar(cursoalterado);
 
             cursos();
-        } else if (opt == 0){
+        } else if (opt == 0) {
             menuProfessor();
         } else {
             System.out.println("Opção Inválida, tente novamente.");
@@ -220,7 +237,7 @@ public class Sistema {
         }
     }
 
-    public void professores(){
+    public void professores() {
         Scanner scanner = new Scanner(System.in);
         Conexao conexao = new Conexao();
         ProfessorDao professorDao = new ProfessorDao(conexao);
@@ -235,9 +252,9 @@ public class Sistema {
         int opt = scanner.nextInt();
         scanner.nextLine();
 
-        if(opt == 1){
+        if (opt == 1) {
             professorDao.consultarTodos();
-        } else if (opt == 2){
+        } else if (opt == 2) {
             System.out.println("Digite Nome do Professor:");
             String nome = scanner.nextLine();
             System.out.println("Digite Email do Professor:");
@@ -246,13 +263,30 @@ public class Sistema {
             Professor professor = new Professor(nome, 0, email, null);
             professorDao.cadastrar(professor);
             professores();
-        } else if (opt == 3){
+        } else if (opt == 3) {
+            Scanner scan = new Scanner(System.in);
+
+            System.out.println(" Digite o id do professor que deseja alterar: ");
+            int Id_alter = scan.nextInt();
+            scan.nextLine();
+
+            Professor alterarProf = new Professor(null, null);
+
+            alterarProf.setId(Id_alter);
+
+            System.out.println("Novo Nome: ");
+            alterarProf.setNome(scan.nextLine());
+
+            System.out.println("Novo Email: ");
+            alterarProf.setEmail(scan.next());
+
+            professorDao.alterar(alterarProf);
 
             professores();
-        } else if (opt == 4){
+        } else if (opt == 4) {
 
             professores();
-        } else if (opt == 0){
+        } else if (opt == 0) {
             menuProfessor();
         } else {
             System.out.println("Opção Inválida, tente novamente.");
@@ -260,7 +294,7 @@ public class Sistema {
         }
     }
 
-        public void alunos(){
+    public void alunos() {
         Scanner scanner = new Scanner(System.in);
         Conexao conexao = new Conexao();
         CursoDao cursoDao = new CursoDao(conexao);
@@ -277,9 +311,9 @@ public class Sistema {
         int opt = scanner.nextInt();
         scanner.nextLine();
 
-        if(opt == 1){
+        if (opt == 1) {
             cursoDao.consultarTodos();
-        } else if (opt == 2){
+        } else if (opt == 2) {
             System.out.println("Digite Nome do Aluno:");
             String nome = scanner.nextLine();
             System.out.println("Digite Email do Aluno:");
@@ -288,15 +322,15 @@ public class Sistema {
             Aluno aluno = new Aluno(0, nome, email, null);
             alunoDao.cadastrar(aluno);
             alunos();
-        } else if (opt == 3){
+        } else if (opt == 3) {
             alunos();
-        } else if (opt == 4){
+        } else if (opt == 4) {
 
             alunos();
-        } else if (opt == 5){
+        } else if (opt == 5) {
 
             alunos();
-        } else if (opt == 0){
+        } else if (opt == 0) {
             menuProfessor();
         } else {
             System.out.println("Opção Inválida, tente novamente.");

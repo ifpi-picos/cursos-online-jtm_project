@@ -40,7 +40,7 @@ public class CursoDao implements Dao<Curso> {
         String SQL_SELECT_ALL = "SELECT * FROM Curso";
 
         try (PreparedStatement stmt = conexao.prepareStatement(SQL_SELECT_ALL);
-             ResultSet resultSet = stmt.executeQuery()) {
+                ResultSet resultSet = stmt.executeQuery()) {
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("ID");

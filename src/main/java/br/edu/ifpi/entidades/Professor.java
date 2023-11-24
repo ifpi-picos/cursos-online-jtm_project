@@ -16,7 +16,7 @@ public class Professor {
     public Professor(String nome2, String email2) {
     }
 
-    public Professor(int id2, String nome2, String email2) {
+    public Professor(int professorId, String professorNome, String email2) {
     }
 
     public String getNome() {
