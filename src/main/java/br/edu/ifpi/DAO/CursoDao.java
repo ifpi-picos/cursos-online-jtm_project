@@ -18,16 +18,23 @@ public class CursoDao implements Dao<Curso> {
 
     @Override
     public int cadastrar(Curso curso) {
-        String SQL_INSERT = "INSERT INTO Curso (ID, NOME, STATUS, CARGAHORARIA) VALUES(?,?,?,?)";
+        String SQL_INSERT = "INSERT INTO Curso (NOME, STATUS, CARGAHORARIA) VALUES(?,?,?)";
 
         try {
             PreparedStatement stmt = conexao.prepareStatement(SQL_INSERT);
-            stmt.setInt(1, curso.getId());
-            stmt.setString(2, curso.getNome());
-            stmt.setString(3, curso.getStatus().name());
-            stmt.setString(4, curso.getCargaHoraria());
+            stmt.setString(1, curso.getNome());
+            stmt.setString(2, curso.getStatus().name());
+            stmt.setString(3, curso.getCargaHoraria());
 
-            return stmt.executeUpdate();
+            int rowsAffected = stmt.executeUpdate();
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    curso.setId(generatedKeys.getInt(1));
+                }
+            }
+
+            return rowsAffected;
 
         } catch (SQLException e) {
             e.printStackTrace();
