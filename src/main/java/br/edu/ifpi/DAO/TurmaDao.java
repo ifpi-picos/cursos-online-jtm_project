@@ -44,8 +44,7 @@ public class TurmaDao implements Dao<Turma> {
     public List<Turma> consultarTodos() {
         List<Turma> turmas = new ArrayList<>();
         String SQL_SELECT_ALL = "SELECT TURMA.ID, TURMA.ID_CURSO, TURMA.ID_ALUNO, TURMA.NOTAS, TURMA.SITUACAO, ALUNO.NOME "
-                +
-                "FROM TURMA INNER JOIN ALUNO ON TURMA.ID_ALUNO = ALUNO.ID";
+                + "FROM TURMA INNER JOIN ALUNO ON TURMA.ID_ALUNO = ALUNO.ID";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_SELECT_ALL);
@@ -53,7 +52,7 @@ public class TurmaDao implements Dao<Turma> {
 
             while (resultSet.next()) {
                 Turma turma = new Turma(resultSet.getInt("ID_CURSO"), resultSet.getInt("ID_ALUNO"),
-                        resultSet.getFloat("NOTA"), resultSet.getString("SITUACAO"));
+                        resultSet.getFloat("NOTAS"), resultSet.getString("SITUACAO"));
                 turma.setIdCurso(resultSet.getInt("ID"));
                 turma.setIdAluno(resultSet.getString("NOME"));
 
@@ -61,14 +60,14 @@ public class TurmaDao implements Dao<Turma> {
             }
 
             for (Turma t : turmas) {
-                System.out.println("ID do Curso: " + t.getIdCurso() + "\t ID doAluno: " + t.getIdAluno() +
+                System.out.println("ID do Curso: " + t.getIdCurso() + "\t Nome do Aluno: " + t.getIdAluno() +
                         "\t Notas: " + t.getNota() + "\t Situação: " + t.getSituacao());
             }
             resultSet.close();
             preparedStatement.close();
 
         } catch (SQLException e) {
-            System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
+            System.err.format("Estado SQL %s\n%s", e.getSQLState(), e.getMessage());
             e.printStackTrace();
         }
 
@@ -77,7 +76,7 @@ public class TurmaDao implements Dao<Turma> {
 
     @Override
     public int alterar(Turma turma) {
-        String SQL_UPDATE = "UPDATE TURMA SET ID_CURSO=?, ID_ALUNO=?, NOTAS=?, SITUACAO=?";
+        String SQL_UPDATE = "UPDATE TURMA SET ID_CURSO=?, ID_ALUNO=?, NOTAS=?, SITUACAO=? WHERE ID=?";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_UPDATE);
@@ -86,6 +85,7 @@ public class TurmaDao implements Dao<Turma> {
             preparedStatement.setInt(2, turma.getIdAluno());
             preparedStatement.setFloat(3, turma.getNota());
             preparedStatement.setString(4, turma.getSituacao());
+            preparedStatement.setInt(5, turma.getIdAluno()); // Adicionado para identificar a linha a ser atualizada
 
             int row = preparedStatement.executeUpdate();
 
@@ -107,7 +107,7 @@ public class TurmaDao implements Dao<Turma> {
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_DELETE);
 
-            preparedStatement.setInt(1, turma.getIdCurso());
+            preparedStatement.setInt(1, turma.getIdAluno()); // Adicionado para identificar a linha a ser removida
 
             int row = preparedStatement.executeUpdate();
 
@@ -123,11 +123,12 @@ public class TurmaDao implements Dao<Turma> {
     }
 
     public void gerarEstatisticas(Turma turma) {
-        String sqlSituacao = "UPDATE turma SET situacao = CASE WHEN nota >= 7.0 THEN 'Aprovado' ELSE 'Reprovado' END, nota = ?";
+        String sqlSituacao = "UPDATE TURMA SET situacao = CASE WHEN nota >= 7.0 THEN 'Aprovado' ELSE 'Reprovado' END, nota = ? WHERE ID=?";
 
         try {
             PreparedStatement psmt = conexao.prepareStatement(sqlSituacao);
             psmt.setFloat(1, turma.getNota());
+            psmt.setInt(2, turma.getIdAluno());
             psmt.executeUpdate();
             System.out.println("Situação criada com sucesso");
         } catch (SQLException e) {

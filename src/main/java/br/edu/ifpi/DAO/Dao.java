@@ -2,9 +2,12 @@ package br.edu.ifpi.DAO;
 
 import java.util.List;
 
-public interface Dao<T>{
-    public int cadastrar(T entidade);
-    public List<T> consultarTodos();
-    public int alterar(T entidade);
-    public int remover(T entidade);
+public interface Dao<T> {
+    int cadastrar(T objeto);
+
+    List<T> consultarTodos();
+
+    int alterar(T objeto);
+
+    int remover(T objeto);
 }
