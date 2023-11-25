@@ -124,6 +124,7 @@ public class Sistema {
         Conexao conexao = new Conexao();
         CursoDao cursoDao = new CursoDao(conexao);
         ProfessorDao professorDao = new ProfessorDao(conexao);
+        TurmaDao turmaDao = new TurmaDao(conexao);
 
         System.out.println("________M E N U   D O   A L U N O________");
         System.out.println("\n1. Vizualizar lista de Cursos");
@@ -146,7 +147,13 @@ public class Sistema {
 
             menuAluno();
         } else if (opt == 4) {
+            System.out.println("Confirme seu ID:");
+            int aluno = scanner.nextInt();
+            System.out.println("Insira o nome do Curso:");
+            int curso = scanner.nextInt();
 
+            Turma turma = new Turma(aluno, curso, 0, null);
+            turmaDao.cadastrar(turma);
             menuAluno();
         } else if (opt == 0) {
             mostrarMenuInicial();
@@ -268,7 +275,7 @@ public class Sistema {
             professorDao.cadastrar(professor);
             professores();
         } else if (opt == 3) {
-            System.out.println(" Digite o ID do Professor que deseja Editar: ");
+            System.out.println("Digite o ID do Professor que deseja Editar: ");
             int Id_alter = scanner.nextInt();
             scanner.nextLine();
 
@@ -301,6 +308,7 @@ public class Sistema {
         Conexao conexao = new Conexao();
         AlunoDao alunoDao = new AlunoDao(conexao);
         CursoDao cursoDao = new CursoDao(conexao);
+        TurmaDao turmaDao = new TurmaDao(conexao);
         System.out.println("_________________A L U N O S_________________");
         System.out.println("\n1. Vizualizar lista de Alunos");
         System.out.println("2. Realizar cadastro de um Aluno");
@@ -326,7 +334,7 @@ public class Sistema {
             alunoDao.cadastrar(aluno);
             alunos();
         } else if (opt == 3) {
-            System.out.println(" Digite o ID do Aluno que deseja alterar: ");
+            System.out.println("Digite o ID do Aluno que deseja Editar: ");
             int Id_alter = scanner.nextInt();
             scanner.nextLine();
 
@@ -345,6 +353,13 @@ public class Sistema {
 
             alunos();
         } else if (opt == 4) {
+            System.out.println("Digite o ID do Aluno:");
+            int aluno = scanner.nextInt();
+            System.out.println("Digite o ID do Curso:");
+            int curso = scanner.nextInt();
+
+            Turma turma = new Turma(aluno, curso, 0, null);
+            turmaDao.cadastrar(turma);
 
             alunos();
         } else if (opt == 5) {

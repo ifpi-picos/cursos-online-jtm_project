@@ -17,14 +17,14 @@ public class TurmaDao implements Dao<Turma> {
 
     @Override
     public int cadastrar(Turma turma) {
-        String SQL_INSERT = "INSERT INTO TURMA (ID_PROFESSOR, ID_ALUNO, NOTAS, SITUACAO) VALUES(?,?,?,?)";
+        String SQL_INSERT = "INSERT INTO TURMA (ID_CURSO, ID_ALUNO, NOTAS, SITUACAO) VALUES(?,?,?,?)";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_INSERT);
 
-            preparedStatement.setInt(1, turma.getIdProfessor());
+            preparedStatement.setInt(1, turma.getIdCurso());
             preparedStatement.setInt(2, turma.getIdAluno());
-            preparedStatement.setString(3, turma.getNotas());
+            preparedStatement.setFloat(3, turma.getNota());
             preparedStatement.setString(4, turma.getSituacao());
 
             int row = preparedStatement.executeUpdate();
@@ -51,20 +51,23 @@ public class TurmaDao implements Dao<Turma> {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
+<<<<<<< HEAD
                 Turma turma = new Turma(0, 0, SQL_SELECT_ALL, SQL_SELECT_ALL);
                 turma.setId(resultSet.getInt("ID"));
                 turma.setIdProfessor(resultSet.getInt("ID_PROFESSOR"));
+=======
+                Turma turma = new Turma(0, 0, 0, SQL_SELECT_ALL);
+                turma.setIdCurso(resultSet.getInt("ID_CURSO"));
+>>>>>>> c86bcc054a97472b3796976dd921933b65027dcf
                 turma.setIdAluno(resultSet.getInt("ID_ALUNO"));
-                turma.setNotas(resultSet.getString("NOTAS"));
+                turma.setNota(resultSet.getFloat("NOTA"));
                 turma.setSituacao(resultSet.getString("SITUACAO"));
 
                 turmas.add(turma);
             }
 
             for (Turma t : turmas) {
-                System.out.println("id : " + t.getId() + "\t Professor ID: " + t.getIdProfessor() +
-                        "\t Aluno ID: " + t.getIdAluno() + "\t Notas: " + t.getNotas() + "\t Situação: "
-                        + t.getSituacao());
+                System.out.println("Professor ID: " + t.getIdCurso() + "\t Aluno ID: " + t.getIdAluno() + "\t Notas: " + t.getNota() + "\t Situação: " + t.getSituacao());
             }
             resultSet.close();
             preparedStatement.close();
@@ -85,11 +88,10 @@ public class TurmaDao implements Dao<Turma> {
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_UPDATE);
 
-            preparedStatement.setInt(1, turma.getIdProfessor());
+            preparedStatement.setInt(1, turma.getIdCurso());
             preparedStatement.setInt(2, turma.getIdAluno());
-            preparedStatement.setString(3, turma.getNotas());
+            preparedStatement.setFloat(3, turma.getNota());
             preparedStatement.setString(4, turma.getSituacao());
-            preparedStatement.setInt(5, turma.getId());
 
             int row = preparedStatement.executeUpdate();
 

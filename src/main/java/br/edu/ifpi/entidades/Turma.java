@@ -1,33 +1,24 @@
 package br.edu.ifpi.entidades;
 
 public class Turma {
-    private int id;
-    private int idProfessor;
+    private int idCurso;
     private int idAluno;
-    private String notas;
+    private float nota;
     private String situacao;
 
-    public Turma(int idProfessor, int idAluno, String notas, String situacao) {
-        this.idProfessor = idProfessor;
+    public Turma(int idCurso, int idAluno, float nota, String situacao) {
+        this.idCurso = idCurso;
         this.idAluno = idAluno;
-        this.notas = notas;
+        this.nota = nota;
         this.situacao = situacao;
     }
 
-    public int getId() {
-        return id;
+    public int getIdCurso() {
+        return idCurso;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getIdProfessor() {
-        return idProfessor;
-    }
-
-    public void setIdProfessor(int idProfessor) {
-        this.idProfessor = idProfessor;
+    public void setIdCurso(int idCurso){
+        this.idCurso = idCurso;
     }
 
     public int getIdAluno() {
@@ -38,12 +29,12 @@ public class Turma {
         this.idAluno = idAluno;
     }
 
-    public String getNotas() {
-        return notas;
+    public float getNota() {
+        return nota;
     }
 
-    public void setNotas(String notas) {
-        this.notas = notas;
+    public void setNota(float nota) {
+        this.nota = nota;
     }
 
     public String getSituacao() {
@@ -56,7 +47,6 @@ public class Turma {
 
     @Override
     public String toString() {
-        return "Turma [id=" + id + ", idProfessor=" + idProfessor + ", idAluno=" + idAluno + ", notas=" + notas
-                + ", situacao=" + situacao + "]";
+        return "Turma [ ID do Curso=" + idCurso + ", ID do Aluno=" + idAluno + ", notas=" + nota + ", situacao=" + situacao + "]";
     }
 }
