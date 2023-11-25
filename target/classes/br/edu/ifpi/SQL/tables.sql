@@ -1,8 +1,7 @@
 create table aluno (
 id int not null primary key,
 nome varchar(50) not null,
-email varchar(50) not null,
-curso varchar(50)
+email varchar(50) not null
 );
 
 create table
@@ -17,13 +16,13 @@ curso (
 id int not null primary key,
 nome varchar(50) not null,
 status varchar(50) not null,
-cargaHoraria varchar(50) not null,
+cargaHoraria int not null,
 foreign key (id_professor) REFERENCES professor(id)
 );
 
 CREATE TABLE turma(
-id_curso int,
-id_aluno int,
+id_curso int primary key,
+id_aluno int primary key,
 nota float(25),
 situacao VARCHAR(255),
 FOREIGN KEY (id_curso) REFERENCES curso(id),
