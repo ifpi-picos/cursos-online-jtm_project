@@ -64,7 +64,7 @@ public class Sistema {
             System.out.println("Digite Email do Aluno:");
             String email = scanner.nextLine();
 
-            Aluno aluno = new Aluno(0, nome, email, null);
+            Aluno aluno = new Aluno(0, nome, email);
             alunoDao.cadastrar(aluno);
             menuAluno();
         } else if (tipo == 2) {
@@ -336,7 +336,7 @@ public class Sistema {
             System.out.println("Digite Email do Aluno:");
             String email = scanner.nextLine();
 
-            Aluno aluno = new Aluno(0, nome, email, null);
+            Aluno aluno = new Aluno(0, nome, email);
             alunoDao.cadastrar(aluno);
             alunos();
         } else if (opt == 3) {
@@ -344,7 +344,7 @@ public class Sistema {
             int Id_alter = scanner.nextInt();
             scanner.nextLine();
 
-            Aluno alterarAluno = new Aluno(Id_alter, null, null, null);
+            Aluno alterarAluno = new Aluno(Id_alter, null, null);
 
             alterarAluno.setId(Id_alter);
 
@@ -352,8 +352,6 @@ public class Sistema {
             alterarAluno.setNome(scanner.nextLine());
             System.out.println("Novo Email: ");
             alterarAluno.setEmail(scanner.nextLine());
-            System.out.println("Novo Curso: ");
-            alterarAluno.setCurso(scanner.nextLine());
 
             alunoDao.alterar(alterarAluno);
 

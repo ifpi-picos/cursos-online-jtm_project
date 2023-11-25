@@ -74,7 +74,7 @@ public class TurmaDao implements Dao<Turma> {
 
     @Override
     public int alterar(Turma turma) {
-        String SQL_UPDATE = "UPDATE TURMA SET ID_CURSO=?, ID_ALUNO=?, NOTAS=?, SITUACAO=? WHERE ID=?";
+        String SQL_UPDATE = "UPDATE TURMA SET ID_CURSO=?, ID_ALUNO=?, NOTAS=?, SITUACAO=?";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_UPDATE);
@@ -83,7 +83,6 @@ public class TurmaDao implements Dao<Turma> {
             preparedStatement.setInt(2, turma.getIdAluno());
             preparedStatement.setFloat(3, turma.getNota());
             preparedStatement.setString(4, turma.getSituacao());
-            preparedStatement.setInt(5, turma.getIdCurso());
 
             int row = preparedStatement.executeUpdate();
 

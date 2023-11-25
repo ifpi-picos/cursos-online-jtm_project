@@ -14,12 +14,11 @@ public class AlunoDao implements Dao<Aluno> {
 
     @Override
     public int cadastrar(Aluno aluno) {
-        String SQL_INSERT = "INSERT INTO ALUNO (NOME, EMAIL, CURSO) VALUES (?, ?, ?)";
+        String SQL_INSERT = "INSERT INTO ALUNO (NOME, EMAIL) VALUES (?, ?)";
 
         try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_INSERT)) {
             stmt.setString(1, aluno.getNome());
             stmt.setString(2, aluno.getEmail());
-            stmt.setString(3, aluno.getCurso());
 
             System.out.println("_____________________________________________\n");
             System.out.println("  C A D A S T R O  R E A L I Z A D O  C O M \n              S U C E S S O !");
@@ -43,15 +42,14 @@ public class AlunoDao implements Dao<Aluno> {
                 int id = resultSet.getInt("ID");
                 String nome = resultSet.getString("NOME");
                 String email = resultSet.getString("EMAIL");
-                String curso = resultSet.getString("CURSO");
 
-                Aluno aluno = new Aluno(id, nome, email, curso);
+                Aluno aluno = new Aluno(id, nome, email);
                 alunos.add(aluno);
             }
             System.out.println("________L I S T A   D E   A L U N O S________");
             for (Aluno p : alunos) {
                 System.out.println(
-                        "ID: " + p.getId() + "\tNome: " + p.getNome() + "\t" + p.getEmail() + "\t" + p.getCurso());
+                        "ID: " + p.getId() + "\tNome: " + p.getNome() + "\t" + p.getEmail());
             }
             resultSet.close();
             stmt.close();
@@ -72,8 +70,7 @@ public class AlunoDao implements Dao<Aluno> {
         try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_UPDATE)) {
             stmt.setString(1, aluno.getNome());
             stmt.setString(2, aluno.getEmail());
-            stmt.setString(3, aluno.getCurso());
-            stmt.setInt(4, aluno.getId());
+            stmt.setInt(3, aluno.getId());
 
             return stmt.executeUpdate();
         } catch (SQLException e) {
