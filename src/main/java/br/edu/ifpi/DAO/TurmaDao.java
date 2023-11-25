@@ -43,7 +43,9 @@ public class TurmaDao implements Dao<Turma> {
     @Override
     public List<Turma> consultarTodos() {
         List<Turma> turmas = new ArrayList<>();
-        String SQL_SELECT_ALL = "SELECT * FROM TURMA";
+        String SQL_SELECT_ALL = "SELECT TURMA.ID, TURMA.ID_CURSO, TURMA.ID_ALUNO, TURMA.NOTAS, TURMA.SITUACAO, ALUNO.NOME "
+                +
+                "FROM TURMA INNER JOIN ALUNO ON TURMA.ID_ALUNO = ALUNO.ID";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_SELECT_ALL);
@@ -53,12 +55,13 @@ public class TurmaDao implements Dao<Turma> {
                 Turma turma = new Turma(resultSet.getInt("ID_CURSO"), resultSet.getInt("ID_ALUNO"),
                         resultSet.getFloat("NOTA"), resultSet.getString("SITUACAO"));
                 turma.setIdCurso(resultSet.getInt("ID"));
+                turma.setIdAluno(resultSet.getString("NOME"));
 
                 turmas.add(turma);
             }
 
             for (Turma t : turmas) {
-                System.out.println("Curso ID: " + t.getIdCurso() + "\t Aluno ID: " + t.getIdAluno() +
+                System.out.println("Curso ID: " + t.getIdCurso() + "\t Aluno Nome: " + t.getIdAluno() +
                         "\t Notas: " + t.getNota() + "\t Situação: " + t.getSituacao());
             }
             resultSet.close();
@@ -125,7 +128,7 @@ public class TurmaDao implements Dao<Turma> {
 
         try {
             PreparedStatement psmt = conexao.prepareStatement(sqlSituacao);
-            psmt.setFloat(1, turma.getNota()); 
+            psmt.setFloat(1, turma.getNota());
             psmt.executeUpdate();
             System.out.println("Situação criada com sucesso");
         } catch (SQLException e) {

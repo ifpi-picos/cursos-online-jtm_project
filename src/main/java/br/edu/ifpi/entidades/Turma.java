@@ -56,4 +56,7 @@ public class Turma {
 
     public void setNota(float[] notas) {
     }
+
+    public void setIdAluno(String string) {
+    }
 }
