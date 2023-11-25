@@ -142,6 +142,8 @@ public class Sistema {
             professorDao.consultarTodos();
             menuAluno();
         } else if (opt == 3) {
+            System.out.println("Confirme seu Id: ");
+            int id = scanner.nextInt();
 
             menuAluno();
         } else if (opt == 4) {
