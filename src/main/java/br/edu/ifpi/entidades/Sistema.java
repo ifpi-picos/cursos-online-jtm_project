@@ -147,7 +147,7 @@ public class Sistema {
         } else if (opt == 4) {
             System.out.println("Confirme seu ID:");
             int aluno = scanner.nextInt();
-            System.out.println("Insira o nome do Curso:");
+            System.out.println("Insira o ID do Curso:");
             int curso = scanner.nextInt();
 
             Turma turma = new Turma(aluno, curso, 0, null);
