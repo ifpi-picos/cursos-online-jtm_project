@@ -47,7 +47,8 @@ public class AlunoDao implements Dao<Aluno> {
             }
 
             for (Aluno p : alunos) {
-                System.out.println("ID: " + p.getId() + "\tNome: " + p.getNome() + "\tEmail: " + p.getEmail() + "\tCurso: " + p.getCurso());
+                System.out.println(
+                        "ID: " + p.getId() + "\tNome: " + p.getNome() + "\t" + p.getEmail() + "\t" + p.getCurso());
             }
             resultSet.close();
             stmt.close();
