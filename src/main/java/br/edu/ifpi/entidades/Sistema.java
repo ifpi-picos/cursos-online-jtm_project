@@ -221,17 +221,16 @@ public class Sistema {
             int alteracao = scanner.nextInt();
             scanner.nextLine();
 
-            Curso cursoalterado = new Curso();
-
-            cursoalterado.setId(alteracao);
             System.out.println("novo nome: ");
-            cursoalterado.setNome(scanner.nextLine());
+            String nome = scanner.nextLine();
+            System.out.println("nova carga horaria: ");
+            String cargaHoraria = scanner.nextLine();
 
+            Curso cursoalterado = new Curso(alteracao, nome, null, cargaHoraria);
             System.out.println("status do curso: ");
             System.out.println("1. Aberto");
             System.out.println("2. Fechado");
             int opcao = scanner.nextInt();
-
             if (opcao == 1){
                 cursoalterado.setStatus(StatusCurso.ABERTO);
             } else if (opcao == 2){
@@ -244,8 +243,6 @@ public class Sistema {
                 opcao = scanner.nextInt();
             }
 
-            System.out.println("nova carga horaria: ");
-            cursoalterado.setCargahoraria(scanner.nextInt());
             cursoDao.alterar(cursoalterado);
 
             cursos();
