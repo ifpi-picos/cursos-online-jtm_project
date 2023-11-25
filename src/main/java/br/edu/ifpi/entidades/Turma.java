@@ -17,7 +17,7 @@ public class Turma {
         return idCurso;
     }
 
-    public void setIdCurso(int idCurso){
+    public void setIdCurso(int idCurso) {
         this.idCurso = idCurso;
     }
 
@@ -47,6 +47,13 @@ public class Turma {
 
     @Override
     public String toString() {
-        return "Turma [ ID do Curso=" + idCurso + ", ID do Aluno=" + idAluno + ", notas=" + nota + ", situacao=" + situacao + "]";
+        return "Turma [ID do Curso=" + idCurso + ", ID do Aluno=" + idAluno + ", Notas=" + nota + ", Situacao="
+                + situacao + "]";
+    }
+
+    public void setNota(String notas) {
+    }
+
+    public void setNota(float[] notas) {
     }
 }

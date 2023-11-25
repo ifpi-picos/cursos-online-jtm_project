@@ -34,7 +34,6 @@ public class TurmaDao implements Dao<Turma> {
 
         } catch (SQLException e) {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
-        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -51,30 +50,22 @@ public class TurmaDao implements Dao<Turma> {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-<<<<<<< HEAD
-                Turma turma = new Turma(0, 0, SQL_SELECT_ALL, SQL_SELECT_ALL);
-                turma.setId(resultSet.getInt("ID"));
-                turma.setIdProfessor(resultSet.getInt("ID_PROFESSOR"));
-=======
-                Turma turma = new Turma(0, 0, 0, SQL_SELECT_ALL);
-                turma.setIdCurso(resultSet.getInt("ID_CURSO"));
->>>>>>> c86bcc054a97472b3796976dd921933b65027dcf
-                turma.setIdAluno(resultSet.getInt("ID_ALUNO"));
-                turma.setNota(resultSet.getFloat("NOTA"));
-                turma.setSituacao(resultSet.getString("SITUACAO"));
+                Turma turma = new Turma(resultSet.getInt("ID_CURSO"), resultSet.getInt("ID_ALUNO"),
+                        resultSet.getFloat("NOTA"), resultSet.getString("SITUACAO"));
+                turma.setIdCurso(resultSet.getInt("ID"));
 
                 turmas.add(turma);
             }
 
             for (Turma t : turmas) {
-                System.out.println("Professor ID: " + t.getIdCurso() + "\t Aluno ID: " + t.getIdAluno() + "\t Notas: " + t.getNota() + "\t Situação: " + t.getSituacao());
+                System.out.println("Curso ID: " + t.getIdCurso() + "\t Aluno ID: " + t.getIdAluno() +
+                        "\t Notas: " + t.getNota() + "\t Situação: " + t.getSituacao());
             }
             resultSet.close();
             preparedStatement.close();
 
         } catch (SQLException e) {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
-        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -83,7 +74,7 @@ public class TurmaDao implements Dao<Turma> {
 
     @Override
     public int alterar(Turma turma) {
-        String SQL_UPDATE = "UPDATE TURMA SET ID_PROFESSOR=?, ID_ALUNO=?, NOTAS=?, SITUACAO=? WHERE ID=?";
+        String SQL_UPDATE = "UPDATE TURMA SET ID_CURSO=?, ID_ALUNO=?, NOTAS=?, SITUACAO=? WHERE ID=?";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_UPDATE);
@@ -92,6 +83,7 @@ public class TurmaDao implements Dao<Turma> {
             preparedStatement.setInt(2, turma.getIdAluno());
             preparedStatement.setFloat(3, turma.getNota());
             preparedStatement.setString(4, turma.getSituacao());
+            preparedStatement.setInt(5, turma.getIdCurso());
 
             int row = preparedStatement.executeUpdate();
 
@@ -100,7 +92,6 @@ public class TurmaDao implements Dao<Turma> {
 
         } catch (SQLException e) {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
-        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -114,7 +105,7 @@ public class TurmaDao implements Dao<Turma> {
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_DELETE);
 
-            preparedStatement.setInt(1, turma.getId());
+            preparedStatement.setInt(1, turma.getIdCurso());
 
             int row = preparedStatement.executeUpdate();
 
@@ -123,20 +114,21 @@ public class TurmaDao implements Dao<Turma> {
 
         } catch (SQLException e) {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
-        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return 0;
     }
 
-    public void gerarEstaticas() {
-        String sqlSituacao = "UPDATE turma SET situacao = CASE WHEN nota >= 7.0 THEN 'Aprovado' ELSE 'Reprovado' END ";
+    public void gerarEstatisticas(Turma turma) {
+        String sqlSituacao = "UPDATE turma SET situacao = CASE WHEN nota >= 7.0 THEN 'Aprovado' ELSE 'Reprovado' END, nota = ?";
+
         try {
             PreparedStatement psmt = conexao.prepareStatement(sqlSituacao);
+            psmt.setFloat(1, turma.getNota()); // Assuming turma is an instance of Turma class
             psmt.executeUpdate();
-            System.out.println("situacao criada com sucesso");
-        } catch (Exception e) {
+            System.out.println("Situação criada com sucesso");
+        } catch (SQLException e) {
             System.out.println("Algum erro ocorreu.");
             e.printStackTrace();
         }

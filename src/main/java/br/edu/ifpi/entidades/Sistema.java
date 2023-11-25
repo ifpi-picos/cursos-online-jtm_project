@@ -368,14 +368,16 @@ public class Sistema {
             scanner.nextLine();
 
             System.out.println("Digite as notas do aluno (separadas por vírgula):");
-            String notas = scanner.nextLine();
+            String notasString = scanner.nextLine();
 
-            TurmaDao turmaDao = new TurmaDao(conexao);
+            String[] notasArray = notasString.split(",");
+            float[] notas = new float[notasArray.length];
+            for (int i = 0; i < notasArray.length; i++) {
+                notas[i] = Float.parseFloat(notasArray[i]);
+            }
 
-            Turma novaTurma = new Turma(0, 0, null, null);
-            novaTurma.setIdProfessor(1);
-            novaTurma.setIdAluno(idAluno);
-            novaTurma.setNotas(notas);
+            Turma novaTurma = new Turma(0, idAluno, 0, null);
+            novaTurma.setNota(notas);
 
             int resultado = turmaDao.cadastrar(novaTurma);
             if (resultado > 0) {
@@ -386,7 +388,6 @@ public class Sistema {
 
             alunos();
 
-            alunos();
         } else if (opt == 0) {
             menuProfessor();
         } else {
