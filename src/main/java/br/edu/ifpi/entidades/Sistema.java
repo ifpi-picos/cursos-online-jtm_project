@@ -331,7 +331,7 @@ public class Sistema {
 
         if (opt == 1) {
             System.out.println("________L I S T A   D E   A L U N O S________");
-            cursoDao.consultarTodos();
+            alunoDao.consultarTodos();
         } else if (opt == 2) {
             System.out.println("Digite Nome do Aluno:");
             String nome = scanner.nextLine();
