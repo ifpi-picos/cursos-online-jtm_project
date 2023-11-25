@@ -145,6 +145,7 @@ public class Sistema {
             System.out.println("Confirme seu Id: ");
             int id = scanner.nextInt();
 
+            turmaDao.mostrarNotasPorAluno(id);
             menuAluno();
         } else if (opt == 4) {
             System.out.println("Confirme seu ID:");
