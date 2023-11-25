@@ -17,7 +17,7 @@ curso (
 id int not null primary key,
 nome varchar(50) not null,
 status varchar(50) not null,
-cargaHoraria int not null,
+cargaHoraria varchar(50) not null,
 foreign key (id_professor) REFERENCES professor(id)
 );
 
