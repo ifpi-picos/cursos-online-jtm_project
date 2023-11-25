@@ -65,7 +65,7 @@ public class AlunoDao implements Dao<Aluno> {
 
     @Override
     public int alterar(Aluno aluno) {
-        String SQL_UPDATE = "UPDATE ALUNO SET NOME=?, EMAIL=?, CURSO=? WHERE ID=?";
+        String SQL_UPDATE = "UPDATE ALUNO SET NOME=?, EMAIL=? WHERE ID=?";
 
         try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_UPDATE)) {
             stmt.setString(1, aluno.getNome());
