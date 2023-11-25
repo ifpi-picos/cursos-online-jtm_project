@@ -2,7 +2,7 @@ create table aluno (
 id int not null primary key,
 nome varchar(50) not null,
 email varchar(50) not null,
-curso varchar(50) not null
+curso varchar(50)
 );
 
 create table
