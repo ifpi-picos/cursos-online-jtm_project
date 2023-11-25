@@ -203,7 +203,6 @@ public class Sistema {
         scanner.nextLine();
 
         if (opt == 1) {
-            System.out.println("________L I S T A   D E   C U R S O S________");
             cursoDao.consultarTodos();
             cursos();
         } else if (opt == 2) {
@@ -270,7 +269,6 @@ public class Sistema {
         scanner.nextLine();
 
         if (opt == 1) {
-            System.out.println("___L I S T A   D E   P R O F E S S O R E S___");
             professorDao.consultarTodos();
             professores();
         } else if (opt == 2) {
@@ -330,7 +328,6 @@ public class Sistema {
         scanner.nextLine();
 
         if (opt == 1) {
-            System.out.println("________L I S T A   D E   A L U N O S________");
             alunoDao.consultarTodos();
             alunos();
         } else if (opt == 2) {
