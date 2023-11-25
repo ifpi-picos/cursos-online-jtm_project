@@ -50,7 +50,7 @@ public class ProfessorDao implements Dao<Professor> {
 
             while (resultSet.next()) {
                 Professor professor = new Professor(SQL_SELECT_ALL, SQL_SELECT_ALL);
-                professor.setId(resultSet.getInt("ID")); // Assuming there is an ID column
+                professor.setId(resultSet.getInt("ID"));
                 professor.setNome(resultSet.getString("NOME"));
                 professor.setEmail(resultSet.getString("EMAIL"));
 
@@ -58,7 +58,7 @@ public class ProfessorDao implements Dao<Professor> {
             }
 
             for (Professor p : professores) {
-                System.out.println("id : " + p.getId() + "\t Nome  :" + p.getNome() + "\t" + p.getEmail());
+                System.out.println("ID: " + p.getId() + "\tNome: " + p.getNome() + "\tEmail: " + p.getEmail());
             }
             resultSet.close();
             preparedStatement.close();

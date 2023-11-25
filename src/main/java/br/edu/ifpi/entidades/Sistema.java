@@ -197,6 +197,7 @@ public class Sistema {
         scanner.nextLine();
 
         if (opt == 1) {
+            System.out.println("________L I S T A   D E   C U R S O S________");
             cursoDao.consultarTodos();
             cursos();
         } else if (opt == 2) {
@@ -253,13 +254,10 @@ public class Sistema {
         scanner.nextLine();
 
         if (opt == 1) {
+            System.out.println("___L I S T A   D E   P R O F E S S O R E S___");
             professorDao.consultarTodos();
-<<<<<<< HEAD
             professores();
         } else if (opt == 2){
-=======
-        } else if (opt == 2) {
->>>>>>> a1bfc6a3d20ad269c3204391ed4c118f07a9885c
             System.out.println("Digite Nome do Professor:");
             String nome = scanner.nextLine();
             System.out.println("Digite Email do Professor:");
@@ -269,21 +267,19 @@ public class Sistema {
             professorDao.cadastrar(professor);
             professores();
         } else if (opt == 3) {
-            Scanner scan = new Scanner(System.in);
-
-            System.out.println(" Digite o id do professor que deseja alterar: ");
-            int Id_alter = scan.nextInt();
-            scan.nextLine();
+            System.out.println(" Digite o ID do Professor que deseja Editar: ");
+            int Id_alter = scanner.nextInt();
+            scanner.nextLine();
 
             Professor alterarProf = new Professor(null, null);
 
             alterarProf.setId(Id_alter);
 
             System.out.println("Novo Nome: ");
-            alterarProf.setNome(scan.nextLine());
+            alterarProf.setNome(scanner.nextLine());
 
             System.out.println("Novo Email: ");
-            alterarProf.setEmail(scan.next());
+            alterarProf.setEmail(scanner.next());
 
             professorDao.alterar(alterarProf);
 
@@ -303,6 +299,7 @@ public class Sistema {
         Scanner scanner = new Scanner(System.in);
         Conexao conexao = new Conexao();
         AlunoDao alunoDao = new AlunoDao(conexao);
+        CursoDao cursoDao = new CursoDao(conexao);
         System.out.println("_________________A L U N O S_________________");
         System.out.println("\n1. Vizualizar lista de Alunos");
         System.out.println("2. Realizar cadastro de um Aluno");
@@ -315,15 +312,10 @@ public class Sistema {
         int opt = scanner.nextInt();
         scanner.nextLine();
 
-<<<<<<< HEAD
-        if(opt == 1){
-            alunoDao.consultarTodos();
-        } else if (opt == 2){
-=======
         if (opt == 1) {
+            System.out.println("________L I S T A   D E   A L U N O S________");
             cursoDao.consultarTodos();
         } else if (opt == 2) {
->>>>>>> a1bfc6a3d20ad269c3204391ed4c118f07a9885c
             System.out.println("Digite Nome do Aluno:");
             String nome = scanner.nextLine();
             System.out.println("Digite Email do Aluno:");
@@ -333,22 +325,20 @@ public class Sistema {
             alunoDao.cadastrar(aluno);
             alunos();
         } else if (opt == 3) {
-            Scanner scan = new Scanner(System.in);
-
-            System.out.println(" Digite o id do professor que deseja alterar: ");
-            int Id_alter = scan.nextInt();
-            scan.nextLine();
+            System.out.println(" Digite o ID do Aluno que deseja alterar: ");
+            int Id_alter = scanner.nextInt();
+            scanner.nextLine();
 
             Aluno alterarAluno = new Aluno(Id_alter, null, null, null);
 
             alterarAluno.setId(Id_alter);
 
             System.out.println("Novo Nome: ");
-            alterarAluno.setNome(scan.nextLine());
+            alterarAluno.setNome(scanner.nextLine());
             System.out.println("Novo Email: ");
-            alterarAluno.setEmail(scan.nextLine());
+            alterarAluno.setEmail(scanner.nextLine());
             System.out.println("Novo Curso: ");
-            alterarAluno.setCurso(scan.nextLine());
+            alterarAluno.setCurso(scanner.nextLine());
 
             alunoDao.alterar(alterarAluno);
 
