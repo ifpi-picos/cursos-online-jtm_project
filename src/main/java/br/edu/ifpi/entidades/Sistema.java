@@ -219,7 +219,6 @@ public class Sistema {
         } else if (opt == 3) {
             System.out.print("Digite o ID do curso a ser alterado: ");
             int alteracao = scanner.nextInt();
-
             scanner.nextLine();
 
             Curso cursoalterado = new Curso();
@@ -229,7 +228,21 @@ public class Sistema {
             cursoalterado.setNome(scanner.nextLine());
 
             System.out.println("status do curso: ");
-            cursoalterado.setStatus(StatusCurso.valueOf(scanner.next()));
+            System.out.println("1. Aberto");
+            System.out.println("2. Fechado");
+            int opcao = scanner.nextInt();
+
+            if (opcao == 1){
+                cursoalterado.setStatus(StatusCurso.ABERTO);
+            } else if (opcao == 2){
+                cursoalterado.setStatus(StatusCurso.FECHADO);
+            } else {
+                System.out.println("Opção inválida, Tente Novamente:");
+                System.out.println("status do curso: ");
+                System.out.println("1. Aberto");
+                System.out.println("2. Fechado");
+                opcao = scanner.nextInt();
+            }
 
             System.out.println("nova carga horaria: ");
             cursoalterado.setCargahoraria(scanner.nextInt());
