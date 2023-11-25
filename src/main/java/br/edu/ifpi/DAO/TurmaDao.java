@@ -30,6 +30,8 @@ public class TurmaDao implements Dao<Turma> {
             int row = preparedStatement.executeUpdate();
 
             System.out.println(row);
+            preparedStatement.close(); // Fechar o PreparedStatement
+
             return row;
 
         } catch (SQLException e) {
@@ -53,7 +55,7 @@ public class TurmaDao implements Dao<Turma> {
             while (resultSet.next()) {
                 Turma turma = new Turma(resultSet.getInt("ID_CURSO"), resultSet.getInt("ID_ALUNO"),
                         resultSet.getFloat("NOTAS"), resultSet.getString("SITUACAO"));
-                turma.setIdCurso(resultSet.getInt("ID"));
+                turma.setIdAluno(resultSet.getInt("ID"));
                 turma.setIdAluno(resultSet.getString("NOME"));
 
                 turmas.add(turma);
@@ -90,6 +92,8 @@ public class TurmaDao implements Dao<Turma> {
             int row = preparedStatement.executeUpdate();
 
             System.out.println(row);
+            preparedStatement.close();
+
             return row;
 
         } catch (SQLException e) {
@@ -112,6 +116,8 @@ public class TurmaDao implements Dao<Turma> {
             int row = preparedStatement.executeUpdate();
 
             System.out.println(row);
+            preparedStatement.close();
+
             return row;
 
         } catch (SQLException e) {
@@ -149,12 +155,11 @@ public class TurmaDao implements Dao<Turma> {
     }
 
     public void gerarEstatisticas(Turma turma) {
-        String sqlSituacao = "UPDATE TURMA SET situacao = CASE WHEN nota >= 7.0 THEN 'Aprovado' ELSE 'Reprovado' END, nota = ? WHERE ID=?";
+        String sqlSituacao = "UPDATE TURMA SET SITUACAO = CASE WHEN NOTAS >= 7.0 THEN 'Aprovado' ELSE 'Reprovado' END WHERE ID=?";
 
         try {
             PreparedStatement psmt = conexao.prepareStatement(sqlSituacao);
-            psmt.setFloat(1, turma.getNota());
-            psmt.setInt(2, turma.getIdAluno());
+            psmt.setInt(1, turma.getIdAluno());
             psmt.executeUpdate();
             System.out.println("Situação criada com sucesso");
         } catch (SQLException e) {
