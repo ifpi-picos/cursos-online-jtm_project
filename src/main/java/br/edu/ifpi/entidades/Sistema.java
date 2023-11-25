@@ -8,6 +8,7 @@ import br.edu.ifpi.DAO.AutenticacaoDao;
 import br.edu.ifpi.DAO.Conexao;
 import br.edu.ifpi.DAO.CursoDao;
 import br.edu.ifpi.DAO.ProfessorDao;
+import br.edu.ifpi.DAO.TurmaDao;
 import br.edu.ifpi.enums.StatusCurso;
 
 public class Sistema {
@@ -257,7 +258,7 @@ public class Sistema {
             System.out.println("___L I S T A   D E   P R O F E S S O R E S___");
             professorDao.consultarTodos();
             professores();
-        } else if (opt == 2){
+        } else if (opt == 2) {
             System.out.println("Digite Nome do Professor:");
             String nome = scanner.nextLine();
             System.out.println("Digite Email do Professor:");
@@ -347,6 +348,28 @@ public class Sistema {
 
             alunos();
         } else if (opt == 5) {
+            System.out.println("Digite o ID do Aluno para o qual deseja registrar as notas:");
+            int idAluno = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.println("Digite as notas do aluno (separadas por vírgula):");
+            String notas = scanner.nextLine();
+
+            TurmaDao turmaDao = new TurmaDao(conexao);
+
+            Turma novaTurma = new Turma(0, 0, null, null);
+            novaTurma.setIdProfessor(1);
+            novaTurma.setIdAluno(idAluno);
+            novaTurma.setNotas(notas);
+
+            int resultado = turmaDao.cadastrar(novaTurma);
+            if (resultado > 0) {
+                System.out.println("Notas do aluno registradas com sucesso!");
+            } else {
+                System.out.println("Falha ao registrar as notas do aluno.");
+            }
+
+            alunos();
 
             alunos();
         } else if (opt == 0) {

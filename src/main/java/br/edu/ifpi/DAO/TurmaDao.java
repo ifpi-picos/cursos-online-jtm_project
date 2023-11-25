@@ -52,7 +52,7 @@ public class TurmaDao implements Dao<Turma> {
 
             while (resultSet.next()) {
                 Turma turma = new Turma(0, 0, SQL_SELECT_ALL, SQL_SELECT_ALL);
-                turma.setId(resultSet.getInt("ID")); // Assuming there is an ID column
+                turma.setId(resultSet.getInt("ID"));
                 turma.setIdProfessor(resultSet.getInt("ID_PROFESSOR"));
                 turma.setIdAluno(resultSet.getInt("ID_ALUNO"));
                 turma.setNotas(resultSet.getString("NOTAS"));
