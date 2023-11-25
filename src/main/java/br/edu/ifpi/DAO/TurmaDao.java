@@ -61,7 +61,7 @@ public class TurmaDao implements Dao<Turma> {
             }
 
             for (Turma t : turmas) {
-                System.out.println("Curso ID: " + t.getIdCurso() + "\t Aluno Nome: " + t.getIdAluno() +
+                System.out.println("ID do Curso: " + t.getIdCurso() + "\t ID doAluno: " + t.getIdAluno() +
                         "\t Notas: " + t.getNota() + "\t Situação: " + t.getSituacao());
             }
             resultSet.close();

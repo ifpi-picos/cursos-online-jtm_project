@@ -61,7 +61,7 @@ public class ProfessorDao implements Dao<Professor> {
             }
             System.out.println("___L I S T A   D E   P R O F E S S O R E S___");
             for (Professor p : professores) {
-                System.out.println("id : " + p.getId() + "\t Nome  :" + p.getNome() + "\t" + p.getEmail());
+                System.out.println("id : " + p.getId() + "\t Nome  :" + p.getNome() + "\t Email:" + p.getEmail());
             }
             resultSet.close();
             preparedStatement.close();

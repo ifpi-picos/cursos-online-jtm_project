@@ -65,7 +65,7 @@ public class CursoDao implements Dao<Curso> {
             System.out.println("________L I S T A   D E   C U R S O S________");
             for (Curso curso : cursos) {
                 System.out.println("id: " + curso.getId() + "\tNome: " + curso.getNome() + "\tStatus: "
-                        + curso.getStatus() + "\tCarga Horária: " + curso.getCargaHoraria());
+                        + curso.getStatus() + "\t Carga Horária: " + curso.getCargaHoraria());
             }
 
         } catch (SQLException e) {
