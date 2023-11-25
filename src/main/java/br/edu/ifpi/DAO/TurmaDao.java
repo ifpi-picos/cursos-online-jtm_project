@@ -85,7 +85,7 @@ public class TurmaDao implements Dao<Turma> {
             preparedStatement.setInt(2, turma.getIdAluno());
             preparedStatement.setFloat(3, turma.getNota());
             preparedStatement.setString(4, turma.getSituacao());
-            preparedStatement.setInt(5, turma.getIdAluno()); // Adicionado para identificar a linha a ser atualizada
+            preparedStatement.setInt(5, turma.getIdAluno());
 
             int row = preparedStatement.executeUpdate();
 
@@ -107,7 +107,7 @@ public class TurmaDao implements Dao<Turma> {
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_DELETE);
 
-            preparedStatement.setInt(1, turma.getIdAluno()); // Adicionado para identificar a linha a ser removida
+            preparedStatement.setInt(1, turma.getIdAluno());
 
             int row = preparedStatement.executeUpdate();
 
@@ -120,6 +120,32 @@ public class TurmaDao implements Dao<Turma> {
         }
 
         return 0;
+    }
+
+    public void mostrarNotasPorAluno(int idAluno) {
+        String SQL_SELECT_NOTAS_ALUNO = "SELECT ID_CURSO, NOTAS, SITUACAO FROM TURMA WHERE ID_ALUNO = ?";
+
+        try {
+            PreparedStatement preparedStatement = conexao.prepareStatement(SQL_SELECT_NOTAS_ALUNO);
+            preparedStatement.setInt(1, idAluno);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int idCurso = resultSet.getInt("ID_CURSO");
+                float notas = resultSet.getFloat("NOTAS");
+                String situacao = resultSet.getString("SITUACAO");
+
+                System.out.println("ID do Curso: " + idCurso + "\t Notas: " + notas + "\t Situação: " + situacao);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+
+        } catch (SQLException e) {
+            System.err.format("Estado SQL %s\n%s", e.getSQLState(), e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public void gerarEstatisticas(Turma turma) {
