@@ -20,22 +20,25 @@ public class CursoDao implements Dao<Curso> {
     public int cadastrar(Curso curso) {
         String SQL_INSERT = "INSERT INTO Curso (NOME, STATUS, CARGAHORARIA) VALUES(?,?,?)";
 
-        try (PreparedStatement stmt = conexao.prepareStatement(SQL_INSERT)){
+        try {
+            PreparedStatement stmt = conexao.prepareStatement(SQL_INSERT);
             stmt.setString(1, curso.getNome());
             stmt.setString(2, curso.getStatus().name());
             stmt.setString(3, curso.getCargaHoraria());
 
-            int row = stmt.executeUpdate();
+            int rowsAffected = stmt.executeUpdate();
 
-            System.out.println(row);
-            return row;
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    curso.setId(generatedKeys.getInt(1));
+                }
+            }
+
+            return rowsAffected;
 
         } catch (SQLException e) {
-            System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
-        } catch (Exception e) {
             e.printStackTrace();
         }
-
         return 0;
     }
 
@@ -50,19 +53,20 @@ public class CursoDao implements Dao<Curso> {
             while (resultSet.next()) {
                 int id = resultSet.getInt("ID");
                 String nome = resultSet.getString("NOME");
-                StatusCurso status = StatusCurso.valueOf(resultSet.getString("STATUS"));
+                String statusStr = resultSet.getString("STATUS");
+
+                StatusCurso status = StatusCurso.fromString(statusStr);
+
                 String cargaHoraria = resultSet.getString("CARGAHORARIA");
 
                 Curso curso = new Curso(id, nome, status, cargaHoraria);
                 cursos.add(curso);
             }
 
-            for (Curso p : cursos) {
-                System.out.println("id : " + p.getId() + "\t Nome  :" + p.getNome() + "\t" + p.getStatus() + "\t"
-                        + p.getCargaHoraria());
+            for (Curso curso : cursos) {
+                System.out.println("id: " + curso.getId() + "\tNome: " + curso.getNome() + "\tStatus: "
+                        + curso.getStatus() + "\tCarga Horária: " + curso.getCargaHoraria());
             }
-            resultSet.close();
-            stmt.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
