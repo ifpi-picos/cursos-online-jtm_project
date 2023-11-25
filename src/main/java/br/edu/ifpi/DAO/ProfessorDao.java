@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.ifpi.entidades.Curso;
 import br.edu.ifpi.entidades.Professor;
 
 public class ProfessorDao implements Dao<Professor> {
@@ -122,4 +123,50 @@ public class ProfessorDao implements Dao<Professor> {
 
         return 0;
     }
+
+public int AssociarProfessorCurso(int idProfessor, int idCurso) {
+    String SQL_QUERY_PROFESSOR = "SELECT * FROM PROFESSOR WHERE id = ?";
+    String SQL_QUERY_CURSO = "SELECT * FROM CURSO WHERE id = ?";
+    String SQL_UPDATE = "UPDATE PROFESSOR SET Curso=? WHERE ID=?";
+    
+    try {
+        PreparedStatement professorStatement = conexao.prepareStatement(SQL_QUERY_PROFESSOR);
+        professorStatement.setInt(1, idProfessor);
+        ResultSet professorResult = professorStatement.executeQuery();
+
+        PreparedStatement cursoStatement = conexao.prepareStatement(SQL_QUERY_CURSO);
+        cursoStatement.setInt(1, idCurso);
+        ResultSet cursoResult = cursoStatement.executeQuery();
+
+        if (professorResult.next() && cursoResult.next()) {
+            int id = professorResult.getInt("ID");
+            String nome = professorResult.getString("NOME");
+            String email = professorResult.getString("EMAIL");
+
+            Curso curso = new Curso(
+                cursoResult.getInt("ID"),
+                cursoResult.getString("NOME"),
+                null,
+                cursoResult.getString("CARGAHORARIA")
+            );
+
+            Professor professor = new Professor(nome, id, email, curso);
+
+            PreparedStatement updateStatement = conexao.prepareStatement(SQL_UPDATE);
+            updateStatement.setInt(1, idCurso);
+            updateStatement.setInt(2, idProfessor);
+
+            int rowsUpdated = updateStatement.executeUpdate();
+            System.out.println(rowsUpdated);
+            return rowsUpdated;
+}
+
+// ...
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return 0; // Return appropriate value for the failure case
+}
+
 }

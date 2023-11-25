@@ -302,7 +302,12 @@ public class Sistema {
 
             professores();
         } else if (opt == 4) {
+            System.out.println("Digite o ID do Professor:");
+            int aluno = scanner.nextInt();
+            System.out.println("Digite o ID do Curso:");
+            int curso = scanner.nextInt();
 
+            
             professores();
         } else if (opt == 0) {
             menuProfessor();
