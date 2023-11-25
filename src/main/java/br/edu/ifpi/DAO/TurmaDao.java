@@ -125,7 +125,7 @@ public class TurmaDao implements Dao<Turma> {
 
         try {
             PreparedStatement psmt = conexao.prepareStatement(sqlSituacao);
-            psmt.setFloat(1, turma.getNota()); // Assuming turma is an instance of Turma class
+            psmt.setFloat(1, turma.getNota()); 
             psmt.executeUpdate();
             System.out.println("Situação criada com sucesso");
         } catch (SQLException e) {

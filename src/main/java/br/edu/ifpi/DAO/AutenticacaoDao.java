@@ -48,8 +48,10 @@ public class AutenticacaoDao {
                     int professorId = resultSet.getInt("id");
                     String professorNome = resultSet.getString("nome");
 
+                    System.out.println("_____________________________________________\n");
                     System.out.println("  P R O F E S S O R   A U T E N T I C A D O\n           C O M   S U C E S S O !");
-                    return new Professor(professorId, professorNome, email);
+                    System.out.println("_____________________________________________\n");
+                    return new Professor(professorNome, professorId, email, null);
                 }
             }
         } catch (SQLException e) {
