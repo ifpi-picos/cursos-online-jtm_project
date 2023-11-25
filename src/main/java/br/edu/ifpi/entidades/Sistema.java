@@ -66,9 +66,6 @@ public class Sistema {
 
             Aluno aluno = new Aluno(0, nome, email, null);
             alunoDao.cadastrar(aluno);
-            System.out.println("_____________________________________________\n");
-            System.out.println("  C A D A S T R O  R E A L I Z A D O  C O M \n              S U C E S S O !");
-            System.out.println("_____________________________________________\n");
             menuAluno();
         } else if (tipo == 2) {
             System.out.println("Digite Nome do Professor:");
@@ -78,9 +75,6 @@ public class Sistema {
 
             Professor professor = new Professor(nome, 0, email, null);
             professorDao.cadastrar(professor);
-            System.out.println("_____________________________________________\n");
-            System.out.println("  C A D A S T R O  R E A L I Z A D O  C O M \n              S U C E S S O !");
-            System.out.println("_____________________________________________\n");
             menuProfessor();
         }
     }
@@ -283,7 +277,7 @@ public class Sistema {
             int Id_alter = scanner.nextInt();
             scanner.nextLine();
 
-            Professor alterarProf = new Professor(null, null);
+            Professor alterarProf = new Professor(null, 0, null, null);
 
             alterarProf.setId(Id_alter);
 

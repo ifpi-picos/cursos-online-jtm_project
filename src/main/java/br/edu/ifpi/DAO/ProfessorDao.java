@@ -28,6 +28,9 @@ public class ProfessorDao implements Dao<Professor> {
             int row = preparedStatement.executeUpdate();
 
             System.out.println(row);
+            System.out.println("_____________________________________________\n");
+            System.out.println("  C A D A S T R O  R E A L I Z A D O  C O M \n              S U C E S S O !");
+            System.out.println("_____________________________________________\n");
             return row;
 
         } catch (SQLException e) {
@@ -49,8 +52,8 @@ public class ProfessorDao implements Dao<Professor> {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Professor professor = new Professor(SQL_SELECT_ALL, SQL_SELECT_ALL);
-                professor.setId(resultSet.getInt("ID"));
+                Professor professor = new Professor(SQL_SELECT_ALL, 0, SQL_SELECT_ALL, null);
+                professor.setId(resultSet.getInt("ID")); 
                 professor.setNome(resultSet.getString("NOME"));
                 professor.setEmail(resultSet.getString("EMAIL"));
 
@@ -58,7 +61,7 @@ public class ProfessorDao implements Dao<Professor> {
             }
 
             for (Professor p : professores) {
-                System.out.println("ID: " + p.getId() + "\tNome: " + p.getNome() + "\tEmail: " + p.getEmail());
+                System.out.println("id : " + p.getId() + "\t Nome  :" + p.getNome() + "\t" + p.getEmail());
             }
             resultSet.close();
             preparedStatement.close();

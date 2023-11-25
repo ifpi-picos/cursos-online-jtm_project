@@ -21,6 +21,9 @@ public class AlunoDao implements Dao<Aluno> {
             stmt.setString(2, aluno.getEmail());
             stmt.setString(3, aluno.getCurso());
 
+            System.out.println("_____________________________________________\n");
+            System.out.println("  C A D A S T R O  R E A L I Z A D O  C O M \n              S U C E S S O !");
+            System.out.println("_____________________________________________\n");
             return stmt.executeUpdate();
         } catch (SQLException e) {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());

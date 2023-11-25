@@ -20,25 +20,22 @@ public class CursoDao implements Dao<Curso> {
     public int cadastrar(Curso curso) {
         String SQL_INSERT = "INSERT INTO Curso (NOME, STATUS, CARGAHORARIA) VALUES(?,?,?)";
 
-        try {
-            PreparedStatement stmt = conexao.prepareStatement(SQL_INSERT);
+        try (PreparedStatement stmt = conexao.prepareStatement(SQL_INSERT)){
             stmt.setString(1, curso.getNome());
             stmt.setString(2, curso.getStatus().name());
             stmt.setString(3, curso.getCargaHoraria());
 
-            int rowsAffected = stmt.executeUpdate();
+            int row = stmt.executeUpdate();
 
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    curso.setId(generatedKeys.getInt(1));
-                }
-            }
-
-            return rowsAffected;
+            System.out.println(row);
+            return row;
 
         } catch (SQLException e) {
+            System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
         return 0;
     }
 
