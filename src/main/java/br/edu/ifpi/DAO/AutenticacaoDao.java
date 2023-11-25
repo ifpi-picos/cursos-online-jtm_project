@@ -24,7 +24,7 @@ public class AutenticacaoDao {
                 if (resultSet.next()) {
                     resultSet.getString("nome");
 
-                    System.out.println("Aluno autenticado com sucesso!");
+                    System.out.println("  A L U N O   A U T E N T I C A D O   C O M\n                S U C E S S O !");
                     return new Aluno(email);
                 }
             }
@@ -46,7 +46,7 @@ public class AutenticacaoDao {
                     int professorId = resultSet.getInt("id");
                     String professorNome = resultSet.getString("nome");
 
-                    System.out.println("Professor autenticado com sucesso!");
+                    System.out.println("  P R O F E S S O R   A U T E N T I C A D O\n           C O M   S U C E S S O !");
                     return new Professor(professorId, professorNome, email);
                 }
             }
