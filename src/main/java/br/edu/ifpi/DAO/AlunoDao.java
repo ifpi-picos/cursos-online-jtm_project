@@ -112,9 +112,9 @@ public class AlunoDao implements Dao<Aluno> {
                     String nomeAluno = resultSet.getString("nome");
                     String emailAluno = resultSet.getString("email");
  
-                    System.out.println("Id: " + idAluno + "\nNome: " + nomeAluno  +  "\nEmail: " + emailAluno);
+                    System.out.println("\nId: " + idAluno + "\nNome: " + nomeAluno  +  "\nEmail: " + emailAluno);
                 }
-                System.out.println("\n_____________________________________________\n");
+                System.out.println("_____________________________________________\n");
             }
         } catch (SQLException e) {
             e.printStackTrace(); 
