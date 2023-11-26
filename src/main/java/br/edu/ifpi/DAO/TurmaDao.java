@@ -128,7 +128,7 @@ public class TurmaDao implements Dao<Turma> {
         return 0;
     }
 
-    public void mostrarNotasPorAluno(int idAluno) {
+    public void mostrarBoletim(int idAluno) {
         String SQL_SELECT_NOTAS_ALUNO = "SELECT ID_CURSO, NOTAS, SITUACAO FROM TURMA WHERE ID_ALUNO = ?";
 
         try {
@@ -136,7 +136,7 @@ public class TurmaDao implements Dao<Turma> {
             preparedStatement.setInt(1, idAluno);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-
+            System.out.println("\n________________B O L E T I M________________");
             while (resultSet.next()) {
                 int idCurso = resultSet.getInt("ID_CURSO");
                 float notas = resultSet.getFloat("NOTAS");
@@ -144,7 +144,7 @@ public class TurmaDao implements Dao<Turma> {
 
                 System.out.println("ID do Curso: " + idCurso + "\t Notas: " + notas + "\t Situação: " + situacao);
             }
-
+            System.out.println("\n_____________________________________________\n");
             resultSet.close();
             preparedStatement.close();
 

@@ -126,7 +126,7 @@ public class Sistema {
         TurmaDao turmaDao = new TurmaDao(conexao);
 
         System.out.println("________M E N U   D O   A L U N O________");
-        System.out.println("\n1. Vivualizar Perfil");
+        System.out.println("\n1. Vizualizar Perfil");
         System.out.println("2. Vizualizar lista de Cursos");
         System.out.println("3. Vizualizar lista de Professores");
         System.out.println("4. Vizualizar Notas");
@@ -152,7 +152,7 @@ public class Sistema {
             System.out.println("Confirme seu Id: ");
             int id = scanner.nextInt();
 
-            turmaDao.mostrarNotasPorAluno(id);
+            turmaDao.mostrarBoletim(id);
             menuAluno();
         } else if (opt == 5) {
             System.out.println("Confirme seu ID:");

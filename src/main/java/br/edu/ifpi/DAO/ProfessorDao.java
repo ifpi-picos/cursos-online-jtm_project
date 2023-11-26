@@ -184,8 +184,9 @@ public class ProfessorDao implements Dao<Professor> {
                     String emailAluno = resultSet.getString("email");
  
                     System.out.println("Id: " + idAluno + "\nNome: " + nomeAluno  +  "\nEmail: " + emailAluno);
-                    System.out.println("\n_____________________________________________");
+                    
                 }
+                System.out.println("\n_____________________________________________\n");
             }
         } catch (SQLException e) {
             e.printStackTrace(); 
