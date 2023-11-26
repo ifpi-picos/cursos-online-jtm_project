@@ -33,7 +33,9 @@ public class CursoDao implements Dao<Curso> {
                     curso.setId(generatedKeys.getInt(1));
                 }
             }
-
+            System.out.println("_____________________________________________\n");
+            System.out.println("  C A D A S T R O  R E A L I Z A D O  C O M \n              S U C E S S O !");
+            System.out.println("_____________________________________________\n");
             return rowsAffected;
 
         } catch (SQLException e) {
