@@ -132,50 +132,39 @@ public class ProfessorDao implements Dao<Professor> {
     }
 
     public int AssociarProfessorCurso(int idProfessor, int idCurso) {
-        String SQL_QUERY_PROFESSOR = "SELECT * FROM PROFESSOR WHERE id = ?";
-        String SQL_QUERY_CURSO = "SELECT * FROM CURSO WHERE id = ?";
-        String SQL_UPDATE = "UPDATE PROFESSOR SET Curso=? WHERE ID=?";
+        String SQL_QUERY_PROFESSOR = "SELECT * FROM professor WHERE id = ?";
+        String SQL_QUERY_CURSO = "SELECT * FROM curso WHERE id = ?";
+        String SQL_UPDATE = "UPDATE professor SET id_curso=? WHERE id=?";
 
-        try {
-            PreparedStatement professorStatement = conexao.prepareStatement(SQL_QUERY_PROFESSOR);
+        try (
+                PreparedStatement professorStatement = conexao.prepareStatement(SQL_QUERY_PROFESSOR);
+                PreparedStatement cursoStatement = conexao.prepareStatement(SQL_QUERY_CURSO);
+                PreparedStatement updateStatement = conexao.prepareStatement(SQL_UPDATE)) {
             professorStatement.setInt(1, idProfessor);
             ResultSet professorResult = professorStatement.executeQuery();
 
-            PreparedStatement cursoStatement = conexao.prepareStatement(SQL_QUERY_CURSO);
             cursoStatement.setInt(1, idCurso);
             ResultSet cursoResult = cursoStatement.executeQuery();
 
             if (professorResult.next() && cursoResult.next()) {
-                int id = professorResult.getInt("ID");
-                String nome = professorResult.getString("NOME");
-                String email = professorResult.getString("EMAIL");
-
-                Curso curso = new Curso(
-                        cursoResult.getInt("ID"),
-                        cursoResult.getString("NOME"),
-                        null,
-                        cursoResult.getString("CARGAHORARIA"));
-
-                Professor professor = new Professor(nome, id, email, curso.getId(), curso.getNome());
-
-                PreparedStatement updateStatement = conexao.prepareStatement(SQL_UPDATE);
                 updateStatement.setInt(1, idCurso);
                 updateStatement.setInt(2, idProfessor);
 
                 int rowsUpdated = updateStatement.executeUpdate();
-                System.out.println(rowsUpdated);
-                return rowsUpdated;
-            }
+                System.out.println("Linhas atualizadas: " + rowsUpdated);
 
+                return rowsUpdated;
+            } else {
+                System.out.println("Registro de professor ou curso não encontrado.");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
-
     }
 
     public void vizualizarPerfilProfessor(String email) {
-        String sql = "SELECT id, nome, email, nome_curso FROM professor WHERE email = ?";
+        String sql = "SELECT id, nome, email, id_curso FROM professor WHERE email = ?";
 
         try (Connection connection = Conexao.getConexao();
                 PreparedStatement stm = connection.prepareStatement(sql)) {
@@ -187,10 +176,10 @@ public class ProfessorDao implements Dao<Professor> {
                 while (resultSet.next()) {
                     int id = resultSet.getInt("id");
                     String nome = resultSet.getString("nome");
-                    String nomeCurso = resultSet.getString("nome_curso");
+                    int idCurso = resultSet.getInt("id_curso");
 
-                    System.out.println("Id: " + id + "\nNome: " + nome + "\nEmail: " + email + "\nCurso: "
-                            + (nomeCurso != null ? nomeCurso : ""));
+                    System.out.println("Id: " + id + "\nNome: " + nome + "\nEmail: " + email + "\nID do Curso: "
+                            + idCurso);
                 }
                 System.out.println("\n_____________________________________________\n");
             }
@@ -198,5 +187,4 @@ public class ProfessorDao implements Dao<Professor> {
             e.printStackTrace();
         }
     }
-
 }
