@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.ifpi.entidades.Curso;
 import br.edu.ifpi.entidades.Professor;
 
 public class ProfessorDao implements Dao<Professor> {
@@ -58,18 +57,15 @@ public class ProfessorDao implements Dao<Professor> {
                 professor.setId(resultSet.getInt("ID"));
                 professor.setNome(resultSet.getString("NOME"));
                 professor.setEmail(resultSet.getString("EMAIL"));
-
-                Curso curso = new Curso(0, SQL_SELECT_ALL, null, SQL_SELECT_ALL);
-                curso.setNome(resultSet.getString("CURSO"));
-
-                professor.setNome_curso(curso.getNome());
+                professor.setId_curso(resultSet.getInt("ID_CURSO"));
+                professor.setNome_curso(resultSet.getString("NOME_CURSO"));
 
                 professores.add(professor);
             }
             System.out.println("___L I S T A   D E   P R O F E S S O R E S___");
             for (Professor p : professores) {
                 System.out.println("id : " + p.getId() + "\t Nome  :" + p.getNome() + "\t Email:" + p.getEmail()
-                        + "\t Curso: " + p.getNome_curso());
+                        + "\t Curso: " + (p.getNome_curso() != null ? p.getNome_curso() : ""));
             }
             resultSet.close();
             preparedStatement.close();
