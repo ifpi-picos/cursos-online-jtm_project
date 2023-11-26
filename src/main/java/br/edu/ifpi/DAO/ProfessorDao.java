@@ -1,5 +1,6 @@
 package br.edu.ifpi.DAO;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -124,49 +125,70 @@ public class ProfessorDao implements Dao<Professor> {
         return 0;
     }
 
-public int AssociarProfessorCurso(int idProfessor, int idCurso) {
-    String SQL_QUERY_PROFESSOR = "SELECT * FROM PROFESSOR WHERE id = ?";
-    String SQL_QUERY_CURSO = "SELECT * FROM CURSO WHERE id = ?";
-    String SQL_UPDATE = "UPDATE PROFESSOR SET Curso=? WHERE ID=?";
+    public int AssociarProfessorCurso(int idProfessor, int idCurso) {
+        String SQL_QUERY_PROFESSOR = "SELECT * FROM PROFESSOR WHERE id = ?";
+        String SQL_QUERY_CURSO = "SELECT * FROM CURSO WHERE id = ?";
+        String SQL_UPDATE = "UPDATE PROFESSOR SET Curso=? WHERE ID=?";
     
-    try {
-        PreparedStatement professorStatement = conexao.prepareStatement(SQL_QUERY_PROFESSOR);
-        professorStatement.setInt(1, idProfessor);
-        ResultSet professorResult = professorStatement.executeQuery();
+        try {
+            PreparedStatement professorStatement = conexao.prepareStatement(SQL_QUERY_PROFESSOR);
+            professorStatement.setInt(1, idProfessor);
+            ResultSet professorResult = professorStatement.executeQuery();
+   
+            PreparedStatement cursoStatement = conexao.prepareStatement(SQL_QUERY_CURSO);
+            cursoStatement.setInt(1, idCurso);
+            ResultSet cursoResult = cursoStatement.executeQuery();
 
-        PreparedStatement cursoStatement = conexao.prepareStatement(SQL_QUERY_CURSO);
-        cursoStatement.setInt(1, idCurso);
-        ResultSet cursoResult = cursoStatement.executeQuery();
+            if (professorResult.next() && cursoResult.next()) {
+                int id = professorResult.getInt("ID");
+                String nome = professorResult.getString("NOME");
+                String email = professorResult.getString("EMAIL");
 
-        if (professorResult.next() && cursoResult.next()) {
-            int id = professorResult.getInt("ID");
-            String nome = professorResult.getString("NOME");
-            String email = professorResult.getString("EMAIL");
+                Curso curso = new Curso(
+                    cursoResult.getInt("ID"),
+                    cursoResult.getString("NOME"),
+                    null,
+                    cursoResult.getString("CARGAHORARIA")
+                );
 
-            Curso curso = new Curso(
-                cursoResult.getInt("ID"),
-                cursoResult.getString("NOME"),
-                null,
-                cursoResult.getString("CARGAHORARIA")
-            );
+                Professor professor = new Professor(nome, id, email, curso);
 
-            Professor professor = new Professor(nome, id, email, curso);
+                PreparedStatement updateStatement = conexao.prepareStatement(SQL_UPDATE);
+                updateStatement.setInt(1, idCurso);
+                updateStatement.setInt(2, idProfessor);
 
-            PreparedStatement updateStatement = conexao.prepareStatement(SQL_UPDATE);
-            updateStatement.setInt(1, idCurso);
-            updateStatement.setInt(2, idProfessor);
+                int rowsUpdated = updateStatement.executeUpdate();
+                System.out.println(rowsUpdated);
+                return rowsUpdated;
+            }
 
-            int rowsUpdated = updateStatement.executeUpdate();
-            System.out.println(rowsUpdated);
-            return rowsUpdated;
-}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0; 
 
-// ...
-
-    } catch (SQLException e) {
-        e.printStackTrace();
     }
-    return 0; // Return appropriate value for the failure case
-}
 
+        public void vizualizarPerfilProfessor(String email) {
+        String sql = "SELECT id, nome, email FROM professor WHERE email = ?";
+
+        try (Connection connection = Conexao.getConexao();
+            PreparedStatement stm = connection.prepareStatement(sql)) {
+
+            stm.setString(1, email);
+            try (ResultSet resultSet = stm.executeQuery()) {
+                System.out.println("\n____P E R F I L   D O   P R O F E S S O R____");
+                while (resultSet.next()) {
+                    int idAluno = resultSet.getInt("id");
+                    String nomeAluno = resultSet.getString("nome");
+                    String emailAluno = resultSet.getString("email");
+ 
+                    System.out.println("Id: " + idAluno + "\nNome: " + nomeAluno  +  "\nEmail: " + emailAluno);
+                    System.out.println("\n_____________________________________________");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); 
+        }
+    }
 }

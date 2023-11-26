@@ -173,11 +173,14 @@ public class Sistema {
 
     public void menuProfessor() {
         Scanner scanner = new Scanner(System.in);
+        Conexao conexao = new Conexao();
+        ProfessorDao professorDao = new ProfessorDao(conexao);
 
         System.out.println("______M E N U   D O   P R O F E S S O R______");
-        System.out.println("\n1. Cursos");
-        System.out.println("2. Professores");
-        System.out.println("3. Alunos");
+        System.out.println("\n1. Vizualizar Perfil");
+        System.out.println("2. Cursos");
+        System.out.println("3. Professores");
+        System.out.println("4. Alunos");
         System.out.println("0. Sair");
         System.out.println("_____________________________________________");
         System.out.println("\nEscolha uma opção: ");
@@ -185,10 +188,16 @@ public class Sistema {
         scanner.nextLine();
 
         if (opt == 1) {
+            System.out.println("Confirme seu email:");
+            String email = scanner.nextLine();
+
+            professorDao.vizualizarPerfilProfessor(email);
+            menuProfessor();
+        } else if (opt == 2){
             cursos();
-        } else if (opt == 2) {
-            professores();
         } else if (opt == 3) {
+            professores();
+        } else if (opt == 4) {
             alunos();
         } else if (opt == 0) {
             mostrarMenuInicial();
