@@ -34,9 +34,7 @@ public class Aluno {
         this.email = email;
     }
     
-    public void add(Aluno aluno) {
-    }
-
-    public void setId(int id_alter) {
+    public void setId(int id){
+        this.id = id;
     }
 }

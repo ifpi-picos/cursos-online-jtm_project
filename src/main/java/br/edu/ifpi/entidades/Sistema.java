@@ -364,12 +364,12 @@ public class Sistema {
             alunos();
         } else if (opt == 3) {
             System.out.println("Digite o ID do Aluno que deseja Editar: ");
-            int Id_alter = scanner.nextInt();
+            int Id = scanner.nextInt();
             scanner.nextLine();
 
-            Aluno alterarAluno = new Aluno(Id_alter, null, null);
+            Aluno alterarAluno = new Aluno(Id, null, null);
 
-            alterarAluno.setId(Id_alter);
+            alterarAluno.setId(Id);
 
             System.out.println("Novo Nome: ");
             alterarAluno.setNome(scanner.nextLine());
