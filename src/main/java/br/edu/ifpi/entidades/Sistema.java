@@ -160,7 +160,7 @@ public class Sistema {
             System.out.println("Insira o ID do Curso:");
             int curso = scanner.nextInt();
 
-            Turma turma = new Turma(aluno, curso, 0, null);
+            Turma turma = new Turma(aluno, curso, 0);
             turmaDao.cadastrar(turma);
             menuAluno();
         } else if (opt == 0) {
@@ -385,7 +385,7 @@ public class Sistema {
             System.out.println("Digite o ID do Curso:");
             int curso = scanner.nextInt();
 
-            Turma turma = new Turma(aluno, curso, 0, null);
+            Turma turma = new Turma(aluno, curso, 0);
             turmaDao.cadastrar(turma);
 
             alunos();
@@ -394,25 +394,15 @@ public class Sistema {
             int idCurso = scanner.nextInt();
             scanner.nextLine();
 
-            System.out.println("Digite o ID do Professor:");
-            int idProfessor = scanner.nextInt();
-            scanner.nextLine();
-
             System.out.println("Digite o ID do Aluno para o qual deseja registrar as notas:");
             int idAluno = scanner.nextInt();
             scanner.nextLine();
 
-            System.out.println("Digite as notas do aluno (separadas por vírgula):");
-            String notasString = scanner.nextLine();
+            System.out.println("Digite a nota do aluno: ");
+            float nota = scanner.nextFloat();
 
-            String[] notasArray = notasString.split(",");
-            float[] notas = new float[notasArray.length];
-            for (int i = 0; i < notasArray.length; i++) {
-                notas[i] = Float.parseFloat(notasArray[i]);
-            }
-
-            Turma novaTurma = new Turma(idCurso, idAluno, idProfessor, null);
-            novaTurma.setNota(notas);
+            Turma novaTurma = new Turma(idCurso, idAluno, nota);
+            novaTurma.setNota(nota);
 
             int resultado = turmaDao.cadastrar(novaTurma);
             if (resultado > 0) {

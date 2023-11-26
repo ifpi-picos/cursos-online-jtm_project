@@ -17,7 +17,7 @@ public class TurmaDao implements Dao<Turma> {
 
     @Override
     public int cadastrar(Turma turma) {
-        String SQL_INSERT = "INSERT INTO TURMA (ID_CURSO, ID_ALUNO, NOTAS, SITUACAO) VALUES(?,?,?,?)";
+        String SQL_INSERT = "INSERT INTO TURMA (ID_CURSO, ID_ALUNO, NOTAS) VALUES(?,?,?)";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_INSERT);
@@ -25,7 +25,6 @@ public class TurmaDao implements Dao<Turma> {
             preparedStatement.setInt(1, turma.getIdCurso());
             preparedStatement.setInt(2, turma.getIdAluno());
             preparedStatement.setFloat(3, turma.getNota());
-            preparedStatement.setString(4, turma.getSituacao());
 
             int row = preparedStatement.executeUpdate();
 
@@ -54,7 +53,7 @@ public class TurmaDao implements Dao<Turma> {
 
             while (resultSet.next()) {
                 Turma turma = new Turma(resultSet.getInt("ID_CURSO"), resultSet.getInt("ID_ALUNO"),
-                        resultSet.getFloat("NOTAS"), resultSet.getString("SITUACAO"));
+                        resultSet.getFloat("NOTAS"));
                 turma.setIdAluno(resultSet.getInt("ID"));
                 turma.setIdAluno(resultSet.getString("NOME"));
 
@@ -63,7 +62,7 @@ public class TurmaDao implements Dao<Turma> {
 
             for (Turma t : turmas) {
                 System.out.println("ID do Curso: " + t.getIdCurso() + "\t Nome do Aluno: " + t.getIdAluno() +
-                        "\t Notas: " + t.getNota() + "\t Situação: " + t.getSituacao());
+                        "\t Notas: " + (t.getNota() != 0 ? t.getNota() : " "));
             }
             resultSet.close();
             preparedStatement.close();
@@ -86,8 +85,7 @@ public class TurmaDao implements Dao<Turma> {
             preparedStatement.setInt(1, turma.getIdCurso());
             preparedStatement.setInt(2, turma.getIdAluno());
             preparedStatement.setFloat(3, turma.getNota());
-            preparedStatement.setString(4, turma.getSituacao());
-            preparedStatement.setInt(5, turma.getIdAluno());
+            preparedStatement.setInt(4, turma.getIdAluno());
 
             int row = preparedStatement.executeUpdate();
 
@@ -129,7 +127,7 @@ public class TurmaDao implements Dao<Turma> {
     }
 
     public void mostrarBoletim(int idAluno) {
-        String SQL_SELECT_NOTAS_ALUNO = "SELECT ID_CURSO, NOTAS, SITUACAO FROM TURMA WHERE ID_ALUNO = ?";
+        String SQL_SELECT_NOTAS_ALUNO = "SELECT ID_CURSO, NOTAS FROM TURMA WHERE ID_ALUNO = ?";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_SELECT_NOTAS_ALUNO);
@@ -140,9 +138,8 @@ public class TurmaDao implements Dao<Turma> {
             while (resultSet.next()) {
                 int idCurso = resultSet.getInt("ID_CURSO");
                 float notas = resultSet.getFloat("NOTAS");
-                String situacao = resultSet.getString("SITUACAO");
 
-                System.out.println("ID do Curso: " + idCurso + "\t Notas: " + notas + "\t Situação: " + situacao);
+                System.out.println("ID do Curso: " + idCurso + "\t Notas: " + notas);
             }
             System.out.println("\n_____________________________________________\n");
             resultSet.close();
@@ -150,20 +147,6 @@ public class TurmaDao implements Dao<Turma> {
 
         } catch (SQLException e) {
             System.err.format("Estado SQL %s\n%s", e.getSQLState(), e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    public void gerarEstatisticas(Turma turma) {
-        String sqlSituacao = "UPDATE TURMA SET SITUACAO = CASE WHEN NOTAS >= 7.0 THEN 'Aprovado' ELSE 'Reprovado' END WHERE ID=?";
-
-        try {
-            PreparedStatement psmt = conexao.prepareStatement(sqlSituacao);
-            psmt.setInt(1, turma.getIdAluno());
-            psmt.executeUpdate();
-            System.out.println("Situação criada com sucesso");
-        } catch (SQLException e) {
-            System.out.println("Algum erro ocorreu.");
             e.printStackTrace();
         }
     }

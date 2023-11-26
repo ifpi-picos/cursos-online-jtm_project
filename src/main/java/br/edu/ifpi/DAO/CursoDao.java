@@ -56,14 +56,15 @@ public class CursoDao implements Dao<Curso> {
                 int id = resultSet.getInt("ID");
                 String nome = resultSet.getString("NOME");
                 String statusStr = resultSet.getString("STATUS");
-
                 StatusCurso status = StatusCurso.fromString(statusStr);
-
                 String cargaHoraria = resultSet.getString("CARGAHORARIA");
 
                 Curso curso = new Curso(id, nome, status, cargaHoraria);
                 cursos.add(curso);
+
             }
+            TurmaDao turma = new TurmaDao(conexao);
+
             System.out.println("________L I S T A   D E   C U R S O S________");
             for (Curso curso : cursos) {
                 System.out.println("id: " + curso.getId() + "\tNome: " + curso.getNome() + "\tStatus: "

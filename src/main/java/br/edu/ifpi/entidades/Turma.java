@@ -4,13 +4,11 @@ public class Turma {
     private int idCurso;
     private int idAluno;
     private float nota;
-    private String situacao;
 
-    public Turma(int idCurso, int idAluno, float nota, String situacao) {
+    public Turma(int idCurso, int idAluno, float nota) {
         this.idCurso = idCurso;
         this.idAluno = idAluno;
         this.nota = nota;
-        this.situacao = situacao;
     }
 
     public int getIdCurso() {
@@ -37,18 +35,10 @@ public class Turma {
         this.nota = nota;
     }
 
-    public String getSituacao() {
-        return situacao;
-    }
-
-    public void setSituacao(String situacao) {
-        this.situacao = situacao;
-    }
 
     @Override
     public String toString() {
-        return "Turma [ID do Curso=" + idCurso + ", ID do Aluno=" + idAluno + ", Notas=" + nota + ", Situacao="
-                + situacao + "]";
+        return "Turma [ID do Curso=" + idCurso + ", ID do Aluno=" + idAluno + ", Notas=" + nota + "]";
     }
 
     public void setNota(String notas) {
