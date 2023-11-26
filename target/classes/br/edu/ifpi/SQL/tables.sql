@@ -1,30 +1,40 @@
-create table aluno (
-id int not null primary key,
-nome varchar(50) not null,
-email varchar(50) not null
-);
+create table
+public.aluno (
+id serial,
+nome character varying(50) not null,
+email character varying(50) not null,
+constraint aluno_pkey primary key (id)
+) tablespace pg_default;
 
 create table
-professor (
-id int not null primary key,
-nome varchar(50) not null,
-email varchar(50) not null
-);
+public.professor (
+id serial,
+nome character varying(50) not null,
+email character varying(50) not null,
+id_curso integer null,
+nome_curso integer null,
+constraint professor_pkey primary key (id),
+constraint professor_id_curso_fkey foreign key (id_curso) references curso (id),
+constraint professor_nome_curso_fkey foreign key (nome_curso) references curso (id)
+) tablespace pg_default;
 
-create table if not exists
-curso (
-id int not null primary key,
-nome varchar(50) not null,
-status varchar(50) not null,
-cargaHoraria int not null,
-foreign key (id_professor) REFERENCES professor(id)
-);
+create table
+public.curso (
+id serial,
+nome character varying(50) not null,
+status character varying(50) not null,
+cargahoraria character varying not null,
+constraint curso_pkey primary key (id)
+) tablespace pg_default;
 
-CREATE TABLE turma(
-id_curso int primary key,
-id_aluno int primary key,
-nota float(25),
-situacao VARCHAR(255),
-FOREIGN KEY (id_curso) REFERENCES curso(id),
-FOREIGN key (id_aluno) REFERENCES aluno(id)
-);
+create table
+public.turma (
+id serial,
+id_curso integer null,
+id_aluno integer null,
+notas double precision null,
+situacao character varying(10) null,
+constraint turma_pkey primary key (id),
+constraint turma_id_aluno_fkey foreign key (id_aluno) references aluno (id),
+constraint turma_id_curso_fkey foreign key (id_curso) references curso (id)
+) tablespace pg_default;
