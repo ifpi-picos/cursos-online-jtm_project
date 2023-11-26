@@ -120,15 +120,17 @@ public class Sistema {
     public void menuAluno() {
         Scanner scanner = new Scanner(System.in);
         Conexao conexao = new Conexao();
+        AlunoDao alunoDao = new AlunoDao(conexao);
         CursoDao cursoDao = new CursoDao(conexao);
         ProfessorDao professorDao = new ProfessorDao(conexao);
         TurmaDao turmaDao = new TurmaDao(conexao);
 
         System.out.println("________M E N U   D O   A L U N O________");
-        System.out.println("\n1. Vizualizar lista de Cursos");
-        System.out.println("2. Vizualizar lista de Professores");
-        System.out.println("3. Vizualizar Notas");
-        System.out.println("4. Realizar cadastro em Curso");
+        System.out.println("\n1. Vivualizar Perfil");
+        System.out.println("2. Vizualizar lista de Cursos");
+        System.out.println("3. Vizualizar lista de Professores");
+        System.out.println("4. Vizualizar Notas");
+        System.out.println("5. Realizar cadastro em Curso");
         System.out.println("0. Sair");
         System.out.println("_____________________________________________");
         System.out.println("\nEscolha uma opção: ");
@@ -136,18 +138,23 @@ public class Sistema {
         scanner.nextLine();
 
         if (opt == 1) {
+            System.out.println("Confirme seu Email: ");
+            String email = scanner.nextLine();
+            alunoDao.vizualizarPerfilAluno(email);
+            menuAluno();
+        } else if (opt == 2){
             cursoDao.consultarTodos();
             menuAluno();
-        } else if (opt == 2) {
+        } else if (opt == 3) {
             professorDao.consultarTodos();
             menuAluno();
-        } else if (opt == 3) {
+        } else if (opt == 4) {
             System.out.println("Confirme seu Id: ");
             int id = scanner.nextInt();
 
             turmaDao.mostrarNotasPorAluno(id);
             menuAluno();
-        } else if (opt == 4) {
+        } else if (opt == 5) {
             System.out.println("Confirme seu ID:");
             int aluno = scanner.nextInt();
             System.out.println("Insira o ID do Curso:");

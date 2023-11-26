@@ -1,5 +1,6 @@
 package br.edu.ifpi.DAO;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -96,4 +97,28 @@ public class AlunoDao implements Dao<Aluno> {
         }
         return 0;
     }
+
+    public void vizualizarPerfilAluno(String email) {
+        String sql = "SELECT id, nome, email FROM aluno WHERE email = ?";
+
+        try (Connection connection = Conexao.getConexao();
+            PreparedStatement stm = connection.prepareStatement(sql)) {
+
+            stm.setString(1, email);
+            try (ResultSet resultSet = stm.executeQuery()) {
+                System.out.println("\n________P E R F I L   D O   A L U N O________");
+                while (resultSet.next()) {
+                    int idAluno = resultSet.getInt("id");
+                    String nomeAluno = resultSet.getString("nome");
+                    String emailAluno = resultSet.getString("email");
+ 
+                    System.out.println("Id: " + idAluno + "\nNome: " + nomeAluno  +  "\nEmail: " + emailAluno);
+                    System.out.println("\n_____________________________________________");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); 
+        }
+    }
 }
+

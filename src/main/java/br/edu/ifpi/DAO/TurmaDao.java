@@ -30,7 +30,7 @@ public class TurmaDao implements Dao<Turma> {
             int row = preparedStatement.executeUpdate();
 
             System.out.println(row);
-            preparedStatement.close(); // Fechar o PreparedStatement
+            preparedStatement.close(); 
 
             return row;
 
