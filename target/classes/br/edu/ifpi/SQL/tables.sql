@@ -12,10 +12,8 @@ id serial,
 nome character varying(50) not null,
 email character varying(50) not null,
 id_curso integer null,
-nome_curso integer null,
 constraint professor_pkey primary key (id),
 constraint professor_id_curso_fkey foreign key (id_curso) references curso (id),
-constraint professor_nome_curso_fkey foreign key (nome_curso) references curso (id)
 ) tablespace pg_default;
 
 create table
