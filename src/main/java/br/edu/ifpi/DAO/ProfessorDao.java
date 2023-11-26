@@ -55,7 +55,7 @@ public class ProfessorDao implements Dao<Professor> {
 
             while (resultSet.next()) {
                 Professor professor = new Professor(SQL_SELECT_ALL, 0, SQL_SELECT_ALL, 0, null);
-                professor.setId(resultSet.getInt("ID")); 
+                professor.setId(resultSet.getInt("ID"));
                 professor.setNome(resultSet.getString("NOME"));
                 professor.setEmail(resultSet.getString("EMAIL"));
 
@@ -68,7 +68,8 @@ public class ProfessorDao implements Dao<Professor> {
             }
             System.out.println("___L I S T A   D E   P R O F E S S O R E S___");
             for (Professor p : professores) {
-                System.out.println("id : " + p.getId() + "\t Nome  :" + p.getNome() + "\t Email:" + p.getEmail() + "\t Curso: " + p.getNome_curso());
+                System.out.println("id : " + p.getId() + "\t Nome  :" + p.getNome() + "\t Email:" + p.getEmail()
+                        + "\t Curso: " + p.getNome_curso());
             }
             resultSet.close();
             preparedStatement.close();
@@ -134,12 +135,12 @@ public class ProfessorDao implements Dao<Professor> {
         String SQL_QUERY_PROFESSOR = "SELECT * FROM PROFESSOR WHERE id = ?";
         String SQL_QUERY_CURSO = "SELECT * FROM CURSO WHERE id = ?";
         String SQL_UPDATE = "UPDATE PROFESSOR SET Curso=? WHERE ID=?";
-    
+
         try {
             PreparedStatement professorStatement = conexao.prepareStatement(SQL_QUERY_PROFESSOR);
             professorStatement.setInt(1, idProfessor);
             ResultSet professorResult = professorStatement.executeQuery();
-   
+
             PreparedStatement cursoStatement = conexao.prepareStatement(SQL_QUERY_CURSO);
             cursoStatement.setInt(1, idCurso);
             ResultSet cursoResult = cursoStatement.executeQuery();
@@ -150,13 +151,12 @@ public class ProfessorDao implements Dao<Professor> {
                 String email = professorResult.getString("EMAIL");
 
                 Curso curso = new Curso(
-                    cursoResult.getInt("ID"),
-                    cursoResult.getString("NOME"),
-                    null,
-                    cursoResult.getString("CARGAHORARIA")
-                );
+                        cursoResult.getInt("ID"),
+                        cursoResult.getString("NOME"),
+                        null,
+                        cursoResult.getString("CARGAHORARIA"));
 
-                Professor professor = new Professor(nome, id, email, curso.getId(),curso.getNome());
+                Professor professor = new Professor(nome, id, email, curso.getId(), curso.getNome());
 
                 PreparedStatement updateStatement = conexao.prepareStatement(SQL_UPDATE);
                 updateStatement.setInt(1, idCurso);
@@ -170,35 +170,33 @@ public class ProfessorDao implements Dao<Professor> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0; 
+        return 0;
 
     }
 
-        public void vizualizarPerfilProfessor(String email) {
-        String sql = "SELECT id, nome, email FROM professor WHERE email = ?";
+    public void vizualizarPerfilProfessor(String email) {
+        String sql = "SELECT id, nome, email, nome_curso FROM professor WHERE email = ?";
 
         try (Connection connection = Conexao.getConexao();
-            PreparedStatement stm = connection.prepareStatement(sql)) {
+                PreparedStatement stm = connection.prepareStatement(sql)) {
 
             stm.setString(1, email);
+
             try (ResultSet resultSet = stm.executeQuery()) {
                 System.out.println("\n____P E R F I L   D O   P R O F E S S O R____");
                 while (resultSet.next()) {
                     int id = resultSet.getInt("id");
                     String nome = resultSet.getString("nome");
-                    String curso = resultSet.getString("curso");
+                    String nomeCurso = resultSet.getString("nome_curso");
 
-                    if(curso == null){
-                        System.out.println("Id: " + id + "\nNome: " + nome  +  "\nEmail: " + email + "\nCurso: ");
-                    } else if (curso != null){
-                        System.out.println("Id: " + id + "\nNome: " + nome  +  "\nEmail: " + email + "\nCurso: " + curso);
-                    }
-                    
+                    System.out.println("Id: " + id + "\nNome: " + nome + "\nEmail: " + email + "\nCurso: "
+                            + (nomeCurso != null ? nomeCurso : ""));
                 }
                 System.out.println("\n_____________________________________________\n");
             }
         } catch (SQLException e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
     }
+
 }
