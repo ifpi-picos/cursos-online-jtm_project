@@ -59,11 +59,16 @@ public class ProfessorDao implements Dao<Professor> {
                 professor.setNome(resultSet.getString("NOME"));
                 professor.setEmail(resultSet.getString("EMAIL"));
 
+                Curso curso = new Curso(0, SQL_SELECT_ALL, null, SQL_SELECT_ALL);
+                curso.setNome(resultSet.getString("CURSO"));
+
+                professor.setCurso(curso);
+
                 professores.add(professor);
             }
             System.out.println("___L I S T A   D E   P R O F E S S O R E S___");
             for (Professor p : professores) {
-                System.out.println("id : " + p.getId() + "\t Nome  :" + p.getNome() + "\t Email:" + p.getEmail());
+                System.out.println("id : " + p.getId() + "\t Nome  :" + p.getNome() + "\t Email:" + p.getEmail() + "\t Curso: " + p.getCurso());
             }
             resultSet.close();
             preparedStatement.close();
@@ -179,11 +184,15 @@ public class ProfessorDao implements Dao<Professor> {
             try (ResultSet resultSet = stm.executeQuery()) {
                 System.out.println("\n____P E R F I L   D O   P R O F E S S O R____");
                 while (resultSet.next()) {
-                    int idAluno = resultSet.getInt("id");
-                    String nomeAluno = resultSet.getString("nome");
-                    String emailAluno = resultSet.getString("email");
- 
-                    System.out.println("Id: " + idAluno + "\nNome: " + nomeAluno  +  "\nEmail: " + emailAluno);
+                    int id = resultSet.getInt("id");
+                    String nome = resultSet.getString("nome");
+                    String curso = resultSet.getString("curso");
+
+                    if(curso == null){
+                        System.out.println("Id: " + id + "\nNome: " + nome  +  "\nEmail: " + email + "\nCurso: ");
+                    } else if (curso != null){
+                        System.out.println("Id: " + id + "\nNome: " + nome  +  "\nEmail: " + email + "\nCurso: " + curso);
+                    }
                     
                 }
                 System.out.println("\n_____________________________________________\n");
