@@ -233,9 +233,9 @@ public class Sistema {
             System.out.println("1. Aberto");
             System.out.println("2. Fechado");
             int opcao = scanner.nextInt();
-            if (opcao == 1){
+            if (opcao == 1) {
                 cursoalterado.setStatus(StatusCurso.ABERTO);
-            } else if (opcao == 2){
+            } else if (opcao == 2) {
                 cursoalterado.setStatus(StatusCurso.FECHADO);
             } else {
                 System.out.println("Opção inválida, Tente Novamente:");
@@ -307,7 +307,6 @@ public class Sistema {
             System.out.println("Digite o ID do Curso:");
             int curso = scanner.nextInt();
 
-            
             professores();
         } else if (opt == 0) {
             menuProfessor();
@@ -375,6 +374,14 @@ public class Sistema {
 
             alunos();
         } else if (opt == 5) {
+            System.out.println("Digite o ID do Curso:");
+            int idCurso = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.println("Digite o ID do Professor:");
+            int idProfessor = scanner.nextInt();
+            scanner.nextLine();
+
             System.out.println("Digite o ID do Aluno para o qual deseja registrar as notas:");
             int idAluno = scanner.nextInt();
             scanner.nextLine();
@@ -388,7 +395,7 @@ public class Sistema {
                 notas[i] = Float.parseFloat(notasArray[i]);
             }
 
-            Turma novaTurma = new Turma(0, idAluno, 0, null);
+            Turma novaTurma = new Turma(idCurso, idAluno, idProfessor, null);
             novaTurma.setNota(notas);
 
             int resultado = turmaDao.cadastrar(novaTurma);
@@ -397,9 +404,7 @@ public class Sistema {
             } else {
                 System.out.println("Falha ao registrar as notas do aluno.");
             }
-
             alunos();
-
         } else if (opt == 0) {
             menuProfessor();
         } else {

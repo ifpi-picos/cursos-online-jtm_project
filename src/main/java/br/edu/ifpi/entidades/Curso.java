@@ -16,9 +16,6 @@ public class Curso {
         this.cargaHoraria = cargaHoraria;
     }
 
-    public Curso() {
-    }
-
     public String getNome() {
         return nome;
     }
