@@ -73,7 +73,7 @@ public class Sistema {
             System.out.println("Digite Email do Professor:");
             String email = scanner.nextLine();
 
-            Professor professor = new Professor(nome, 0, email, null);
+            Professor professor = new Professor(nome, 0, email, 0, null);
             professorDao.cadastrar(professor);
             menuProfessor();
         }
@@ -296,7 +296,7 @@ public class Sistema {
             System.out.println("Digite Email do Professor:");
             String email = scanner.nextLine();
 
-            Professor professor = new Professor(nome, 0, email, null);
+            Professor professor = new Professor(nome, 0, email, 0, null);
             professorDao.cadastrar(professor);
             professores();
         } else if (opt == 3) {
@@ -304,7 +304,7 @@ public class Sistema {
             int Id_alter = scanner.nextInt();
             scanner.nextLine();
 
-            Professor alterarProf = new Professor(null, 0, null, null);
+            Professor alterarProf = new Professor(null, 0, null, 0, null);
 
             alterarProf.setId(Id_alter);
 

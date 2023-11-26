@@ -51,7 +51,7 @@ public class AutenticacaoDao {
                     System.out.println("_____________________________________________\n");
                     System.out.println("  P R O F E S S O R   A U T E N T I C A D O\n           C O M   S U C E S S O !");
                     System.out.println("_____________________________________________\n");
-                    return new Professor(professorNome, professorId, email, null);
+                    return new Professor(professorNome, professorId, email, 0, null);
                 }
             }
         } catch (SQLException e) {

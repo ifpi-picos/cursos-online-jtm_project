@@ -54,7 +54,7 @@ public class ProfessorDao implements Dao<Professor> {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Professor professor = new Professor(SQL_SELECT_ALL, 0, SQL_SELECT_ALL, null);
+                Professor professor = new Professor(SQL_SELECT_ALL, 0, SQL_SELECT_ALL, 0, null);
                 professor.setId(resultSet.getInt("ID")); 
                 professor.setNome(resultSet.getString("NOME"));
                 professor.setEmail(resultSet.getString("EMAIL"));
@@ -62,13 +62,13 @@ public class ProfessorDao implements Dao<Professor> {
                 Curso curso = new Curso(0, SQL_SELECT_ALL, null, SQL_SELECT_ALL);
                 curso.setNome(resultSet.getString("CURSO"));
 
-                professor.setCurso(curso);
+                professor.setNome_curso(curso.getNome());
 
                 professores.add(professor);
             }
             System.out.println("___L I S T A   D E   P R O F E S S O R E S___");
             for (Professor p : professores) {
-                System.out.println("id : " + p.getId() + "\t Nome  :" + p.getNome() + "\t Email:" + p.getEmail() + "\t Curso: " + p.getCurso());
+                System.out.println("id : " + p.getId() + "\t Nome  :" + p.getNome() + "\t Email:" + p.getEmail() + "\t Curso: " + p.getNome_curso());
             }
             resultSet.close();
             preparedStatement.close();
@@ -156,7 +156,7 @@ public class ProfessorDao implements Dao<Professor> {
                     cursoResult.getString("CARGAHORARIA")
                 );
 
-                Professor professor = new Professor(nome, id, email, curso);
+                Professor professor = new Professor(nome, id, email, curso.getId(),curso.getNome());
 
                 PreparedStatement updateStatement = conexao.prepareStatement(SQL_UPDATE);
                 updateStatement.setInt(1, idCurso);

@@ -4,13 +4,15 @@ public class Professor {
     private String nome;
     private int id;
     private String email;
-    private Curso curso;
+    private int id_curso;
+    private String nome_curso;
 
-    public Professor(String nome, int id, String email, Curso curso) {
+    public Professor(String nome, int id, String email, int id_curso, String nome_curso) {
         this.nome = nome;
         this.id = id;
         this.email = email;
-        this.curso = curso;
+        this.id_curso = id_curso;
+        this.nome_curso = nome_curso;
     }
 
     public String getNome() {
@@ -25,8 +27,12 @@ public class Professor {
         return email;
     }
 
-    public Curso getCurso() {
-        return curso;
+    public int getId_curso() {
+        return id_curso;
+    }
+
+    public String getNome_curso() {
+        return nome_curso;
     }
 
     public void setNome(String nome) {
@@ -41,7 +47,11 @@ public class Professor {
         this.id = id;
     }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setId_curso(int id_curso) {
+        this.id_curso = id_curso;
+    }
+
+    public void setNome_curso(String nome_curso) {
+        this.nome_curso = nome_curso;
     }
 }
