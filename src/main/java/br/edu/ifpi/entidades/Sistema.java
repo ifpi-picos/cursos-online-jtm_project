@@ -211,6 +211,7 @@ public class Sistema {
         Scanner scanner = new Scanner(System.in);
         Conexao conexao = new Conexao();
         CursoDao cursoDao = new CursoDao(conexao);
+        TurmaDao turmaDao = new TurmaDao(conexao);
         System.out.println("_________________C U R S O S________________");
         System.out.println("\n1. Vizualizar lista de Cursos");
         System.out.println("2. Realizar cadastro de Curso");
@@ -270,6 +271,8 @@ public class Sistema {
             int id = scanner.nextInt();
             StatusCurso status = StatusCurso.ABERTO;
 
+            Turma turma = new Turma(id, 0, 0);
+            turmaDao.remover(turma);
             Curso curso = new Curso(id , null, status, null);
             cursoDao.remover(curso);
             cursos();
@@ -401,6 +404,8 @@ public class Sistema {
             System.out.println("Digite o ID do Aluno:");
             int id = scanner.nextInt();
             
+            Turma turma = new Turma(id, 0, 0);
+            turmaDao.remover(turma);
             Aluno aluno = new Aluno(id, null, null);
             alunoDao.remover(aluno);
             alunos();
