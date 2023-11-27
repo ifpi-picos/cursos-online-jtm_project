@@ -93,6 +93,9 @@ public class ProfessorDao implements Dao<Professor> {
             int row = preparedStatement.executeUpdate();
 
             System.out.println(row);
+            System.out.println("_____________________________________________\n");
+            System.out.println("    D A D O S   A L T E R A D O S   C O M\n              S U C E S S O !");
+            System.out.println("_____________________________________________\n");
             return row;
 
         } catch (SQLException e) {
@@ -116,6 +119,9 @@ public class ProfessorDao implements Dao<Professor> {
             int row = preparedStatement.executeUpdate();
 
             System.out.println(row);
+            System.out.println("_____________________________________________\n");
+            System.out.println(" P R O F E S S O R   E X C L U Í D O   C O M\n              S U C E S S O !");
+            System.out.println("_____________________________________________\n");
             return row;
 
         } catch (SQLException e) {
@@ -147,7 +153,9 @@ public class ProfessorDao implements Dao<Professor> {
                 updateStatement.setInt(2, idProfessor);
 
                 int rowsUpdated = updateStatement.executeUpdate();
-                System.out.println("Linhas atualizadas: " + rowsUpdated);
+                System.out.println("_____________________________________________\n");
+                System.out.println(" M A T R Í C U L A  R E A L I Z A D O  C O M\n              S U C E S S O !");
+                System.out.println("_____________________________________________\n");
 
                 return rowsUpdated;
             } else {

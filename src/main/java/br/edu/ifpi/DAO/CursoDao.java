@@ -63,13 +63,13 @@ public class CursoDao implements Dao<Curso> {
                 cursos.add(curso);
 
             }
-            TurmaDao turma = new TurmaDao(conexao);
 
             System.out.println("________L I S T A   D E   C U R S O S________");
             for (Curso curso : cursos) {
                 System.out.println("id: " + curso.getId() + "\tNome: " + curso.getNome() + "\tStatus: "
                         + curso.getStatus() + "\t Carga Horária: " + curso.getCargaHoraria());
             }
+            System.out.println("_____________________________________________\n");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -87,9 +87,11 @@ public class CursoDao implements Dao<Curso> {
             stmt.setString(2, curso.getStatus().name());
             stmt.setString(3, curso.getCargaHoraria());
             stmt.setInt(4, curso.getId());
-
+            
+            System.out.println("_____________________________________________\n");
+            System.out.println("    D A D O S   A L T E R A D O S   C O M\n              S U C E S S O !");
+            System.out.println("_____________________________________________\n");
             return stmt.executeUpdate();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -102,7 +104,9 @@ public class CursoDao implements Dao<Curso> {
 
         try (PreparedStatement stmt = conexao.prepareStatement(SQL_DELETE)) {
             stmt.setInt(1, curso.getId());
-
+            System.out.println("_____________________________________________\n");
+            System.out.println("     C U R S O   E X C L U Í D O   C O M\n              S U C E S S O !");
+            System.out.println("_____________________________________________\n");
             return stmt.executeUpdate();
 
         } catch (SQLException e) {

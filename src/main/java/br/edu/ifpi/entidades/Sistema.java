@@ -215,6 +215,7 @@ public class Sistema {
         System.out.println("\n1. Vizualizar lista de Cursos");
         System.out.println("2. Realizar cadastro de Curso");
         System.out.println("3. Editar dados de um Curso");
+        System.out.println("4. Excluir um Curso");
         System.out.println("0. Voltar ao menu Professor");
         System.out.println("_____________________________________________");
         System.out.println("\nEscolha uma opção: ");
@@ -264,7 +265,15 @@ public class Sistema {
             cursoDao.alterar(cursoalterado);
 
             cursos();
-        } else if (opt == 0) {
+        } else if (opt == 4) {
+            System.out.println("Digite ID do Curso:");
+            int id = scanner.nextInt();
+            StatusCurso status = StatusCurso.ABERTO;
+
+            Curso curso = new Curso(id , null, status, null);
+            cursoDao.remover(curso);
+            cursos();
+        }else if (opt == 0) {
             menuProfessor();
         } else {
             System.out.println("Opção Inválida, tente novamente.");
@@ -280,7 +289,8 @@ public class Sistema {
         System.out.println("\n1. Vizualizar lista de Professoers");
         System.out.println("2. Realizar cadastro de um Professor");
         System.out.println("3. Editar dados de um Professor");
-        System.out.println("4. Matricular Professor em um Curso");
+        System.out.println("4. Excluir um Professor");
+        System.out.println("5. Matricular Professor em um Curso");
         System.out.println("0. Voltar ao menu Professor");
         System.out.println("_____________________________________________");
         System.out.println("\nEscolha uma opção: ");
@@ -319,10 +329,18 @@ public class Sistema {
             professores();
         } else if (opt == 4) {
             System.out.println("Digite o ID do Professor:");
-            int aluno = scanner.nextInt();
+            int id = scanner.nextInt();
+            
+            Professor professor = new Professor(null, id, null, 0);
+            professorDao.remover(professor);
+            professores();
+        }else if (opt == 5) {
+            System.out.println("Digite o ID do Professor:");
+            int professor = scanner.nextInt();
             System.out.println("Digite o ID do Curso:");
             int curso = scanner.nextInt();
 
+            professorDao.AssociarProfessorCurso(professor, curso);
             professores();
         } else if (opt == 0) {
             menuProfessor();
@@ -336,14 +354,14 @@ public class Sistema {
         Scanner scanner = new Scanner(System.in);
         Conexao conexao = new Conexao();
         AlunoDao alunoDao = new AlunoDao(conexao);
-        CursoDao cursoDao = new CursoDao(conexao);
         TurmaDao turmaDao = new TurmaDao(conexao);
         System.out.println("_________________A L U N O S_________________");
         System.out.println("\n1. Vizualizar lista de Alunos");
         System.out.println("2. Realizar cadastro de um Aluno");
         System.out.println("3. Editar dados de um Aluno");
-        System.out.println("4. Matricular Aluno em um Curso");
-        System.out.println("5. Registrar Notas de Alunos");
+        System.out.println("4. Excluir um Aluno");
+        System.out.println("5. Matricular Aluno em um Curso");
+        System.out.println("6. Registrar Notas de Alunos");
         System.out.println("0. Voltar ao menu Professor");
         System.out.println("_____________________________________________");
         System.out.println("\nEscolha uma opção: ");
@@ -381,6 +399,13 @@ public class Sistema {
             alunos();
         } else if (opt == 4) {
             System.out.println("Digite o ID do Aluno:");
+            int id = scanner.nextInt();
+            
+            Aluno aluno = new Aluno(id, null, null);
+            alunoDao.remover(aluno);
+            alunos();
+        }else if (opt == 5) {
+            System.out.println("Digite o ID do Aluno:");
             int aluno = scanner.nextInt();
             System.out.println("Digite o ID do Curso:");
             int curso = scanner.nextInt();
@@ -389,7 +414,7 @@ public class Sistema {
             turmaDao.cadastrar(turma);
 
             alunos();
-        } else if (opt == 5) {
+        } else if (opt == 6) {
             System.out.println("Digite o ID do Curso:");
             int idCurso = scanner.nextInt();
             scanner.nextLine();

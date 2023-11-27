@@ -31,6 +31,9 @@ public class TurmaDao implements Dao<Turma> {
             System.out.println(row);
             preparedStatement.close(); 
 
+            System.out.println("_____________________________________________\n");
+            System.out.println(" M A T R Í C U L A  R E A L I Z A D O  C O M\n              S U C E S S O !");
+            System.out.println("_____________________________________________\n");
             return row;
 
         } catch (SQLException e) {

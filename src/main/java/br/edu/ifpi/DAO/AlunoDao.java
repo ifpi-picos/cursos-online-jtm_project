@@ -52,6 +52,7 @@ public class AlunoDao implements Dao<Aluno> {
                 System.out.println(
                         "ID: " + p.getId() + "\t Nome: " + p.getNome() + "\t Email:" + p.getEmail());
             }
+            System.out.println("_____________________________________________\n");
             resultSet.close();
             stmt.close();
 
@@ -72,7 +73,10 @@ public class AlunoDao implements Dao<Aluno> {
             stmt.setString(1, aluno.getNome());
             stmt.setString(2, aluno.getEmail());
             stmt.setInt(3, aluno.getId());
-
+            
+            System.out.println("_____________________________________________\n");
+            System.out.println("    D A D O S   A L T E R A D O S   C O M\n              S U C E S S O !");
+            System.out.println("_____________________________________________\n");
             return stmt.executeUpdate();
         } catch (SQLException e) {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
@@ -89,6 +93,9 @@ public class AlunoDao implements Dao<Aluno> {
         try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_DELETE)) {
             stmt.setInt(1, aluno.getId());
 
+            System.out.println("_____________________________________________\n");
+            System.out.println("     A L U N O   E X C L U Í D O   C O M\n              S U C E S S O !");
+            System.out.println("_____________________________________________\n");
             return stmt.executeUpdate();
         } catch (SQLException e) {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
