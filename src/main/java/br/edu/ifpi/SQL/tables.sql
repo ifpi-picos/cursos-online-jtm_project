@@ -32,7 +32,7 @@ id_curso integer null,
 id_aluno integer null,
 notas double precision null,
 situacao character varying(10) null,
-constraint turma_pkey primary key (id),
-constraint turma_id_aluno_fkey foreign key (id_aluno) references aluno (id),
-constraint turma_id_curso_fkey foreign key (id_curso) references curso (id)
-) tablespace pg_default;
+CONSTRAINT turma_pkey PRIMARY KEY (id),
+CONSTRAINT turma_id_aluno_fkey FOREIGN KEY (id_aluno) REFERENCES aluno (id) ON DELETE CASCADE,
+CONSTRAINT turma_id_curso_fkey FOREIGN KEY (id_curso) REFERENCES curso (id) ON DELETE CASCADE
+) TABLESPACE pg_default;
