@@ -87,7 +87,7 @@ public class CursoDao implements Dao<Curso> {
             stmt.setString(2, curso.getStatus().name());
             stmt.setString(3, curso.getCargaHoraria());
             stmt.setInt(4, curso.getId());
-            
+
             System.out.println("_____________________________________________\n");
             System.out.println("    D A D O S   A L T E R A D O S   C O M\n              S U C E S S O !");
             System.out.println("_____________________________________________\n");
@@ -109,6 +109,27 @@ public class CursoDao implements Dao<Curso> {
             System.out.println("_____________________________________________\n");
             return stmt.executeUpdate();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int exibirQuantidadeAlunosMatriculados(Curso curso) {
+        String SQL_COUNT_ENROLLMENTS = "SELECT COUNT(*) AS QUANTIDADE_ALUNOS FROM Matricula WHERE ID_CURSO = ?";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(SQL_COUNT_ENROLLMENTS)) {
+            stmt.setInt(1, curso.getId());
+
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    int quantidadeAlunos = resultSet.getInt("QUANTIDADE_ALUNOS");
+                    System.out.println("_____________________________________________\n");
+                    System.out.println("   Número de Alunos Matriculados no Curso: " + quantidadeAlunos);
+                    System.out.println("_____________________________________________\n");
+                    return quantidadeAlunos;
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
