@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.ifpi.entidades.Curso;
 import br.edu.ifpi.entidades.CursoAluno;
 
 public class CursoAlunoDao implements Dao<CursoAluno> {
@@ -160,4 +161,26 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
 
     public void remover(int id) {
     }
+
+    public double exibirNotaMediaGeralAlunos(Curso curso) {
+        String SQL_SELECT_AVG_GRADE = "SELECT AVG(nota) AS MEDIA_GERAL FROM cursoaluno WHERE ID_CURSO = ?";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(SQL_SELECT_AVG_GRADE)) {
+            stmt.setInt(1, curso.getId());
+
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    double mediaGeral = resultSet.getDouble("MEDIA_GERAL");
+                    System.out.println("_____________________________________________\n");
+                    System.out.println("   Nota Média Geral dos Alunos no Curso: " + mediaGeral);
+                    System.out.println("_____________________________________________\n");
+                    return mediaGeral;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
+
 }
