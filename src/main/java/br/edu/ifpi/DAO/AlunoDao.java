@@ -165,8 +165,8 @@ public class AlunoDao implements Dao<Aluno> {
 
     public void exibirCursosMatriculados(int idAluno) {
         String SQL_SELECT_MATRICULAS = "SELECT C.ID, C.NOME FROM CURSO C " +
-                                       "JOIN MATRICULA M ON C.ID = M.ID_CURSO " +
-                                       "WHERE M.ID_ALUNO = ?";
+                                       "JOIN CURSOALUNO CA ON C.ID = CA.ID_CURSO " +
+                                       "WHERE CA.ID_ALUNO = ?";
     
         try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_SELECT_MATRICULAS)) {
             stmt.setInt(1, idAluno);
