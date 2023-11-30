@@ -157,4 +157,7 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
             e.printStackTrace();
         }
     }
+
+    public void remover(int id) {
+    }
 }

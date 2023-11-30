@@ -6,9 +6,9 @@ import java.util.Scanner;
 import br.edu.ifpi.DAO.AlunoDao;
 import br.edu.ifpi.DAO.AutenticacaoDao;
 import br.edu.ifpi.DAO.Conexao;
+import br.edu.ifpi.DAO.CursoAlunoDao;
 import br.edu.ifpi.DAO.CursoDao;
 import br.edu.ifpi.DAO.ProfessorDao;
-import br.edu.ifpi.DAO.TurmaDao;
 import br.edu.ifpi.enums.StatusCurso;
 
 public class Sistema {
@@ -123,7 +123,7 @@ public class Sistema {
         AlunoDao alunoDao = new AlunoDao(conexao);
         CursoDao cursoDao = new CursoDao(conexao);
         ProfessorDao professorDao = new ProfessorDao(conexao);
-        TurmaDao turmaDao = new TurmaDao(conexao);
+        CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(conexao);
 
         System.out.println("________M E N U   D O   A L U N O________");
         System.out.println("\n1. Vizualizar Perfil");
@@ -142,7 +142,7 @@ public class Sistema {
             String email = scanner.nextLine();
             alunoDao.vizualizarPerfilAluno(email);
             menuAluno();
-        } else if (opt == 2){
+        } else if (opt == 2) {
             cursoDao.consultarTodos();
             menuAluno();
         } else if (opt == 3) {
@@ -152,7 +152,7 @@ public class Sistema {
             System.out.println("Confirme seu Id: ");
             int id = scanner.nextInt();
 
-            turmaDao.mostrarBoletim(id);
+            cursoAlunoDao.mostrarBoletim(id);
             menuAluno();
         } else if (opt == 5) {
             System.out.println("Confirme seu ID:");
@@ -160,8 +160,8 @@ public class Sistema {
             System.out.println("Insira o ID do Curso:");
             int curso = scanner.nextInt();
 
-            Turma turma = new Turma(aluno, curso, 0);
-            turmaDao.cadastrar(turma);
+            CursoAluno cursoAluno = new CursoAluno(aluno, curso, 0, "");
+            cursoAlunoDao.cadastrar(cursoAluno);
             menuAluno();
         } else if (opt == 0) {
             mostrarMenuInicial();
@@ -193,7 +193,7 @@ public class Sistema {
 
             professorDao.vizualizarPerfilProfessor(email);
             menuProfessor();
-        } else if (opt == 2){
+        } else if (opt == 2) {
             cursos();
         } else if (opt == 3) {
             professores();
@@ -211,7 +211,7 @@ public class Sistema {
         Scanner scanner = new Scanner(System.in);
         Conexao conexao = new Conexao();
         CursoDao cursoDao = new CursoDao(conexao);
-        TurmaDao turmaDao = new TurmaDao(conexao);
+        CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(conexao);
         System.out.println("_________________C U R S O S________________");
         System.out.println("\n1. Vizualizar lista de Cursos");
         System.out.println("2. Realizar cadastro de Curso");
@@ -271,12 +271,12 @@ public class Sistema {
             int id = scanner.nextInt();
             StatusCurso status = StatusCurso.ABERTO;
 
-            Turma turma = new Turma(id, 0, 0);
-            turmaDao.remover(turma);
-            Curso curso = new Curso(id , null, status, null);
+            CursoAluno cursoAluno = new CursoAluno(id, 0, 0, "");
+            cursoAlunoDao.remover(cursoAluno);
+            Curso curso = new Curso(id, null, status, null);
             cursoDao.remover(curso);
             cursos();
-        }else if (opt == 0) {
+        } else if (opt == 0) {
             menuProfessor();
         } else {
             System.out.println("Opção Inválida, tente novamente.");
@@ -333,17 +333,18 @@ public class Sistema {
         } else if (opt == 4) {
             System.out.println("Digite o ID do Professor:");
             int id = scanner.nextInt();
-            
+
             Professor professor = new Professor(null, id, null, 0);
             professorDao.remover(professor);
             professores();
-        }else if (opt == 5) {
+        } else if (opt == 5) {
             System.out.println("Digite o ID do Professor:");
             int professor = scanner.nextInt();
             System.out.println("Digite o ID do Curso:");
             int curso = scanner.nextInt();
 
-            professorDao.AssociarProfessorCurso(professor, curso);
+            CursoAluno cursoAluno = new CursoAluno(professor, curso, 0, "");
+            CursoAluno.cadastrar(cursoAluno);
             professores();
         } else if (opt == 0) {
             menuProfessor();
@@ -357,7 +358,7 @@ public class Sistema {
         Scanner scanner = new Scanner(System.in);
         Conexao conexao = new Conexao();
         AlunoDao alunoDao = new AlunoDao(conexao);
-        TurmaDao turmaDao = new TurmaDao(conexao);
+        CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(conexao);
         System.out.println("_________________A L U N O S_________________");
         System.out.println("\n1. Vizualizar lista de Alunos");
         System.out.println("2. Realizar cadastro de um Aluno");
@@ -403,21 +404,18 @@ public class Sistema {
         } else if (opt == 4) {
             System.out.println("Digite o ID do Aluno:");
             int id = scanner.nextInt();
-            
-            Turma turma = new Turma(id, 0, 0);
-            turmaDao.remover(turma);
-            Aluno aluno = new Aluno(id, null, null);
-            alunoDao.remover(aluno);
+
+            cursoAlunoDao.remover(id);
+            alunoDao.remover(id);
             alunos();
-        }else if (opt == 5) {
+        } else if (opt == 5) {
             System.out.println("Digite o ID do Aluno:");
-            int aluno = scanner.nextInt();
+            int alunoId = scanner.nextInt();
             System.out.println("Digite o ID do Curso:");
-            int curso = scanner.nextInt();
+            int cursoId = scanner.nextInt();
 
-            Turma turma = new Turma(aluno, curso, 0);
-            turmaDao.cadastrar(turma);
-
+            CursoAluno cursoAluno = new CursoAluno(alunoId, cursoId, 0, "");
+            cursoAlunoDao.cadastrar(cursoAluno);
             alunos();
         } else if (opt == 6) {
             System.out.println("Digite o ID do Curso:");
@@ -431,11 +429,10 @@ public class Sistema {
             System.out.println("Digite a nota do aluno: ");
             float nota = scanner.nextFloat();
 
-            Turma novaTurma = new Turma(idCurso, idAluno, nota);
-            novaTurma.setNota(nota);
+            CursoAluno novoCursoAluno = new CursoAluno(idAluno, idCurso, nota, "");
+            cursoAlunoDao.cadastrar(novoCursoAluno);
 
-            int resultado = turmaDao.cadastrar(novaTurma);
-            if (resultado > 0) {
+            if (nota != 0) {
                 System.out.println("Notas do aluno registradas com sucesso!");
             } else {
                 System.out.println("Falha ao registrar as notas do aluno.");

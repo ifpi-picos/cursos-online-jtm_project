@@ -73,7 +73,7 @@ public class AlunoDao implements Dao<Aluno> {
             stmt.setString(1, aluno.getNome());
             stmt.setString(2, aluno.getEmail());
             stmt.setInt(3, aluno.getId());
-            
+
             System.out.println("_____________________________________________\n");
             System.out.println("    D A D O S   A L T E R A D O S   C O M\n              S U C E S S O !");
             System.out.println("_____________________________________________\n");
@@ -109,7 +109,7 @@ public class AlunoDao implements Dao<Aluno> {
         String sql = "SELECT id, nome, email FROM aluno WHERE email = ?";
 
         try (Connection connection = Conexao.getConexao();
-            PreparedStatement stm = connection.prepareStatement(sql)) {
+                PreparedStatement stm = connection.prepareStatement(sql)) {
 
             stm.setString(1, email);
             try (ResultSet resultSet = stm.executeQuery()) {
@@ -118,14 +118,16 @@ public class AlunoDao implements Dao<Aluno> {
                     int idAluno = resultSet.getInt("id");
                     String nomeAluno = resultSet.getString("nome");
                     String emailAluno = resultSet.getString("email");
- 
-                    System.out.println("\nId: " + idAluno + "\nNome: " + nomeAluno  +  "\nEmail: " + emailAluno);
+
+                    System.out.println("\nId: " + idAluno + "\nNome: " + nomeAluno + "\nEmail: " + emailAluno);
                 }
                 System.out.println("_____________________________________________\n");
             }
         } catch (SQLException e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
     }
-}
 
+    public void remover(int id) {
+    }
+}

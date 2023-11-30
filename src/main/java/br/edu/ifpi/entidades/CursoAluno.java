@@ -51,4 +51,7 @@ public class CursoAluno {
     public String getNomeAluno() {
         return null;
     }
+
+    public static void cadastrar(CursoAluno cursoAluno) {
+    }
 }
