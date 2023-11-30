@@ -6,33 +6,34 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.ifpi.entidades.Turma;
+import br.edu.ifpi.entidades.CursoAluno;
 
-public class TurmaDao implements Dao<Turma> {
+public class CursoAlunoDao implements Dao<CursoAluno> {
     private Conexao conexao;
 
-    public TurmaDao(Conexao conexao) {
+    public CursoAlunoDao(Conexao conexao) {
         this.conexao = conexao;
     }
 
     @Override
-    public int cadastrar(Turma turma) {
-        String SQL_INSERT = "INSERT INTO TURMA (ID_CURSO, ID_ALUNO, NOTAS) VALUES(?,?,?)";
+    public int cadastrar(CursoAluno cursoAluno) {
+        String SQL_INSERT = "INSERT INTO CURSO_ALUNO (ID_CURSO, ID_ALUNO, NOTAS, SITUACAO) VALUES(?,?,?,?)";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_INSERT);
 
-            preparedStatement.setInt(1, turma.getIdCurso());
-            preparedStatement.setInt(2, turma.getIdAluno());
-            preparedStatement.setFloat(3, turma.getNota());
+            preparedStatement.setInt(1, cursoAluno.getIdCurso());
+            preparedStatement.setInt(2, cursoAluno.getIdAluno());
+            preparedStatement.setFloat(3, cursoAluno.getNota());
+            preparedStatement.setString(4, cursoAluno.getSituacao());
 
             int row = preparedStatement.executeUpdate();
 
             System.out.println(row);
-            preparedStatement.close(); 
+            preparedStatement.close();
 
             System.out.println("_____________________________________________\n");
-            System.out.println(" M A T R Í C U L A  R E A L I Z A D O  C O M\n              S U C E S S O !");
+            System.out.println(" M A T R Í C U L A  R E A L I Z A D A  C O M\n              S U C E S S O !");
             System.out.println("_____________________________________________\n");
             return row;
 
@@ -45,27 +46,28 @@ public class TurmaDao implements Dao<Turma> {
     }
 
     @Override
-    public List<Turma> consultarTodos() {
-        List<Turma> turmas = new ArrayList<>();
-        String SQL_SELECT_ALL = "SELECT TURMA.ID, TURMA.ID_CURSO, TURMA.ID_ALUNO, TURMA.NOTAS, TURMA.SITUACAO, ALUNO.NOME "
-                + "FROM TURMA INNER JOIN ALUNO ON TURMA.ID_ALUNO = ALUNO.ID";
+    public List<CursoAluno> consultarTodos() {
+        List<CursoAluno> cursoAlunos = new ArrayList<>();
+        String SQL_SELECT_ALL = "SELECT CURSO_ALUNO.ID, CURSO_ALUNO.ID_CURSO, CURSO_ALUNO.ID_ALUNO, CURSO_ALUNO.NOTAS, CURSO_ALUNO.SITUACAO, ALUNO.NOME "
+                + "FROM CURSO_ALUNO INNER JOIN ALUNO ON CURSO_ALUNO.ID_ALUNO = ALUNO.ID";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_SELECT_ALL);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Turma turma = new Turma(resultSet.getInt("ID_CURSO"), resultSet.getInt("ID_ALUNO"),
-                        resultSet.getFloat("NOTAS"));
-                turma.setIdAluno(resultSet.getInt("ID"));
-                turma.setIdAluno(resultSet.getString("NOME"));
+                CursoAluno cursoAluno = new CursoAluno(resultSet.getInt("ID_CURSO"), resultSet.getInt("ID_ALUNO"),
+                        resultSet.getFloat("NOTAS"), resultSet.getString("SITUACAO"));
+                cursoAluno.setIdAluno(resultSet.getInt("ID"));
+                cursoAluno.setNomeAluno(resultSet.getString("NOME"));
 
-                turmas.add(turma);
+                cursoAlunos.add(cursoAluno);
             }
 
-            for (Turma t : turmas) {
-                System.out.println("ID do Curso: " + t.getIdCurso() + "\t Nome do Aluno: " + t.getIdAluno() +
-                        "\t Notas: " + (t.getNota() != 0 ? t.getNota() : " "));
+            for (CursoAluno ca : cursoAlunos) {
+                System.out.println("ID do Curso: " + ca.getIdCurso() + "\t Nome do Aluno: " + ca.getNomeAluno() +
+                        "\t Notas: " + (ca.getNota() != 0 ? ca.getNota() : " ") +
+                        "\t Situação: " + ca.getSituacao());
             }
             resultSet.close();
             preparedStatement.close();
@@ -75,20 +77,21 @@ public class TurmaDao implements Dao<Turma> {
             e.printStackTrace();
         }
 
-        return turmas;
+        return cursoAlunos;
     }
 
     @Override
-    public int alterar(Turma turma) {
-        String SQL_UPDATE = "UPDATE TURMA SET ID_CURSO=?, ID_ALUNO=?, NOTAS=?, SITUACAO=? WHERE ID=?";
+    public int alterar(CursoAluno cursoAluno) {
+        String SQL_UPDATE = "UPDATE CURSO_ALUNO SET ID_CURSO=?, ID_ALUNO=?, NOTAS=?, SITUACAO=? WHERE ID=?";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_UPDATE);
 
-            preparedStatement.setInt(1, turma.getIdCurso());
-            preparedStatement.setInt(2, turma.getIdAluno());
-            preparedStatement.setFloat(3, turma.getNota());
-            preparedStatement.setInt(4, turma.getIdAluno());
+            preparedStatement.setInt(1, cursoAluno.getIdCurso());
+            preparedStatement.setInt(2, cursoAluno.getIdAluno());
+            preparedStatement.setFloat(3, cursoAluno.getNota());
+            preparedStatement.setString(4, cursoAluno.getSituacao());
+            preparedStatement.setInt(5, cursoAluno.getIdCurso());
 
             int row = preparedStatement.executeUpdate();
 
@@ -106,13 +109,13 @@ public class TurmaDao implements Dao<Turma> {
     }
 
     @Override
-    public int remover(Turma turma) {
-        String SQL_DELETE = "DELETE FROM TURMA WHERE ID=?";
+    public int remover(CursoAluno cursoAluno) {
+        String SQL_DELETE = "DELETE FROM CURSO_ALUNO WHERE ID=?";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_DELETE);
 
-            preparedStatement.setInt(1, turma.getIdAluno());
+            preparedStatement.setInt(1, cursoAluno.getIdCurso());
 
             int row = preparedStatement.executeUpdate();
 
@@ -130,7 +133,7 @@ public class TurmaDao implements Dao<Turma> {
     }
 
     public void mostrarBoletim(int idAluno) {
-        String SQL_SELECT_NOTAS_ALUNO = "SELECT ID_CURSO, NOTAS FROM TURMA WHERE ID_ALUNO = ?";
+        String SQL_SELECT_NOTAS_ALUNO = "SELECT ID_CURSO, NOTAS, SITUACAO FROM CURSO_ALUNO WHERE ID_ALUNO = ?";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_SELECT_NOTAS_ALUNO);
@@ -141,8 +144,9 @@ public class TurmaDao implements Dao<Turma> {
             while (resultSet.next()) {
                 int idCurso = resultSet.getInt("ID_CURSO");
                 float notas = resultSet.getFloat("NOTAS");
+                String situacao = resultSet.getString("SITUACAO");
 
-                System.out.println("ID do Curso: " + idCurso + "\t Notas: " + notas);
+                System.out.println("ID do Curso: " + idCurso + "\t Notas: " + notas + "\t Situação: " + situacao);
             }
             System.out.println("\n_____________________________________________\n");
             resultSet.close();

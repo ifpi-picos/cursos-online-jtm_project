@@ -1,14 +1,16 @@
 package br.edu.ifpi.entidades;
 
-public class Turma {
+public class CursoAluno {
     private int idCurso;
     private int idAluno;
     private float nota;
+    private String situacao;
 
-    public Turma(int idCurso, int idAluno, float nota) {
+    public CursoAluno(int idCurso, int idAluno, float nota, String situacao) {
         this.idCurso = idCurso;
         this.idAluno = idAluno;
         this.nota = nota;
+        this.situacao = situacao;
     }
 
     public int getIdCurso() {
@@ -35,18 +37,18 @@ public class Turma {
         this.nota = nota;
     }
 
-
-    @Override
-    public String toString() {
-        return "Turma [ID do Curso=" + idCurso + ", ID do Aluno=" + idAluno + ", Notas=" + nota + "]";
+    public String getSituacao() {
+        return situacao;
     }
 
-    public void setNota(String notas) {
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
     }
 
-    public void setNota(float[] notas) {
+    public void setNomeAluno(String string) {
     }
 
-    public void setIdAluno(String string) {
+    public String getNomeAluno() {
+        return null;
     }
 }
