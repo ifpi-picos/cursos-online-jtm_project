@@ -88,7 +88,7 @@ public class ProfessorDao implements Dao<Professor> {
 
             preparedStatement.setString(1, professor.getNome());
             preparedStatement.setString(2, professor.getEmail());
-            preparedStatement.setInt(3, professor.getId()); // Assuming there is an ID column
+            preparedStatement.setInt(3, professor.getId()); 
 
             int row = preparedStatement.executeUpdate();
 

@@ -405,7 +405,9 @@ public class Sistema {
             System.out.println("Digite o ID do Aluno:");
             int id = scanner.nextInt();
 
-            cursoAlunoDao.remover(id);
+            CursoAluno cursoAluno = new CursoAluno(id, 0, 0, null);
+
+            cursoAlunoDao.remover(cursoAluno);
             alunoDao.remover(id);
             alunos();
         } else if (opt == 5) {

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.ifpi.entidades.Curso;
+import br.edu.ifpi.entidades.CursoAluno;
 import br.edu.ifpi.enums.StatusCurso;
 
 public class CursoDao implements Dao<Curso> {
@@ -48,6 +49,7 @@ public class CursoDao implements Dao<Curso> {
     public List<Curso> consultarTodos() {
         List<Curso> cursos = new ArrayList<>();
         String SQL_SELECT_ALL = "SELECT * FROM Curso";
+        CursoDao cursoDao = new CursoDao(conexao);
 
         try (PreparedStatement stmt = conexao.prepareStatement(SQL_SELECT_ALL);
                 ResultSet resultSet = stmt.executeQuery()) {
@@ -61,13 +63,12 @@ public class CursoDao implements Dao<Curso> {
 
                 Curso curso = new Curso(id, nome, status, cargaHoraria);
                 cursos.add(curso);
-
             }
 
             System.out.println("________L I S T A   D E   C U R S O S________");
             for (Curso curso : cursos) {
                 System.out.println("id: " + curso.getId() + "\tNome: " + curso.getNome() + "\tStatus: "
-                        + curso.getStatus() + "\t Carga Horária: " + curso.getCargaHoraria());
+                        + curso.getStatus() + "\t Carga Horária: " + curso.getCargaHoraria() + "\tAlunos cursando: " + cursoDao.exibirQuantidadeAlunosMatriculados(curso));
             }
             System.out.println("_____________________________________________\n");
 
@@ -124,9 +125,9 @@ public class CursoDao implements Dao<Curso> {
             try (ResultSet resultSet = stmt.executeQuery()) {
                 if (resultSet.next()) {
                     int quantidadeAlunos = resultSet.getInt("QUANTIDADE_ALUNOS");
-                    System.out.println("_____________________________________________\n");
-                    System.out.println("   Número de Alunos Matriculados no Curso: " + quantidadeAlunos);
-                    System.out.println("_____________________________________________\n");
+                    //System.out.println("_____________________________________________\n");
+                    //System.out.println("   Número de Alunos Matriculados no Curso: " + quantidadeAlunos);
+                    //System.out.println("_____________________________________________\n");
                     return quantidadeAlunos;
                 }
             }

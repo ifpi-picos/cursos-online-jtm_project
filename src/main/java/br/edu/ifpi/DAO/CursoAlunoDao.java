@@ -161,9 +161,6 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
         }
     }
 
-    public void remover(int id) {
-    }
-
     public double exibirNotaMediaGeralAlunos(Curso curso) {
         String SQL_SELECT_AVG_GRADE = "SELECT AVG(nota) AS MEDIA_GERAL FROM cursoaluno WHERE ID_CURSO = ?";
 
