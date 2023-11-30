@@ -12,7 +12,7 @@ import br.edu.ifpi.entidades.Aluno;
 public class AlunoDao implements Dao<Aluno> {
 
     public AlunoDao(Conexao conexao) {
-        // You may initialize the connection if needed
+        
     }
 
     @Override
