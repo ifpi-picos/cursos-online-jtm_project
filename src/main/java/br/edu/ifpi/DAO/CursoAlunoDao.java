@@ -6,8 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.ifpi.entidades.Aluno;
 import br.edu.ifpi.entidades.Curso;
 import br.edu.ifpi.entidades.CursoAluno;
+import br.edu.ifpi.enums.StatusCurso;
 
 public class CursoAlunoDao implements Dao<CursoAluno> {
     private Conexao conexao;
@@ -214,6 +216,41 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Curso> exibirCursosConcluidosPorAluno(Aluno aluno) {
+        List<Curso> cursosConcluidos = new ArrayList<>();
+        String SQL_SELECT_CONCLUIDOS = "SELECT curso.* FROM cursoaluno "
+                + "INNER JOIN curso ON cursoaluno.id_curso = curso.id "
+                + "WHERE cursoaluno.id_aluno = ? AND cursoaluno.concluido = true";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(SQL_SELECT_CONCLUIDOS)) {
+            stmt.setInt(1, aluno.getId());
+
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                while (resultSet.next()) {
+                    int idCurso = resultSet.getInt("id");
+                    String nomeCurso = resultSet.getString("nome");
+                    String statusStr = resultSet.getString("status");
+                    StatusCurso status = StatusCurso.fromString(statusStr);
+                    String cargaHoraria = resultSet.getString("cargahoraria");
+
+                    Curso curso = new Curso(idCurso, nomeCurso, status, cargaHoraria);
+                    cursosConcluidos.add(curso);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("_____________________________________________\n");
+        System.out.println("   Cursos Concluídos pelo Aluno: " + aluno.getNome());
+        for (Curso curso : cursosConcluidos) {
+            System.out.println("   - " + curso.getNome());
+        }
+        System.out.println("_____________________________________________\n");
+
+        return cursosConcluidos;
     }
 
 }
