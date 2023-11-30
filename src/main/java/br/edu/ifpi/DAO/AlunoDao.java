@@ -10,7 +10,9 @@ import java.util.List;
 import br.edu.ifpi.entidades.Aluno;
 
 public class AlunoDao implements Dao<Aluno> {
+
     public AlunoDao(Conexao conexao) {
+        // You may initialize the connection if needed
     }
 
     @Override
@@ -29,6 +31,38 @@ public class AlunoDao implements Dao<Aluno> {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
         }
         return 0;
+    }
+
+    public void cadastrarEmCurso(int idAluno, int idCurso) {
+        String SQL_INSERT_MATRICULA = "INSERT INTO MATRICULA (ID_ALUNO, ID_CURSO) VALUES (?, ?)";
+
+        try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_INSERT_MATRICULA)) {
+            stmt.setInt(1, idAluno);
+            stmt.setInt(2, idCurso);
+
+            System.out.println("_____________________________________________\n");
+            System.out.println("  M A T R Í C U L A   R E A L I Z A D A   C O M \n              S U C E S S O !");
+            System.out.println("_____________________________________________\n");
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
+        }
+    }
+
+    public void desmatricularEmCurso(int idAluno, int idCurso) {
+        String SQL_DELETE_MATRICULA = "DELETE FROM MATRICULA WHERE ID_ALUNO=? AND ID_CURSO=?";
+
+        try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_DELETE_MATRICULA)) {
+            stmt.setInt(1, idAluno);
+            stmt.setInt(2, idCurso);
+
+            System.out.println("_____________________________________________\n");
+            System.out.println("D E S M A T R Í C U L A   R E A L I Z A D A   C O M \n              S U C E S S O !");
+            System.out.println("_____________________________________________\n");
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
+        }
     }
 
     @Override
@@ -53,9 +87,6 @@ public class AlunoDao implements Dao<Aluno> {
                         "ID: " + p.getId() + "\t Nome: " + p.getNome() + "\t Email:" + p.getEmail());
             }
             System.out.println("_____________________________________________\n");
-            resultSet.close();
-            stmt.close();
-
         } catch (SQLException e) {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
         } catch (Exception e) {
@@ -129,5 +160,6 @@ public class AlunoDao implements Dao<Aluno> {
     }
 
     public void remover(int id) {
+        
     }
 }
