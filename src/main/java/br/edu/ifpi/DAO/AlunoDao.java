@@ -162,4 +162,28 @@ public class AlunoDao implements Dao<Aluno> {
     public void remover(int id) {
         
     }
+
+    public void exibirCursosMatriculados(int idAluno) {
+        String SQL_SELECT_MATRICULAS = "SELECT C.ID, C.NOME FROM CURSO C " +
+                                       "JOIN MATRICULA M ON C.ID = M.ID_CURSO " +
+                                       "WHERE M.ID_ALUNO = ?";
+    
+        try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_SELECT_MATRICULAS)) {
+            stmt.setInt(1, idAluno);
+    
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                System.out.println("\n______C U R S O S   M A T R I C U L A D O S______");
+                while (resultSet.next()) {
+                    int idCurso = resultSet.getInt("ID");
+                    String nomeCurso = resultSet.getString("NOME");
+    
+                    System.out.println("ID: " + idCurso + "\t Nome do Curso: " + nomeCurso);
+                }
+                System.out.println("_____________________________________________\n");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }
