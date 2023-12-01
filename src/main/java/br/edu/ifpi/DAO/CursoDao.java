@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.ifpi.entidades.Curso;
-import br.edu.ifpi.entidades.CursoAluno;
 import br.edu.ifpi.enums.StatusCurso;
 
 public class CursoDao implements Dao<Curso> {
@@ -49,7 +48,6 @@ public class CursoDao implements Dao<Curso> {
     public List<Curso> consultarTodos() {
         List<Curso> cursos = new ArrayList<>();
         String SQL_SELECT_ALL = "SELECT * FROM Curso";
-        CursoDao cursoDao = new CursoDao(conexao);
 
         try (PreparedStatement stmt = conexao.prepareStatement(SQL_SELECT_ALL);
                 ResultSet resultSet = stmt.executeQuery()) {
@@ -63,13 +61,17 @@ public class CursoDao implements Dao<Curso> {
 
                 Curso curso = new Curso(id, nome, status, cargaHoraria);
                 cursos.add(curso);
+
+                // Aqui, passamos apenas o ID do curso para o método
+                // exibirQuantidadeAlunosMatriculados
+                int quantidadeAlunos = exibirQuantidadeAlunosMatriculados(id);
+
+                System.out.println("id: " + curso.getId() + "\tNome: " + curso.getNome() + "\tStatus: "
+                        + curso.getStatus() + "\tCarga Horária: " + curso.getCargaHoraria() + "\tAlunos cursando: "
+                        + quantidadeAlunos);
             }
 
             System.out.println("________L I S T A   D E   C U R S O S________");
-            for (Curso curso : cursos) {
-                System.out.println("id: " + curso.getId() + "\tNome: " + curso.getNome() + "\tStatus: "
-                        + curso.getStatus() + "\t Carga Horária: " + curso.getCargaHoraria() + "\tAlunos cursando: " + cursoDao.exibirQuantidadeAlunosMatriculados(curso));
-            }
             System.out.println("_____________________________________________\n");
 
         } catch (SQLException e) {
@@ -77,6 +79,39 @@ public class CursoDao implements Dao<Curso> {
         }
 
         return cursos;
+    }
+
+    public int exibirQuantidadeAlunosMatriculados(int idCurso) {
+        String SQL_COUNT_ENROLLMENTS = "SELECT COUNT(*) AS QUANTIDADE_ALUNOS FROM cursoaluno WHERE id_curso = ?";
+        String SQL_GET_CURSO_NAME = "SELECT NOME FROM Curso WHERE ID = ?";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(SQL_COUNT_ENROLLMENTS)) {
+            stmt.setInt(1, idCurso);
+
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    int quantidadeAlunos = resultSet.getInt("QUANTIDADE_ALUNOS");
+
+                    try (PreparedStatement stmtCurso = conexao.prepareStatement(SQL_GET_CURSO_NAME)) {
+                        stmtCurso.setInt(1, idCurso);
+
+                        try (ResultSet resultSetCurso = stmtCurso.executeQuery()) {
+                            if (resultSetCurso.next()) {
+                                String nomeCurso = resultSetCurso.getString("NOME");
+                                System.out.println("_____________________________________________\n");
+                                System.out.println("   Número de Alunos Matriculados no Curso '" + nomeCurso + "': "
+                                        + quantidadeAlunos);
+                                System.out.println("_____________________________________________\n");
+                                return quantidadeAlunos;
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     @Override
@@ -120,7 +155,9 @@ public class CursoDao implements Dao<Curso> {
 
             System.out.println("__D E S E M P E N H O   D O S   C U R S O S__");
             for (Curso curso : cursos) {
-                System.out.println("Id do Curso: " + curso.getId() + "\tMédia Geral: " + cursoalunoDao.exibirNotaMediaGeralAlunos(curso) + "\tPercentagem de Aprovações: " + cursoalunoDao.exibirPorcentagemAprovadosReprovados(curso));
+                System.out.println("Id do Curso: " + curso.getId() + "\tMédia Geral: "
+                        + cursoalunoDao.exibirNotaMediaGeralAlunos(curso) + "\tPercentagem de Aprovações: "
+                        + cursoalunoDao.exibirPorcentagemAprovadosReprovados(curso));
             }
             System.out.println("_____________________________________________\n");
 
@@ -148,24 +185,4 @@ public class CursoDao implements Dao<Curso> {
         return 0;
     }
 
-    public int exibirQuantidadeAlunosMatriculados(Curso curso) {
-        String SQL_COUNT_ENROLLMENTS = "SELECT COUNT(*) AS QUANTIDADE_ALUNOS FROM Matricula WHERE ID_CURSO = ?";
-
-        try (PreparedStatement stmt = conexao.prepareStatement(SQL_COUNT_ENROLLMENTS)) {
-            stmt.setInt(1, curso.getId());
-
-            try (ResultSet resultSet = stmt.executeQuery()) {
-                if (resultSet.next()) {
-                    int quantidadeAlunos = resultSet.getInt("QUANTIDADE_ALUNOS");
-                    //System.out.println("_____________________________________________\n");
-                    //System.out.println("   Número de Alunos Matriculados no Curso: " + quantidadeAlunos);
-                    //System.out.println("_____________________________________________\n");
-                    return quantidadeAlunos;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
 }

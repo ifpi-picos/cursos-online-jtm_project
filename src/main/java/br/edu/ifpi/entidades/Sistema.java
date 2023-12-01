@@ -227,7 +227,8 @@ public class Sistema {
         if (opt == 1) {
             cursoDao.consultarTodos();
             cursos();
-        }if (opt == 2) {
+        }
+        if (opt == 2) {
             cursoDao.consultarDesempenhCursos();
             cursos();
         } else if (opt == 3) {

@@ -20,7 +20,7 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
 
     @Override
     public int cadastrar(CursoAluno cursoAluno) {
-        String SQL_INSERT = "INSERT INTO CURSO_ALUNO (ID_CURSO, ID_ALUNO, NOTAS, SITUACAO) VALUES(?,?,?,?)";
+        String SQL_INSERT = "INSERT INTO CURSOALUNO (ID_CURSO, ID_ALUNO, NOTAS, SITUACAO) VALUES(?,?,?,?)";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_INSERT);
@@ -51,8 +51,8 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
     @Override
     public List<CursoAluno> consultarTodos() {
         List<CursoAluno> cursoAlunos = new ArrayList<>();
-        String SQL_SELECT_ALL = "SELECT CURSO_ALUNO.ID, CURSO_ALUNO.ID_CURSO, CURSO_ALUNO.ID_ALUNO, CURSO_ALUNO.NOTAS, CURSO_ALUNO.SITUACAO, ALUNO.NOME "
-                + "FROM CURSO_ALUNO INNER JOIN ALUNO ON CURSO_ALUNO.ID_ALUNO = ALUNO.ID";
+        String SQL_SELECT_ALL = "SELECT CURSOALUNO.ID, CURSOALUNO.ID_CURSO, CURSOALUNO.ID_ALUNO, CURSOALUNO.NOTAS, CURSOALUNO.SITUACAO, ALUNO.NOME "
+                + "FROM CURSOALUNO INNER JOIN ALUNO ON CURSOALUNO.ID_ALUNO = ALUNO.ID";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_SELECT_ALL);
@@ -85,7 +85,7 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
 
     @Override
     public int alterar(CursoAluno cursoAluno) {
-        String SQL_UPDATE = "UPDATE CURSO_ALUNO SET ID_CURSO=?, ID_ALUNO=?, NOTAS=?, SITUACAO=? WHERE ID=?";
+        String SQL_UPDATE = "UPDATE CURSOALUNO SET ID_CURSO=?, ID_ALUNO=?, NOTAS=?, SITUACAO=? WHERE ID=?";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_UPDATE);
@@ -113,7 +113,7 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
 
     @Override
     public int remover(CursoAluno cursoAluno) {
-        String SQL_DELETE = "DELETE FROM CURSO_ALUNO WHERE ID=?";
+        String SQL_DELETE = "DELETE FROM CURSOALUNO WHERE ID=?";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_DELETE);
@@ -136,7 +136,7 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
     }
 
     public void mostrarBoletim(int idAluno) {
-        String SQL_SELECT_NOTAS_ALUNO = "SELECT ID_CURSO, NOTAS, SITUACAO FROM CURSO_ALUNO WHERE ID_ALUNO = ?";
+        String SQL_SELECT_NOTAS_ALUNO = "SELECT ID_CURSO, NOTAS, SITUACAO FROM CURSOALUNO WHERE ID_ALUNO = ?";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_SELECT_NOTAS_ALUNO);
@@ -170,9 +170,9 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
             try (ResultSet resultSet = stmt.executeQuery()) {
                 if (resultSet.next()) {
                     double mediaGeral = resultSet.getDouble("MEDIA_GERAL");
-                    //System.out.println("_____________________________________________\n");
-                    //System.out.println("   Nota Média Geral dos Alunos no Curso: " + mediaGeral);
-                    //System.out.println("_____________________________________________\n");
+                    // System.out.println("_____________________________________________\n");
+                    // System.out.println(" Nota Média Geral dos Alunos no Curso: " + mediaGeral);
+                    // System.out.println("_____________________________________________\n");
                     return mediaGeral;
                 }
             }
@@ -191,25 +191,26 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
 
             stmtAprovados.setInt(1, curso.getId());
             stmtTotalAlunos.setInt(1, curso.getId());
-            
 
             try (ResultSet resultSetAprovados = stmtAprovados.executeQuery();
-                ResultSet resultSetTotalAlunos = stmtTotalAlunos.executeQuery()) {
+                    ResultSet resultSetTotalAlunos = stmtTotalAlunos.executeQuery()) {
 
                 double porcentagemAprovados = 0;
                 if (resultSetAprovados.next() && resultSetTotalAlunos.next()) {
                     int aprovados = resultSetAprovados.getInt("APROVADOS");
                     int totalAlunos = resultSetTotalAlunos.getInt("TOTAL_ALUNOS");
 
-                    //int reprovados = totalAlunos - aprovados;
+                    // int reprovados = totalAlunos - aprovados;
 
                     porcentagemAprovados = (double) aprovados / totalAlunos * 100;
-                    //double porcentagemReprovados = (double) reprovados / totalAlunos * 100;
+                    // double porcentagemReprovados = (double) reprovados / totalAlunos * 100;
 
-                    //System.out.println("_____________________________________________\n");
-                    //System.out.println("   Porcentagem de Alunos Aprovados: " + porcentagemAprovados + "%");
-                    //System.out.println("   Porcentagem de Alunos Reprovados: " + porcentagemReprovados + "%");
-                    //System.out.println("_____________________________________________\n");
+                    // System.out.println("_____________________________________________\n");
+                    // System.out.println(" Porcentagem de Alunos Aprovados: " +
+                    // porcentagemAprovados + "%");
+                    // System.out.println(" Porcentagem de Alunos Reprovados: " +
+                    // porcentagemReprovados + "%");
+                    // System.out.println("_____________________________________________\n");
                 }
 
                 return porcentagemAprovados;

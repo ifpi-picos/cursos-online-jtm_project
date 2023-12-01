@@ -11,7 +11,7 @@ import br.edu.ifpi.entidades.Aluno;
 
 public class AlunoDao implements Dao<Aluno> {
     private Conexao conexao;
-    
+
     public AlunoDao(Conexao conexao) {
         this.conexao = conexao;
     }
@@ -35,9 +35,9 @@ public class AlunoDao implements Dao<Aluno> {
     }
 
     public void cadastrarEmCurso(int idAluno, int idCurso) {
-        String SQL_INSERT_MATRICULA = "INSERT INTO MATRICULA (ID_ALUNO, ID_CURSO) VALUES (?, ?)";
+        String SQL_INSERT_ALUNO_CURSO = "INSERT INTO ALUNO_CURSO (ID_ALUNO, ID_CURSO) VALUES (?, ?)";
 
-        try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_INSERT_MATRICULA)) {
+        try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_INSERT_ALUNO_CURSO)) {
             stmt.setInt(1, idAluno);
             stmt.setInt(2, idCurso);
 
@@ -51,9 +51,9 @@ public class AlunoDao implements Dao<Aluno> {
     }
 
     public void desmatricularEmCurso(int idAluno, int idCurso) {
-        String SQL_DELETE_MATRICULA = "DELETE FROM MATRICULA WHERE ID_ALUNO=? AND ID_CURSO=?";
+        String SQL_DELETE_ALUNO_CURSO = "DELETE FROM ALUNO_CURSO WHERE ID_ALUNO=? AND ID_CURSO=?";
 
-        try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_DELETE_MATRICULA)) {
+        try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_DELETE_ALUNO_CURSO)) {
             stmt.setInt(1, idAluno);
             stmt.setInt(2, idCurso);
 
@@ -161,23 +161,23 @@ public class AlunoDao implements Dao<Aluno> {
     }
 
     public void remover(int id) {
-        
+
     }
 
     public void exibirCursosMatriculados(int idAluno) {
         String SQL_SELECT_MATRICULAS = "SELECT C.ID, C.NOME FROM CURSO C " +
-                                       "JOIN CURSOALUNO CA ON C.ID = CA.ID_CURSO " +
-                                       "WHERE CA.ID_ALUNO = ?";
-    
+                "JOIN CURSOALUNO CA ON C.ID = CA.ID_CURSO " +
+                "WHERE CA.ID_ALUNO = ?";
+
         try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_SELECT_MATRICULAS)) {
             stmt.setInt(1, idAluno);
-    
+
             try (ResultSet resultSet = stmt.executeQuery()) {
                 System.out.println("\n______C U R S O S   M A T R I C U L A D O S______");
                 while (resultSet.next()) {
                     int idCurso = resultSet.getInt("ID");
                     String nomeCurso = resultSet.getString("NOME");
-    
+
                     System.out.println("ID: " + idCurso + "\t Nome do Curso: " + nomeCurso);
                 }
                 System.out.println("_____________________________________________\n");
@@ -186,5 +186,5 @@ public class AlunoDao implements Dao<Aluno> {
             e.printStackTrace();
         }
     }
-    
+
 }
