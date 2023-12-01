@@ -135,6 +135,18 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
         return 0;
     }
 
+    public void gerarSituacao(){
+        String sqlSituacao = "UPDATE curso_aluno SET situacao = CASE WHEN nota >= 7.0 THEN 'Aprovado' ELSE 'Reprovado' END ";
+        try {
+            PreparedStatement psmt = conexao.prepareStatement(sqlSituacao);
+            psmt.executeUpdate();
+            System.out.println("situacao criada com sucesso");
+        } catch (Exception e) {
+            System.out.println("Algum erro ocorreu.");
+            e.printStackTrace();
+        }
+    }
+
     public void mostrarBoletim(int idAluno) {
         String SQL_SELECT_NOTAS_ALUNO = "SELECT ID_CURSO, NOTAS, SITUACAO FROM CURSOALUNO WHERE ID_ALUNO = ?";
 
@@ -254,6 +266,27 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
         System.out.println("_____________________________________________\n");
 
         return cursosConcluidos;
+    }
+
+    public void mostrarAproveitamento() {
+        String select = "SELECT aluno.nome AS nome_aluno, curso.nome AS nome_curso, curso_aluno.aproveitamento " +
+                        "FROM curso_aluno " +
+                        "JOIN aluno ON curso_aluno.id_aluno = aluno.id " +
+                        "JOIN curso ON curso_aluno.id_curso = curso.id " +
+                        "WHERE aluno.id > 0";
+        try {
+            PreparedStatement stmt = conexao.prepareStatement(select);
+            ResultSet rs = stmt.executeQuery();
+            System.out.printf("%-30s | %-30s | %-15s\n", "Nome do Aluno", "Nome do Curso", "Aproveitamento");
+            while (rs.next()) {
+                System.out.printf("%-30s | %-30s | %-15s\n", rs.getString("nome_aluno"), rs.getString("nome_curso"), rs.getString("aproveitamento"));
+            }
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Deu um erro!");
+        }
     }
 
 }
