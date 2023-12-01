@@ -3,13 +3,13 @@ package br.edu.ifpi.entidades;
 public class CursoAluno {
     private int idCurso;
     private int idAluno;
-    private float nota;
+    private float notas;
     private String situacao;
 
-    public CursoAluno(int idCurso, int idAluno, float nota, String situacao) {
+    public CursoAluno(int idCurso, int idAluno, float notas, String situacao) {
         this.idCurso = idCurso;
         this.idAluno = idAluno;
-        this.nota = nota;
+        this.notas = notas;
         this.situacao = situacao;
     }
 
@@ -29,12 +29,12 @@ public class CursoAluno {
         this.idAluno = idAluno;
     }
 
-    public float getNota() {
-        return nota;
+    public float getNotas() {
+        return notas;
     }
 
-    public void setNota(float nota) {
-        this.nota = nota;
+    public void setNotas(float notas) {
+        this.notas = notas;
     }
 
     public String getSituacao() {

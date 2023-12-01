@@ -27,7 +27,7 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
 
             preparedStatement.setInt(1, cursoAluno.getIdCurso());
             preparedStatement.setInt(2, cursoAluno.getIdAluno());
-            preparedStatement.setFloat(3, cursoAluno.getNota());
+            preparedStatement.setFloat(3, cursoAluno.getNotas());
             preparedStatement.setString(4, cursoAluno.getSituacao());
 
             int row = preparedStatement.executeUpdate();
@@ -69,7 +69,7 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
 
             for (CursoAluno ca : cursoAlunos) {
                 System.out.println("ID do Curso: " + ca.getIdCurso() + "\t Nome do Aluno: " + ca.getNomeAluno() +
-                        "\t Notas: " + (ca.getNota() != 0 ? ca.getNota() : " ") +
+                        "\t Notas: " + (ca.getNotas() != 0 ? ca.getNotas() : " ") +
                         "\t Situação: " + ca.getSituacao());
             }
             resultSet.close();
@@ -92,7 +92,7 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
 
             preparedStatement.setInt(1, cursoAluno.getIdCurso());
             preparedStatement.setInt(2, cursoAluno.getIdAluno());
-            preparedStatement.setFloat(3, cursoAluno.getNota());
+            preparedStatement.setFloat(3, cursoAluno.getNotas());
             preparedStatement.setString(4, cursoAluno.getSituacao());
             preparedStatement.setInt(5, cursoAluno.getIdCurso());
 
@@ -162,7 +162,7 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
     }
 
     public double exibirNotaMediaGeralAlunos(Curso curso) {
-        String SQL_SELECT_AVG_GRADE = "SELECT AVG(nota) AS MEDIA_GERAL FROM cursoaluno WHERE ID_CURSO = ?";
+        String SQL_SELECT_AVG_GRADE = "SELECT AVG(notas) AS MEDIA_GERAL FROM cursoaluno WHERE ID_CURSO = ?";
 
         try (PreparedStatement stmt = conexao.prepareStatement(SQL_SELECT_AVG_GRADE)) {
             stmt.setInt(1, curso.getId());
@@ -183,7 +183,7 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
     }
 
     public double exibirPorcentagemAprovadosReprovados(Curso curso) {
-        String SQL_COUNT_APROVADOS = "SELECT COUNT(*) AS APROVADOS FROM cursoaluno WHERE ID_CURSO = ? AND nota >= 7";
+        String SQL_COUNT_APROVADOS = "SELECT COUNT(*) AS APROVADOS FROM cursoaluno WHERE ID_CURSO = ? AND notas >= 7";
         String SQL_COUNT_TODOS = "SELECT COUNT(*) AS TOTAL_ALUNOS FROM cursoaluno WHERE ID_CURSO = ?";
 
         try (PreparedStatement stmtAprovados = conexao.prepareStatement(SQL_COUNT_APROVADOS);
