@@ -214,9 +214,10 @@ public class Sistema {
         CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(conexao);
         System.out.println("_________________C U R S O S________________");
         System.out.println("\n1. Vizualizar lista de Cursos");
-        System.out.println("2. Realizar cadastro de Curso");
-        System.out.println("3. Editar dados de um Curso");
-        System.out.println("4. Excluir um Curso");
+        System.out.println("2. Consultar desempenho dos Cursos");
+        System.out.println("3. Realizar cadastro de Curso");
+        System.out.println("4. Editar dados de um Curso");
+        System.out.println("5. Excluir um Curso");
         System.out.println("0. Voltar ao menu Professor");
         System.out.println("_____________________________________________");
         System.out.println("\nEscolha uma opção: ");
@@ -226,7 +227,10 @@ public class Sistema {
         if (opt == 1) {
             cursoDao.consultarTodos();
             cursos();
-        } else if (opt == 2) {
+        }if (opt == 2) {
+            cursoDao.consultarDesempenhCursos();
+            cursos();
+        } else if (opt == 3) {
             System.out.println("Digite Nome do Curso:");
             String nome = scanner.nextLine();
             System.out.println("Digite Carga Horária do Curso:");
@@ -236,7 +240,7 @@ public class Sistema {
             Curso curso = new Curso(0, nome, status, ch);
             cursoDao.cadastrar(curso);
             cursos();
-        } else if (opt == 3) {
+        } else if (opt == 4) {
             System.out.print("Digite o ID do curso a ser alterado: ");
             int alteracao = scanner.nextInt();
             scanner.nextLine();
@@ -266,7 +270,7 @@ public class Sistema {
             cursoDao.alterar(cursoalterado);
 
             cursos();
-        } else if (opt == 4) {
+        } else if (opt == 5) {
             System.out.println("Digite ID do Curso:");
             int id = scanner.nextInt();
             StatusCurso status = StatusCurso.ABERTO;
@@ -280,7 +284,7 @@ public class Sistema {
             menuProfessor();
         } else {
             System.out.println("Opção Inválida, tente novamente.");
-            professores();
+            cursos();
         }
     }
 

@@ -170,9 +170,9 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
             try (ResultSet resultSet = stmt.executeQuery()) {
                 if (resultSet.next()) {
                     double mediaGeral = resultSet.getDouble("MEDIA_GERAL");
-                    System.out.println("_____________________________________________\n");
-                    System.out.println("   Nota Média Geral dos Alunos no Curso: " + mediaGeral);
-                    System.out.println("_____________________________________________\n");
+                    //System.out.println("_____________________________________________\n");
+                    //System.out.println("   Nota Média Geral dos Alunos no Curso: " + mediaGeral);
+                    //System.out.println("_____________________________________________\n");
                     return mediaGeral;
                 }
             }
@@ -182,7 +182,7 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
         return 0.0;
     }
 
-    public void exibirPorcentagemAprovadosReprovados(Curso curso) {
+    public double exibirPorcentagemAprovadosReprovados(Curso curso) {
         String SQL_COUNT_APROVADOS = "SELECT COUNT(*) AS APROVADOS FROM cursoaluno WHERE ID_CURSO = ? AND nota >= 7";
         String SQL_COUNT_TODOS = "SELECT COUNT(*) AS TOTAL_ALUNOS FROM cursoaluno WHERE ID_CURSO = ?";
 
@@ -191,27 +191,32 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
 
             stmtAprovados.setInt(1, curso.getId());
             stmtTotalAlunos.setInt(1, curso.getId());
+            
 
             try (ResultSet resultSetAprovados = stmtAprovados.executeQuery();
-                    ResultSet resultSetTotalAlunos = stmtTotalAlunos.executeQuery()) {
+                ResultSet resultSetTotalAlunos = stmtTotalAlunos.executeQuery()) {
 
+                double porcentagemAprovados = 0;
                 if (resultSetAprovados.next() && resultSetTotalAlunos.next()) {
                     int aprovados = resultSetAprovados.getInt("APROVADOS");
                     int totalAlunos = resultSetTotalAlunos.getInt("TOTAL_ALUNOS");
 
-                    int reprovados = totalAlunos - aprovados;
+                    //int reprovados = totalAlunos - aprovados;
 
-                    double porcentagemAprovados = (double) aprovados / totalAlunos * 100;
-                    double porcentagemReprovados = (double) reprovados / totalAlunos * 100;
+                    porcentagemAprovados = (double) aprovados / totalAlunos * 100;
+                    //double porcentagemReprovados = (double) reprovados / totalAlunos * 100;
 
-                    System.out.println("_____________________________________________\n");
-                    System.out.println("   Porcentagem de Alunos Aprovados: " + porcentagemAprovados + "%");
-                    System.out.println("   Porcentagem de Alunos Reprovados: " + porcentagemReprovados + "%");
-                    System.out.println("_____________________________________________\n");
+                    //System.out.println("_____________________________________________\n");
+                    //System.out.println("   Porcentagem de Alunos Aprovados: " + porcentagemAprovados + "%");
+                    //System.out.println("   Porcentagem de Alunos Reprovados: " + porcentagemReprovados + "%");
+                    //System.out.println("_____________________________________________\n");
                 }
+
+                return porcentagemAprovados;
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         }
     }
 

@@ -99,6 +99,38 @@ public class CursoDao implements Dao<Curso> {
         return 0;
     }
 
+    public List<Curso> consultarDesempenhCursos() {
+        List<Curso> cursos = new ArrayList<>();
+        String SQL_SELECT_ALL = "SELECT * FROM Curso";
+        CursoAlunoDao cursoalunoDao = new CursoAlunoDao(conexao);
+
+        try (PreparedStatement stmt = conexao.prepareStatement(SQL_SELECT_ALL);
+                ResultSet resultSet = stmt.executeQuery()) {
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("ID");
+                String nome = resultSet.getString("NOME");
+                String statusStr = resultSet.getString("STATUS");
+                StatusCurso status = StatusCurso.fromString(statusStr);
+                String cargaHoraria = resultSet.getString("CARGAHORARIA");
+
+                Curso curso = new Curso(id, nome, status, cargaHoraria);
+                cursos.add(curso);
+            }
+
+            System.out.println("__D E S E M P E N H O   D O S   C U R S O S__");
+            for (Curso curso : cursos) {
+                System.out.println("Id do Curso: " + curso.getId() + "\tMédia Geral: " + cursoalunoDao.exibirNotaMediaGeralAlunos(curso) + "\tPercentagem de Aprovações: " + cursoalunoDao.exibirPorcentagemAprovadosReprovados(curso));
+            }
+            System.out.println("_____________________________________________\n");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cursos;
+    }
+
     @Override
     public int remover(Curso curso) {
         String SQL_DELETE = "DELETE FROM Curso WHERE ID=?";
