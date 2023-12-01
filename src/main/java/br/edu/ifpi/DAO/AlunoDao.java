@@ -10,9 +10,10 @@ import java.util.List;
 import br.edu.ifpi.entidades.Aluno;
 
 public class AlunoDao implements Dao<Aluno> {
-
+    private Conexao conexao;
+    
     public AlunoDao(Conexao conexao) {
-        
+        this.conexao = conexao;
     }
 
     @Override
@@ -138,10 +139,10 @@ public class AlunoDao implements Dao<Aluno> {
 
     public void vizualizarPerfilAluno(String email) {
         String sql = "SELECT id, nome, email FROM aluno WHERE email = ?";
+        AlunoDao alunoDao = new AlunoDao(conexao);
 
         try (Connection connection = Conexao.getConexao();
                 PreparedStatement stm = connection.prepareStatement(sql)) {
-
             stm.setString(1, email);
             try (ResultSet resultSet = stm.executeQuery()) {
                 System.out.println("\n________P E R F I L   D O   A L U N O________");
@@ -151,8 +152,8 @@ public class AlunoDao implements Dao<Aluno> {
                     String emailAluno = resultSet.getString("email");
 
                     System.out.println("\nId: " + idAluno + "\nNome: " + nomeAluno + "\nEmail: " + emailAluno);
+                    alunoDao.exibirCursosMatriculados(idAluno);
                 }
-                System.out.println("_____________________________________________\n");
             }
         } catch (SQLException e) {
             e.printStackTrace();
