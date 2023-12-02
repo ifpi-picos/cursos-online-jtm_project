@@ -134,7 +134,7 @@ public class CursoDao implements Dao<Curso> {
         return 0;
     }
 
-    public List<Curso> consultarDesempenhCursos() {
+    public List<Curso> consultarDesempenhoCursos() {
         List<Curso> cursos = new ArrayList<>();
         String SQL_SELECT_ALL = "SELECT * FROM Curso";
         CursoAlunoDao cursoalunoDao = new CursoAlunoDao(conexao);
@@ -156,8 +156,8 @@ public class CursoDao implements Dao<Curso> {
             System.out.println("__D E S E M P E N H O   D O S   C U R S O S__");
             for (Curso curso : cursos) {
                 System.out.println("Id do Curso: " + curso.getId() + "\tMédia Geral: "
-                        + cursoalunoDao.exibirNotaMediaGeralAlunos(curso) + "\tPercentagem de Aprovações: "
-                        + cursoalunoDao.exibirPorcentagemAprovadosReprovados(curso));
+                        + cursoalunoDao.exibirNotaMediaGeralAlunos(curso) + "\tPorcentagem de Aprovações: "
+                        + cursoalunoDao.exibirPorcentagemAprovados(curso) + "\tPorcentagem de Reprovações: " + cursoalunoDao.calcularPorcentagemReprovados(curso));
             }
             System.out.println("_____________________________________________\n");
 

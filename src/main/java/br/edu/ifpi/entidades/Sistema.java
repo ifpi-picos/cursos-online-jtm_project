@@ -127,10 +127,9 @@ public class Sistema {
 
         System.out.println("________M E N U   D O   A L U N O________");
         System.out.println("\n1. Vizualizar Perfil");
-        System.out.println("2. Vizualizar lista de Cursos");
-        System.out.println("3. Vizualizar lista de Professores");
-        System.out.println("4. Vizualizar Notas");
-        System.out.println("5. Realizar cadastro em Curso");
+        System.out.println("2. Cursos");
+        System.out.println("3. Professores");
+        System.out.println("4. Boletim");
         System.out.println("0. Sair");
         System.out.println("_____________________________________________");
         System.out.println("\nEscolha uma opção: ");
@@ -143,8 +142,7 @@ public class Sistema {
             alunoDao.vizualizarPerfilAluno(email);
             menuAluno();
         } else if (opt == 2) {
-            cursoDao.consultarTodos();
-            menuAluno();
+            cursoParaAlunos();
         } else if (opt == 3) {
             professorDao.consultarTodos();
             menuAluno();
@@ -154,20 +152,74 @@ public class Sistema {
 
             cursoAlunoDao.mostrarBoletim(id);
             menuAluno();
-        } else if (opt == 5) {
-            System.out.println("Confirme seu ID:");
-            int aluno = scanner.nextInt();
-            System.out.println("Insira o ID do Curso:");
-            int curso = scanner.nextInt();
-
-            CursoAluno cursoAluno = new CursoAluno(aluno, curso, 0, "");
-            cursoAlunoDao.cadastrar(cursoAluno);
-            menuAluno();
         } else if (opt == 0) {
             mostrarMenuInicial();
         } else {
             System.out.println("Opção Inválida, tente novamente.");
             menuAluno();
+        }
+    }
+
+    public void cursoParaAlunos() {
+        Scanner scanner = new Scanner(System.in);
+        Conexao conexao = new Conexao();
+        CursoDao cursoDao = new CursoDao(conexao);
+        CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(conexao);
+        System.out.println("_________________C U R S O S________________");
+        System.out.println("\n1. Vizualizar lista de Cursos");
+        System.out.println("2. Consultar desempenho dos Cursos");
+        System.out.println("3. Realizar Matrícula em um Curso");
+        System.out.println("4. Remover Matrícula em um Curso");
+        System.out.println("0. Voltar ao Menu do Aluno");
+        System.out.println("_____________________________________________");
+        System.out.println("\nEscolha uma opção: ");
+        int opt = scanner.nextInt();
+        scanner.nextLine();
+
+        if (opt == 1) {
+            cursoDao.consultarTodos();
+            cursoParaAlunos();
+        }
+        if (opt == 2) {
+            cursoDao.consultarDesempenhoCursos();
+            cursoParaAlunos();
+        } else if (opt == 3) {
+            System.out.println("Confirme seu ID:");
+            int id = scanner.nextInt();
+            System.out.println("Digite o ID do Curso:");
+            int id_curso = scanner.nextInt();
+
+            CursoAluno cursoAluno = new CursoAluno(id, id_curso, 0, null);
+            cursoAlunoDao.cadastrar(cursoAluno);
+            cursoParaAlunos();
+        } else if (opt == 4) {
+            System.out.println("Confirme seu ID:");
+            int id = scanner.nextInt();
+            System.out.println("Confirme o ID do Curso:");
+            int id_curso = scanner.nextInt();
+            CursoAluno cursoAluno = new CursoAluno(id, id_curso, 0, null);
+
+            System.out.println("Tem Certeza que deseja remover a Matrícula?");
+            System.out.println("1. Sim");
+            System.out.println("2. Não");
+            int op = scanner.nextInt();
+
+            if(op == 1){
+            cursoAlunoDao.remover(cursoAluno);
+
+            } else if (op == 2){
+                System.out.println("_____________________________________________\n");
+                System.out.println("  O P E R A Ç Ã O   I N T E R R O M P I D A");
+                System.out.println("_____________________________________________\n");
+            } else {
+                System.out.println("Opção Inválida, tente Novamente. ");
+            }
+            cursoParaAlunos();
+        } else if (opt == 0) {
+            menuAluno();
+        } else {
+            System.out.println("Opção Inválida, tente novamente.");
+            cursoParaAlunos();
         }
     }
 
@@ -229,7 +281,7 @@ public class Sistema {
             cursos();
         }
         if (opt == 2) {
-            cursoDao.consultarDesempenhCursos();
+            cursoDao.consultarDesempenhoCursos();
             cursos();
         } else if (opt == 3) {
             System.out.println("Digite Nome do Curso:");
@@ -276,10 +328,23 @@ public class Sistema {
             int id = scanner.nextInt();
             StatusCurso status = StatusCurso.ABERTO;
 
-            CursoAluno cursoAluno = new CursoAluno(id, 0, 0, "");
-            cursoAlunoDao.remover(cursoAluno);
-            Curso curso = new Curso(id, null, status, null);
-            cursoDao.remover(curso);
+            System.out.println("Tem Certeza que deseja excluir o Curso?");
+            System.out.println("1. Sim");
+            System.out.println("2. Não");
+            int op = scanner.nextInt();
+
+            if(op == 1){
+                CursoAluno cursoAluno = new CursoAluno(id, 0, 0, "");
+                cursoAlunoDao.remover(cursoAluno);
+                Curso curso = new Curso(id, null, status, null);
+                cursoDao.remover(curso);
+            } else if (op == 2){
+                System.out.println("_____________________________________________\n");
+                System.out.println("  O P E R A Ç Ã O   I N T E R R O M P I D A");
+                System.out.println("_____________________________________________\n");
+            } else {
+                System.out.println("Opção Inválida, tente Novamente. ");
+            }
             cursos();
         } else if (opt == 0) {
             menuProfessor();
@@ -299,6 +364,7 @@ public class Sistema {
         System.out.println("3. Editar dados de um Professor");
         System.out.println("4. Excluir um Professor");
         System.out.println("5. Matricular Professor em um Curso");
+        System.out.println("6. Remover Matrícula de um Professor em um Curso");
         System.out.println("0. Voltar ao menu Professor");
         System.out.println("_____________________________________________");
         System.out.println("\nEscolha uma opção: ");
@@ -339,8 +405,21 @@ public class Sistema {
             System.out.println("Digite o ID do Professor:");
             int id = scanner.nextInt();
 
-            Professor professor = new Professor(null, id, null, 0);
-            professorDao.remover(professor);
+            System.out.println("Tem Certeza que deseja excluir o Professor?");
+            System.out.println("1. Sim");
+            System.out.println("2. Não");
+            int op = scanner.nextInt();
+
+            if(op == 1){
+                Professor professor = new Professor(null, id, null, 0);
+                professorDao.remover(professor);
+            } else if (op == 2){
+                System.out.println("_____________________________________________\n");
+                System.out.println("  O P E R A Ç Ã O   I N T E R R O M P I D A");
+                System.out.println("_____________________________________________\n");
+            } else {
+                System.out.println("Opção Inválida, tente Novamente. ");
+            }
             professores();
         } else if (opt == 5) {
             System.out.println("Digite o ID do Professor:");
@@ -348,8 +427,15 @@ public class Sistema {
             System.out.println("Digite o ID do Curso:");
             int curso = scanner.nextInt();
 
-            CursoAluno cursoAluno = new CursoAluno(professor, curso, 0, "");
-            CursoAluno.cadastrar(cursoAluno);
+            professorDao.AssociarProfessorCurso(professor, curso);
+            professores();
+        } else if (opt == 6) {
+            System.out.println("Digite o ID do Professor:");
+            int professor = scanner.nextInt();
+            System.out.println("Digite o ID do Curso:");
+            int curso = scanner.nextInt();
+
+            
             professores();
         } else if (opt == 0) {
             menuProfessor();
@@ -409,11 +495,23 @@ public class Sistema {
         } else if (opt == 4) {
             System.out.println("Digite o ID do Aluno:");
             int id = scanner.nextInt();
+                        
+            System.out.println("Tem Certeza que deseja excluir o Professor?");
+            System.out.println("1. Sim");
+            System.out.println("2. Não");
+            int op = scanner.nextInt();
 
+            if(op == 1){
             CursoAluno cursoAluno = new CursoAluno(id, 0, 0, null);
-
             cursoAlunoDao.remover(cursoAluno);
             alunoDao.remover(id);
+            } else if (op == 2){
+                System.out.println("_____________________________________________\n");
+                System.out.println("  O P E R A Ç Ã O   I N T E R R O M P I D A");
+                System.out.println("_____________________________________________\n");
+            } else {
+                System.out.println("Opção Inválida, tente Novamente. ");
+            }
             alunos();
         } else if (opt == 5) {
             System.out.println("Digite o ID do Aluno:");

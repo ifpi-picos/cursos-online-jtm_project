@@ -194,7 +194,7 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
         return 0.0;
     }
 
-    public double exibirPorcentagemAprovadosReprovados(Curso curso) {
+    public double exibirPorcentagemAprovados(Curso curso) {
         String SQL_COUNT_APROVADOS = "SELECT COUNT(*) AS APROVADOS FROM cursoaluno WHERE ID_CURSO = ? AND notas >= 7";
         String SQL_COUNT_TODOS = "SELECT COUNT(*) AS TOTAL_ALUNOS FROM cursoaluno WHERE ID_CURSO = ?";
 
@@ -212,19 +212,8 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
                     int aprovados = resultSetAprovados.getInt("APROVADOS");
                     int totalAlunos = resultSetTotalAlunos.getInt("TOTAL_ALUNOS");
 
-                    // int reprovados = totalAlunos - aprovados;
-
                     porcentagemAprovados = (double) aprovados / totalAlunos * 100;
-                    // double porcentagemReprovados = (double) reprovados / totalAlunos * 100;
-
-                    // System.out.println("_____________________________________________\n");
-                    // System.out.println(" Porcentagem de Alunos Aprovados: " +
-                    // porcentagemAprovados + "%");
-                    // System.out.println(" Porcentagem de Alunos Reprovados: " +
-                    // porcentagemReprovados + "%");
-                    // System.out.println("_____________________________________________\n");
                 }
-
                 return porcentagemAprovados;
             }
         } catch (SQLException e) {
@@ -232,6 +221,35 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
             return 0;
         }
     }
+
+    public double calcularPorcentagemReprovados(Curso curso) {
+    String SQL_COUNT_APROVADOS = "SELECT COUNT(*) AS APROVADOS FROM cursoaluno WHERE ID_CURSO = ? AND notas >= 7";
+    String SQL_COUNT_TODOS = "SELECT COUNT(*) AS TOTAL_ALUNOS FROM cursoaluno WHERE ID_CURSO = ?";
+
+    try (PreparedStatement stmtAprovados = conexao.prepareStatement(SQL_COUNT_APROVADOS);
+         PreparedStatement stmtTotalAlunos = conexao.prepareStatement(SQL_COUNT_TODOS)) {
+
+        stmtAprovados.setInt(1, curso.getId());
+        stmtTotalAlunos.setInt(1, curso.getId());
+
+        try (ResultSet resultSetAprovados = stmtAprovados.executeQuery();
+             ResultSet resultSetTotalAlunos = stmtTotalAlunos.executeQuery()) {
+
+            if (resultSetAprovados.next() && resultSetTotalAlunos.next()) {
+                int aprovados = resultSetAprovados.getInt("APROVADOS");
+                int totalAlunos = resultSetTotalAlunos.getInt("TOTAL_ALUNOS");
+
+                int reprovados = totalAlunos - aprovados;
+
+                return (double) reprovados / totalAlunos * 100;
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return 0; 
+}
 
     public List<Curso> exibirCursosConcluidosPorAluno(Aluno aluno) {
         List<Curso> cursosConcluidos = new ArrayList<>();
