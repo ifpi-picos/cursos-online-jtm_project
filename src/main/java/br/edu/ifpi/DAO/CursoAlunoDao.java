@@ -135,8 +135,59 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
         return 0;
     }
 
+    public int adicionarNota(int idCursoAluno, float novaNota) {
+        String SQL_UPDATE_NOTA = "UPDATE CURSOALUNO SET NOTAS = ? WHERE ID = ?";
+    
+        try {
+            PreparedStatement preparedStatement = conexao.prepareStatement(SQL_UPDATE_NOTA);
+
+            String SQL_SELECT_NOTAS = "SELECT NOTAS FROM CURSOALUNO WHERE ID = ?";
+            PreparedStatement stmtSelect = conexao.prepareStatement(SQL_SELECT_NOTAS);
+            stmtSelect.setInt(1, idCursoAluno);
+    
+            ResultSet resultSet = stmtSelect.executeQuery();
+            float nota1 = 0;
+            float nota2 = 0;
+            float nota3 = 0;
+    
+            if (resultSet.next()) {
+                nota1 = resultSet.getFloat("NOTAS");
+                if (resultSet.next()) {
+                    nota2 = resultSet.getFloat("NOTAS");
+                    if (resultSet.next()) {
+                        nota3 = resultSet.getFloat("NOTAS");
+                    }
+                }
+            }
+
+            float media = (nota1 + nota2 + nota3) / 3;
+    
+            preparedStatement.setFloat(1, media);
+            preparedStatement.setInt(2, idCursoAluno);
+    
+            int row = preparedStatement.executeUpdate();
+    
+            System.out.println(row);
+            preparedStatement.close();
+    
+            System.out.println("_____________________________________________\n");
+            System.out.println(" Nota adicionada com sucesso!");
+            System.out.println(" Nova média: " + media);
+            System.out.println("_____________________________________________\n");
+    
+            return row;
+    
+        } catch (SQLException e) {
+            System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
+            e.printStackTrace();
+        }
+    
+        return 0;
+    }
+    
+
     public void gerarSituacao(){
-        String sqlSituacao = "UPDATE curso_aluno SET situacao = CASE WHEN nota >= 7.0 THEN 'Aprovado' ELSE 'Reprovado' END ";
+        String sqlSituacao = "UPDATE cursoaluno SET situacao = CASE WHEN nota >= 7.0 THEN 'Aprovado' ELSE 'Reprovado' END ";
         try {
             PreparedStatement psmt = conexao.prepareStatement(sqlSituacao);
             psmt.executeUpdate();
@@ -227,13 +278,13 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
     String SQL_COUNT_TODOS = "SELECT COUNT(*) AS TOTAL_ALUNOS FROM cursoaluno WHERE ID_CURSO = ?";
 
     try (PreparedStatement stmtAprovados = conexao.prepareStatement(SQL_COUNT_APROVADOS);
-         PreparedStatement stmtTotalAlunos = conexao.prepareStatement(SQL_COUNT_TODOS)) {
+        PreparedStatement stmtTotalAlunos = conexao.prepareStatement(SQL_COUNT_TODOS)) {
 
         stmtAprovados.setInt(1, curso.getId());
         stmtTotalAlunos.setInt(1, curso.getId());
 
         try (ResultSet resultSetAprovados = stmtAprovados.executeQuery();
-             ResultSet resultSetTotalAlunos = stmtTotalAlunos.executeQuery()) {
+            ResultSet resultSetTotalAlunos = stmtTotalAlunos.executeQuery()) {
 
             if (resultSetAprovados.next() && resultSetTotalAlunos.next()) {
                 int aprovados = resultSetAprovados.getInt("APROVADOS");
@@ -248,7 +299,7 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
         e.printStackTrace();
     }
 
-    return 0; 
+    return 0;
 }
 
     public List<Curso> exibirCursosConcluidosPorAluno(Aluno aluno) {

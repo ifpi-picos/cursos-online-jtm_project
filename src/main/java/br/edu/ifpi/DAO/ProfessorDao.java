@@ -167,6 +167,29 @@ public class ProfessorDao implements Dao<Professor> {
         return 0;
     }
 
+    public int RemoverMatricula(int idProfessor) {
+        String SQL_UPDATE = "UPDATE professor SET id_curso=NULL WHERE id=?";
+        try (PreparedStatement updateStatement = conexao.prepareStatement(SQL_UPDATE)) {
+            updateStatement.setInt(1, idProfessor);
+    
+            int rowsUpdated = updateStatement.executeUpdate();
+    
+            if (rowsUpdated > 0) {
+                System.out.println("_____________________________________________\n");
+                System.out.println(" M A T R Í C U L A  R E M O V I D A  C O M\n              S U C E S S O !");
+                System.out.println("_____________________________________________\n");
+            } else {
+                System.out.println("Matrícula não encontrada para o professor com ID: " + idProfessor);
+            }
+    
+            return rowsUpdated;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
+
     public void vizualizarPerfilProfessor(String email) {
         String sql = "SELECT id, nome, email, id_curso FROM professor WHERE email = ?";
 
