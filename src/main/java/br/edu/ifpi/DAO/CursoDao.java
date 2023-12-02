@@ -51,7 +51,7 @@ public class CursoDao implements Dao<Curso> {
 
         try (PreparedStatement stmt = conexao.prepareStatement(SQL_SELECT_ALL);
                 ResultSet resultSet = stmt.executeQuery()) {
-
+            System.out.println("________L I S T A   D E   C U R S O S________");
             while (resultSet.next()) {
                 int id = resultSet.getInt("ID");
                 String nome = resultSet.getString("NOME");
@@ -61,23 +61,15 @@ public class CursoDao implements Dao<Curso> {
 
                 Curso curso = new Curso(id, nome, status, cargaHoraria);
                 cursos.add(curso);
-
-                // Aqui, passamos apenas o ID do curso para o método
-                // exibirQuantidadeAlunosMatriculados
                 int quantidadeAlunos = exibirQuantidadeAlunosMatriculados(id);
 
                 System.out.println("id: " + curso.getId() + "\tNome: " + curso.getNome() + "\tStatus: "
-                        + curso.getStatus() + "\tCarga Horária: " + curso.getCargaHoraria() + "\tAlunos cursando: "
-                        + quantidadeAlunos);
+                        + curso.getStatus() + "\tCarga Horária: " + curso.getCargaHoraria() + "\t Alunos cursando: " + quantidadeAlunos);
             }
-
-            System.out.println("________L I S T A   D E   C U R S O S________");
             System.out.println("_____________________________________________\n");
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return cursos;
     }
 
@@ -91,17 +83,11 @@ public class CursoDao implements Dao<Curso> {
             try (ResultSet resultSet = stmt.executeQuery()) {
                 if (resultSet.next()) {
                     int quantidadeAlunos = resultSet.getInt("QUANTIDADE_ALUNOS");
-
                     try (PreparedStatement stmtCurso = conexao.prepareStatement(SQL_GET_CURSO_NAME)) {
                         stmtCurso.setInt(1, idCurso);
 
                         try (ResultSet resultSetCurso = stmtCurso.executeQuery()) {
                             if (resultSetCurso.next()) {
-                                String nomeCurso = resultSetCurso.getString("NOME");
-                                System.out.println("_____________________________________________\n");
-                                System.out.println("   Número de Alunos Matriculados no Curso '" + nomeCurso + "': "
-                                        + quantidadeAlunos);
-                                System.out.println("_____________________________________________\n");
                                 return quantidadeAlunos;
                             }
                         }
@@ -164,7 +150,6 @@ public class CursoDao implements Dao<Curso> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return cursos;
     }
 
