@@ -35,12 +35,12 @@ public class AlunoDao implements Dao<Aluno> {
     }
 
     public void cadastrarEmCurso(int idAluno, int idCurso) {
-        String SQL_INSERT_ALUNO_CURSO = "INSERT INTO ALUNO_CURSO (ID_ALUNO, ID_CURSO) VALUES (?, ?)";
-
+        String SQL_INSERT_ALUNO_CURSO = "INSERT INTO cursoaluno (ID_ALUNO, ID_CURSO) VALUES (?, ?)";
+    
         try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_INSERT_ALUNO_CURSO)) {
             stmt.setInt(1, idAluno);
             stmt.setInt(2, idCurso);
-
+    
             System.out.println("_____________________________________________\n");
             System.out.println("  M A T R Í C U L A   R E A L I Z A D A   C O M \n              S U C E S S O !");
             System.out.println("_____________________________________________\n");
@@ -49,14 +49,14 @@ public class AlunoDao implements Dao<Aluno> {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
         }
     }
-
+    
     public void desmatricularEmCurso(int idAluno, int idCurso) {
-        String SQL_DELETE_ALUNO_CURSO = "DELETE FROM ALUNO_CURSO WHERE ID_ALUNO=? AND ID_CURSO=?";
-
+        String SQL_DELETE_ALUNO_CURSO = "DELETE FROM cursoaluno WHERE ID_ALUNO=? AND ID_CURSO=?";
+    
         try (PreparedStatement stmt = Conexao.getConexao().prepareStatement(SQL_DELETE_ALUNO_CURSO)) {
             stmt.setInt(1, idAluno);
             stmt.setInt(2, idCurso);
-
+    
             System.out.println("_____________________________________________\n");
             System.out.println("D E S M A T R Í C U L A   R E A L I Z A D A   C O M \n              S U C E S S O !");
             System.out.println("_____________________________________________\n");
