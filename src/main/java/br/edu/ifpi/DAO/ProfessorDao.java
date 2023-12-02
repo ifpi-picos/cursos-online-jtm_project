@@ -176,7 +176,7 @@ public class ProfessorDao implements Dao<Professor> {
     
             if (rowsUpdated > 0) {
                 System.out.println("_____________________________________________\n");
-                System.out.println(" M A T R Í C U L A  R E M O V I D A  C O M\n              S U C E S S O !");
+                System.out.println("  M A T R Í C U L A  R E M O V I D A  C O M\n              S U C E S S O !");
                 System.out.println("_____________________________________________\n");
             } else {
                 System.out.println("Matrícula não encontrada para o professor com ID: " + idProfessor);

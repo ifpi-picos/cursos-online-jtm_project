@@ -435,7 +435,7 @@ public class Sistema {
             System.out.println("Digite o ID do Curso:");
             int curso = scanner.nextInt();
 
-            
+            professorDao.RemoverMatricula(professor);
             professores();
         } else if (opt == 0) {
             menuProfessor();
@@ -496,7 +496,7 @@ public class Sistema {
             System.out.println("Digite o ID do Aluno:");
             int id = scanner.nextInt();
                         
-            System.out.println("Tem Certeza que deseja excluir o Professor?");
+            System.out.println("Tem Certeza que deseja excluir o Aluno?");
             System.out.println("1. Sim");
             System.out.println("2. Não");
             int op = scanner.nextInt();
@@ -519,7 +519,7 @@ public class Sistema {
             System.out.println("Digite o ID do Curso:");
             int cursoId = scanner.nextInt();
 
-            CursoAluno cursoAluno = new CursoAluno(alunoId, cursoId, 0, "");
+            CursoAluno cursoAluno = new CursoAluno(cursoId, alunoId, 0, "");
             cursoAlunoDao.cadastrar(cursoAluno);
             alunos();
         } else if (opt == 6) {
@@ -534,7 +534,7 @@ public class Sistema {
             System.out.println("Digite a nota do aluno: ");
             float nota = scanner.nextFloat();
 
-            CursoAluno novoCursoAluno = new CursoAluno(idAluno, idCurso, nota, "");
+            CursoAluno novoCursoAluno = new CursoAluno(idCurso, idAluno, nota, "");
             cursoAlunoDao.cadastrar(novoCursoAluno);
 
             if (nota != 0) {
