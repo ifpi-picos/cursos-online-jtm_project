@@ -189,7 +189,7 @@ public class Sistema {
             System.out.println("Digite o ID do Curso:");
             int id_curso = scanner.nextInt();
 
-            CursoAluno cursoAluno = new CursoAluno(id, id_curso, 0, null);
+            CursoAluno cursoAluno = new CursoAluno(id_curso, id, 0, null);
             cursoAlunoDao.cadastrar(cursoAluno);
             cursoParaAlunos();
         } else if (opt == 4) {
