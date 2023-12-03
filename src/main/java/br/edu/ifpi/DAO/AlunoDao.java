@@ -58,7 +58,7 @@ public class AlunoDao implements Dao<Aluno> {
             stmt.setInt(2, idCurso);
     
             System.out.println("_____________________________________________\n");
-            System.out.println("D E S M A T R Í C U L A   R E A L I Z A D A   C O M \n              S U C E S S O !");
+            System.out.println("  M A T R Í C U L A  R E M O V I D A  C O M\\n              S U C E S S O !");
             System.out.println("_____________________________________________\n");
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -173,7 +173,7 @@ public class AlunoDao implements Dao<Aluno> {
             stmt.setInt(1, idAluno);
 
             try (ResultSet resultSet = stmt.executeQuery()) {
-                System.out.println("\n______C U R S O S   M A T R I C U L A D O S______");
+                System.out.println("\n____C U R S O S   M A T R I C U L A D O S____");
                 while (resultSet.next()) {
                     int idCurso = resultSet.getInt("ID");
                     String nomeCurso = resultSet.getString("NOME");

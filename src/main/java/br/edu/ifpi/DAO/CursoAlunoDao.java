@@ -113,13 +113,12 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
 
     @Override
     public int remover(CursoAluno cursoAluno) {
-        String SQL_DELETE = "DELETE FROM CURSOALUNO WHERE ID_CURSO=? AND ID_ALUNO=?";
+        String SQL_DELETE = "DELETE FROM CURSOALUNO WHERE ID=?";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_DELETE);
 
-                preparedStatement.setInt(1, cursoAluno.getIdCurso());
-                preparedStatement.setInt(2, cursoAluno.getIdCurso());
+            preparedStatement.setInt(1, cursoAluno.getIdAluno());
 
             int row = preparedStatement.executeUpdate();
 

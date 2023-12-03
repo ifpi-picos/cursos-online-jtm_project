@@ -21,10 +21,10 @@ public class Sistema {
 
     public void mostrarMenuInicial() {
         System.out.println("___________M E N U   I N I C I A L___________");
-        System.out.println("1. Cadastrar Usuário");
+        System.out.println("\n1. Cadastrar Usuário");
         System.out.println("2. Logar Usuário");
         System.out.println("0. Sair do Sistema");
-        System.out.println("_____________________________________________");
+        System.out.println("\n_____________________________________________");
 
         Scanner scanner = new Scanner(System.in);
 
@@ -121,11 +121,10 @@ public class Sistema {
         Scanner scanner = new Scanner(System.in);
         Conexao conexao = new Conexao();
         AlunoDao alunoDao = new AlunoDao(conexao);
-        CursoDao cursoDao = new CursoDao(conexao);
         ProfessorDao professorDao = new ProfessorDao(conexao);
         CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(conexao);
 
-        System.out.println("________M E N U   D O   A L U N O________");
+        System.out.println("__________M E N U   D O   A L U N O__________");
         System.out.println("\n1. Vizualizar Perfil");
         System.out.println("2. Cursos");
         System.out.println("3. Professores");
@@ -165,6 +164,7 @@ public class Sistema {
         Conexao conexao = new Conexao();
         CursoDao cursoDao = new CursoDao(conexao);
         CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(conexao);
+        AlunoDao alunoDao = new AlunoDao(conexao);
         System.out.println("_________________C U R S O S________________");
         System.out.println("\n1. Vizualizar lista de Cursos");
         System.out.println("2. Consultar desempenho dos Cursos");
@@ -197,7 +197,6 @@ public class Sistema {
             int id = scanner.nextInt();
             System.out.println("Confirme o ID do Curso:");
             int id_curso = scanner.nextInt();
-            CursoAluno cursoAluno = new CursoAluno(id, id_curso, 0, null);
 
             System.out.println("Tem Certeza que deseja remover a Matrícula?");
             System.out.println("1. Sim");
@@ -205,7 +204,7 @@ public class Sistema {
             int op = scanner.nextInt();
 
             if(op == 1){
-            cursoAlunoDao.remover(cursoAluno);
+            alunoDao.desmatricularEmCurso(id, id_curso);
             } else if (op == 2){
                 System.out.println("_____________________________________________\n");
                 System.out.println("  O P E R A Ç Ã O   I N T E R R O M P I D A");
@@ -262,7 +261,7 @@ public class Sistema {
         Scanner scanner = new Scanner(System.in);
         Conexao conexao = new Conexao();
         CursoDao cursoDao = new CursoDao(conexao);
-        CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(conexao);
+        AlunoDao alunoDao = new AlunoDao(conexao);
         System.out.println("_________________C U R S O S________________");
         System.out.println("\n1. Vizualizar lista de Cursos");
         System.out.println("2. Consultar desempenho dos Cursos");
@@ -333,8 +332,7 @@ public class Sistema {
             int op = scanner.nextInt();
 
             if(op == 1){
-                CursoAluno cursoAluno = new CursoAluno(id, 0, 0, "");
-                cursoAlunoDao.remover(cursoAluno);
+                alunoDao.desmatricularEmCurso(0, id);
                 Curso curso = new Curso(id, null, status, null);
                 cursoDao.remover(curso);
             } else if (op == 2){
