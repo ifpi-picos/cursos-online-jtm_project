@@ -113,12 +113,13 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
 
     @Override
     public int remover(CursoAluno cursoAluno) {
-        String SQL_DELETE = "DELETE FROM CURSOALUNO WHERE ID=?";
+        String SQL_DELETE = "DELETE FROM CURSOALUNO WHERE ID_CURSO=? AND ID_ALUNO=?";
 
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_DELETE);
 
-            preparedStatement.setInt(1, cursoAluno.getIdCurso());
+                preparedStatement.setInt(1, cursoAluno.getIdCurso());
+                preparedStatement.setInt(2, cursoAluno.getIdCurso());
 
             int row = preparedStatement.executeUpdate();
 
@@ -135,55 +136,34 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
         return 0;
     }
 
-    public int adicionarNota(int idCursoAluno, float novaNota) {
-        String SQL_UPDATE_NOTA = "UPDATE CURSOALUNO SET NOTAS = ? WHERE ID = ?";
-    
+    public int adicionarNota(int idCurso, int idAluno, float novaNota) {
+        String SQL_UPDATE_NOTA = "UPDATE CURSOALUNO SET NOTAS = ? WHERE ID_CURSO=? AND ID_ALUNO=?";
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_UPDATE_NOTA);
+            preparedStatement.setFloat(1, novaNota);
+            preparedStatement.setInt(2, idCurso);
+            preparedStatement.setInt(3, idAluno);
 
-            String SQL_SELECT_NOTAS = "SELECT NOTAS FROM CURSOALUNO WHERE ID = ?";
-            PreparedStatement stmtSelect = conexao.prepareStatement(SQL_SELECT_NOTAS);
-            stmtSelect.setInt(1, idCursoAluno);
-    
-            ResultSet resultSet = stmtSelect.executeQuery();
-            float nota1 = 0;
-            float nota2 = 0;
-            float nota3 = 0;
-    
-            if (resultSet.next()) {
-                nota1 = resultSet.getFloat("NOTAS");
-                if (resultSet.next()) {
-                    nota2 = resultSet.getFloat("NOTAS");
-                    if (resultSet.next()) {
-                        nota3 = resultSet.getFloat("NOTAS");
-                    }
-                }
-            }
-
-            float media = (nota1 + nota2 + nota3) / 3;
-    
-            preparedStatement.setFloat(1, media);
-            preparedStatement.setInt(2, idCursoAluno);
-    
             int row = preparedStatement.executeUpdate();
-    
+
             System.out.println(row);
             preparedStatement.close();
-    
+
+            System.out.println("_____________________________________________");
+            System.out.println("\n    N O T A   R E G I S T R A D A   C O M \n          S U C E S S O !");
+            System.out.println(" Nova nota: " + novaNota);
             System.out.println("_____________________________________________\n");
-            System.out.println(" Nota adicionada com sucesso!");
-            System.out.println(" Nova média: " + media);
-            System.out.println("_____________________________________________\n");
-    
+
             return row;
-    
+
         } catch (SQLException e) {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
             e.printStackTrace();
         }
-    
+
         return 0;
     }
+
     
 
     public void gerarSituacao(){
@@ -212,7 +192,7 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
                 float notas = resultSet.getFloat("NOTAS");
                 String situacao = resultSet.getString("SITUACAO");
 
-                System.out.println("ID do Curso: " + idCurso + "\t Notas: " + notas + "\t Situação: " + situacao);
+                System.out.println("\nID do Curso: " + idCurso + "\t Notas: " + notas + "\t Situação: " + situacao);
             }
             System.out.println("\n_____________________________________________\n");
             resultSet.close();

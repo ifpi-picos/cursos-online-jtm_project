@@ -206,7 +206,6 @@ public class Sistema {
 
             if(op == 1){
             cursoAlunoDao.remover(cursoAluno);
-
             } else if (op == 2){
                 System.out.println("_____________________________________________\n");
                 System.out.println("  O P E R A Ç Ã O   I N T E R R O M P I D A");
@@ -534,14 +533,7 @@ public class Sistema {
             System.out.println("Digite a nota do aluno: ");
             float nota = scanner.nextFloat();
 
-            CursoAluno novoCursoAluno = new CursoAluno(idCurso, idAluno, nota, "");
-            cursoAlunoDao.cadastrar(novoCursoAluno);
-
-            if (nota != 0) {
-                System.out.println("Notas do aluno registradas com sucesso!");
-            } else {
-                System.out.println("Falha ao registrar as notas do aluno.");
-            }
+            cursoAlunoDao.adicionarNota(idCurso, idAluno, nota);
             alunos();
         } else if (opt == 0) {
             menuProfessor();
