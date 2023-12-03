@@ -24,7 +24,7 @@ public class Sistema {
         System.out.println("\n1. Cadastrar Usuário");
         System.out.println("2. Logar Usuário");
         System.out.println("0. Sair do Sistema");
-        System.out.println("\n_____________________________________________");
+        System.out.println("_____________________________________________");
 
         Scanner scanner = new Scanner(System.in);
 
@@ -261,7 +261,6 @@ public class Sistema {
         Scanner scanner = new Scanner(System.in);
         Conexao conexao = new Conexao();
         CursoDao cursoDao = new CursoDao(conexao);
-        AlunoDao alunoDao = new AlunoDao(conexao);
         System.out.println("_________________C U R S O S________________");
         System.out.println("\n1. Vizualizar lista de Cursos");
         System.out.println("2. Consultar desempenho dos Cursos");
@@ -332,7 +331,6 @@ public class Sistema {
             int op = scanner.nextInt();
 
             if(op == 1){
-                alunoDao.desmatricularEmCurso(0, id);
                 Curso curso = new Curso(id, null, status, null);
                 cursoDao.remover(curso);
             } else if (op == 2){
@@ -429,9 +427,7 @@ public class Sistema {
         } else if (opt == 6) {
             System.out.println("Digite o ID do Professor:");
             int professor = scanner.nextInt();
-            System.out.println("Digite o ID do Curso:");
-            int curso = scanner.nextInt();
-
+            
             professorDao.RemoverMatricula(professor);
             professores();
         } else if (opt == 0) {
@@ -532,7 +528,6 @@ public class Sistema {
             float nota = scanner.nextFloat();
 
             cursoAlunoDao.adicionarNota(idCurso, idAluno, nota);
-            //cursoAlunoDao.gerarSituacao();
             alunos();
         } else if (opt == 0) {
             menuProfessor();
