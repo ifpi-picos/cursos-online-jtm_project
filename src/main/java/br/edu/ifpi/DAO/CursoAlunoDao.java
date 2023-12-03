@@ -187,8 +187,8 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
     }
 
     public void mostrarBoletim(int idAluno) {
-        String SQL_SELECT_NOTAS_ALUNO = "SELECT ID_CURSO, NOTAS, SITUACAO FROM CURSOALUNO WHERE ID_ALUNO = ?";
-CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(conexao);
+        String SQL_SELECT_NOTAS_ALUNO = "SELECT ID_CURSO, NOTAS FROM CURSOALUNO WHERE ID_ALUNO = ?";
+        CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(conexao);
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_SELECT_NOTAS_ALUNO);
             preparedStatement.setInt(1, idAluno);
@@ -198,8 +198,6 @@ CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(conexao);
             while (resultSet.next()) {
                 int idCurso = resultSet.getInt("ID_CURSO");
                 float notas = resultSet.getFloat("NOTAS");
-                String situacao = resultSet.getString("SITUACAO");
-
             
                 System.out.println("\nID do Curso: " + idCurso + "\t Notas: " + notas + "\t Situação: " + cursoAlunoDao.gerarSituacao());
             }
