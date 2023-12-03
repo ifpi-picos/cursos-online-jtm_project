@@ -150,7 +150,6 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
 
             System.out.println("_____________________________________________");
             System.out.println("\n    N O T A   R E G I S T R A D A   C O M \n          S U C E S S O !");
-            System.out.println(" Nova nota: " + novaNota);
             System.out.println("_____________________________________________\n");
 
             return row;
