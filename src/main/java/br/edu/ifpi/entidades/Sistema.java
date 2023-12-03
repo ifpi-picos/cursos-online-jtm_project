@@ -532,7 +532,7 @@ public class Sistema {
             float nota = scanner.nextFloat();
 
             cursoAlunoDao.adicionarNota(idCurso, idAluno, nota);
-            cursoAlunoDao.gerarSituacao();
+            //cursoAlunoDao.gerarSituacao();
             alunos();
         } else if (opt == 0) {
             menuProfessor();

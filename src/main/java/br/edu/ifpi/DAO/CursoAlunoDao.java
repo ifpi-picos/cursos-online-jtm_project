@@ -164,21 +164,31 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
 
     
 
-    public void gerarSituacao(){
-        String sqlSituacao = "UPDATE cursoaluno SET situacao = CASE WHEN nota >= 7.0 THEN 'Aprovado' ELSE 'Reprovado' END ";
+    public String gerarSituacao() {
+        String situacao = ""; 
+        String sqlSituacao = "UPDATE cursoaluno SET situacao = CASE WHEN cursoaluno.notas >= 7.0 THEN 'Aprovado' ELSE 'Reprovado' END ";
         try {
             PreparedStatement psmt = conexao.prepareStatement(sqlSituacao);
-            psmt.executeUpdate();
-            System.out.println("situacao criada com sucesso");
-        } catch (Exception e) {
+            int rowsUpdated = psmt.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                situacao = "Aprovado";  
+            } else {
+                situacao = "Reprovado";  
+            }
+
+            System.out.println(rowsUpdated + " linhas atualizadas com sucesso");
+        } catch (SQLException e) {
             System.out.println("Algum erro ocorreu.");
             e.printStackTrace();
+            situacao = "Erro ao criar a situacao";
         }
+        return situacao;
     }
 
     public void mostrarBoletim(int idAluno) {
         String SQL_SELECT_NOTAS_ALUNO = "SELECT ID_CURSO, NOTAS, SITUACAO FROM CURSOALUNO WHERE ID_ALUNO = ?";
-
+CursoAlunoDao cursoAlunoDao = new CursoAlunoDao(conexao);
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_SELECT_NOTAS_ALUNO);
             preparedStatement.setInt(1, idAluno);
@@ -190,7 +200,8 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
                 float notas = resultSet.getFloat("NOTAS");
                 String situacao = resultSet.getString("SITUACAO");
 
-                System.out.println("\nID do Curso: " + idCurso + "\t Notas: " + notas + "\t Situação: " + situacao);
+            
+                System.out.println("\nID do Curso: " + idCurso + "\t Notas: " + notas + "\t Situação: " + cursoAlunoDao.gerarSituacao());
             }
             System.out.println("\n_____________________________________________\n");
             resultSet.close();
