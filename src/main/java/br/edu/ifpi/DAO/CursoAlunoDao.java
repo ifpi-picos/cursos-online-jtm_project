@@ -113,25 +113,25 @@ public class CursoAlunoDao implements Dao<CursoAluno> {
 
     @Override
     public int remover(CursoAluno cursoAluno) {
-        String SQL_DELETE = "DELETE FROM CURSOALUNO WHERE ID=?";
-
+        String SQL_DELETE = "DELETE FROM CURSOALUNO WHERE ID_CURSO=?";
+    
         try {
             PreparedStatement preparedStatement = conexao.prepareStatement(SQL_DELETE);
-
-            preparedStatement.setInt(1, cursoAluno.getIdAluno());
-
+    
+            preparedStatement.setInt(1, cursoAluno.getIdCurso());
+    
             int row = preparedStatement.executeUpdate();
-
+    
             System.out.println(row);
             preparedStatement.close();
-
+    
             return row;
-
+    
         } catch (SQLException e) {
             System.err.format("SQL State %s\n%s", e.getSQLState(), e.getMessage());
             e.printStackTrace();
         }
-
+    
         return 0;
     }
 
