@@ -27,7 +27,7 @@ public class AutenticacaoDao {
                     System.out.println("_____________________________________________\n");
                     System.out.println("  A L U N O   A U T E N T I C A D O   C O M\n                S U C E S S O !");
                     System.out.println("_____________________________________________\n");
-                    return new Aluno(email);
+                    return new Aluno(id, email, null);
                 }
             }
         } catch (SQLException e) {
