@@ -11,9 +11,6 @@ public class Aluno {
         this.email = email;
     }
 
-    public Aluno(String email2) {
-    }
-
     public String getNome() {
         return nome;
     }
